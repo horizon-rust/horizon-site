@@ -8,16 +8,7 @@ import type { LauncherBuild } from "@/components/github-releases";
 import { LauncherLink } from "@/components/launcher-download";
 import { GITHUB_URL } from "@/components/links";
 import { useUnseenCount } from "@/components/release-seen";
-
-const NAV = [
-  { label: "About", href: "/#about" },
-  { label: "Hub", href: "/hub" },
-  { label: "Benchmarks", href: "/benchmarks" },
-  { label: "Mods", href: "/mods" },
-  { label: "Releases", href: "/releases" },
-  { label: "Docs", href: "/docs" },
-  { label: "Players", href: "/stats" },
-];
+import { getDictionary } from "@/lib/i18n";
 
 const NAV_LINK = "inline-flex items-center gap-1.5 transition-colors hover:text-white";
 
@@ -34,6 +25,20 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
   );
   const unseen = useUnseenCount(releaseIds);
   const pathname = usePathname();
+  const isSpanish = pathname === "/es" || pathname.startsWith("/es/");
+  const dict = getDictionary(isSpanish ? "es" : "en");
+  const homePrefix = isSpanish ? "/es" : "";
+
+  const nav = [
+    { label: dict.header.about, href: `${homePrefix}/#about` },
+    { label: dict.header.hub, href: "/hub" },
+    { label: dict.header.benchmarks, href: "/benchmarks" },
+    { label: dict.header.mods, href: "/mods" },
+    { label: dict.header.releases, href: "/releases" },
+    { label: dict.header.docs, href: "/docs" },
+    { label: dict.header.players, href: "/stats" },
+  ];
+
   const isCurrent = (href: string) => !href.includes("#") && (pathname === href || pathname.startsWith(`${href}/`));
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuPath, setMenuPath] = useState(pathname);
@@ -56,13 +61,13 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
       }`}
     >
       <div className="mx-auto flex h-18 w-full max-w-6xl items-center gap-12 px-6 lg:px-10">
-        <Link href="/" className="flex items-center gap-2 text-white">
+        <Link href={isSpanish ? "/es" : "/"} className="flex items-center gap-2 text-white">
           <HorizonMark className="size-8" />
           <span className="font-display text-[19px] font-semibold tracking-[-0.02em]">Horizon</span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-8 text-sm text-white/65 lg:flex">
-          {NAV.map((item) => (
+        <nav aria-label={dict.header.mainNav} className="hidden items-center gap-8 text-sm text-white/65 lg:flex">
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -78,7 +83,7 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
                   >
                     {unseen > 9 ? "9+" : unseen}
                   </span>
-                  <span className="sr-only">, {unseen} new</span>
+                  <span className="sr-only">, {unseen} {dict.header.new}</span>
                 </>
               )}
             </Link>
@@ -86,6 +91,14 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
         </nav>
 
         <div className="ml-auto flex items-center gap-1.5">
+          <Link
+            href={isSpanish ? "/" : "/es"}
+            className="inline-flex h-9 items-center rounded-lg px-2.5 text-xs font-semibold tracking-wider text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+            aria-label={dict.header.switchLanguage}
+            title={dict.header.switchLanguage}
+          >
+            {isSpanish ? "EN" : "ES"}
+          </Link>
           <a
             href={GITHUB_URL}
             className="hidden h-9 items-center gap-2 px-3 text-sm text-white/65 transition-colors hover:text-white sm:inline-flex"
@@ -97,13 +110,13 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
             build={launcher}
             className="inline-flex h-9 items-center rounded-lg bg-white/10 px-4 text-sm font-medium text-white transition-colors hover:bg-white/15"
           >
-            Download
+            {dict.header.download}
           </LauncherLink>
           <button
             type="button"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={menuOpen ? "Close the menu" : "Open the menu"}
+            aria-label={menuOpen ? dict.header.closeMenu : dict.header.openMenu}
             onClick={() => {
               setMenuOpen((o) => !o);
               setMenuPath(pathname);
@@ -116,9 +129,9 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
       </div>
 
       {menuOpen && (
-        <nav id="mobile-menu" aria-label="Main" className="mx-auto h-[calc(100dvh-4.5rem)] w-full max-w-6xl overflow-y-auto px-6 pt-2 pb-6 lg:hidden">
+        <nav id="mobile-menu" aria-label={dict.header.mainNav} className="mx-auto h-[calc(100dvh-4.5rem)] w-full max-w-6xl overflow-y-auto px-6 pt-2 pb-6 lg:hidden">
           <ul className="grid gap-0.5">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -129,10 +142,22 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
                   }`}
                 >
                   {item.label}
-                  {item.href === "/releases" && unseen > 0 && <span className="text-sm text-[#c4b5ff]">{unseen > 9 ? "9+" : unseen} new</span>}
+                  {item.href === "/releases" && unseen > 0 && <span className="text-sm text-[#c4b5ff]">{unseen > 9 ? "9+" : unseen} {dict.header.new}</span>}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href={isSpanish ? "/" : "/es"}
+                onClick={() => setMenuOpen(false)}
+                className="flex h-12 items-center justify-between rounded-lg px-3 text-[17px] text-white/75 transition-colors hover:bg-white/[0.05]"
+              >
+                <span>Idioma / Language</span>
+                <span className="text-sm font-semibold uppercase tracking-wider text-[#c4b5ff]">
+                  {isSpanish ? "English (EN)" : "Español (ES)"}
+                </span>
+              </Link>
+            </li>
             <li>
               <a href={GITHUB_URL} className="flex h-12 items-center gap-2.5 rounded-lg px-3 text-[17px] text-white/75 transition-colors hover:bg-white/[0.05]">
                 <GitHubIcon className="size-4" />

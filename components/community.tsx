@@ -2,6 +2,7 @@ import type { ComponentType, SVGProps } from "react";
 import { DiscordIcon, DollarIcon, GitHubIcon, ShieldIcon } from "@/components/icons";
 import { BUILD_URL, DISCORD_URL, GITHUB_URL, SPONSOR_URL } from "@/components/links";
 import { PixelAurora } from "@/components/pixel-aurora";
+import { type Locale, getDictionary } from "@/lib/i18n";
 
 const GLASS = {
   card: "bg-white/[0.06] backdrop-blur-xl hover:bg-white/[0.1] focus-visible:ring-[#a98fff]",
@@ -32,20 +33,22 @@ type Card = {
   tone: typeof GLASS;
 };
 
-const LINKS: Card[] = [
-  { title: "Discord", body: "Questions, bug reports and screenshots.", href: DISCORD_URL, icon: DiscordIcon, tone: DISCORD },
-  { title: "Sponsor", body: "Sponsors on GitHub fund the next release.", href: SPONSOR_URL, icon: DollarIcon, tone: GLASS },
-  { title: "Source", body: "Issues and pull requests are welcome.", href: GITHUB_URL, icon: GitHubIcon, tone: LIGHT },
-  {
-    title: "How it's built",
-    body: "Who writes it, how changes are checked, why it's safe to run.",
-    href: BUILD_URL,
-    icon: ShieldIcon,
-    tone: GLASS,
-  },
-];
+export function Community({ locale = "en" }: { locale?: Locale }) {
+  const dict = getDictionary(locale);
 
-export function Community() {
+  const links: Card[] = [
+    { title: dict.community.discordTitle, body: dict.community.discordBody, href: DISCORD_URL, icon: DiscordIcon, tone: DISCORD },
+    { title: dict.community.sponsorTitle, body: dict.community.sponsorBody, href: SPONSOR_URL, icon: DollarIcon, tone: GLASS },
+    { title: dict.community.sourceTitle, body: dict.community.sourceBody, href: GITHUB_URL, icon: GitHubIcon, tone: LIGHT },
+    {
+      title: dict.community.buildTitle,
+      body: dict.community.buildBody,
+      href: BUILD_URL,
+      icon: ShieldIcon,
+      tone: GLASS,
+    },
+  ];
+
   return (
     <section
       id="community"
@@ -56,20 +59,20 @@ export function Community() {
 
       <div className="mx-auto w-full max-w-6xl px-6 lg:px-10">
         <div className="reveal">
-          <p className="text-sm font-medium text-white/60">Community</p>
+          <p className="text-sm font-medium text-white/60">{dict.community.eyebrow}</p>
           <h2
             id="community-title"
             className="mt-5 font-display text-[clamp(2rem,3.6vw,3rem)] leading-[1.08] font-semibold tracking-[-0.03em] text-balance text-white"
           >
-            Built in the open.
+            {dict.community.title}
           </h2>
           <p className="mt-4 max-w-md text-[15px] leading-relaxed text-pretty text-white/60">
-            Every change lands on GitHub in public. Come ask questions, report bugs or send a pull request.
+            {dict.community.description}
           </p>
         </div>
 
         <ul className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
-          {LINKS.map(({ title, body, href, icon: Icon, tone }) => (
+          {links.map(({ title, body, href, icon: Icon, tone }) => (
             <li key={title} className="flex">
               <a
                 href={href}

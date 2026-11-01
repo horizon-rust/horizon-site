@@ -6,6 +6,7 @@ import { DownloadIcon, GitHubIcon, LinuxIcon, RustIcon, WindowsIcon } from "@/co
 import { getReleases, launcherBuild } from "@/components/github-releases";
 import { LauncherLink, LauncherMeta } from "@/components/launcher-download";
 import { GITHUB_URL, RUST_WIKI_URL } from "@/components/links";
+import { type Locale, getDictionary } from "@/lib/i18n";
 
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as CSSProperties;
 
@@ -17,8 +18,9 @@ function Dot({ className = "mx-2" }: { className?: string }) {
   );
 }
 
-export async function Hero() {
+export async function Hero({ locale = "en" }: { locale?: Locale }) {
   const launcher = launcherBuild(await getReleases());
+  const dict = getDictionary(locale);
   return (
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden">
       <HorizonScene className="absolute inset-0 -z-10" />
@@ -29,13 +31,13 @@ export async function Hero() {
           <p className="rise flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm font-medium text-white/60" style={delay(0)}>
             <span className="inline-flex items-center gap-2">
               <Image src="/minecraft.webp" alt="" width={64} height={71} className="h-[18px] w-auto" />
-              Minecraft: Java Edition 26.3
+              {dict.hero.gameVersion}
             </span>
             <Dot className="hidden sm:inline" />
             <span className="inline-flex items-center gap-2">
               <RustIcon className="size-4" />
               <span>
-                Written in{" "}
+                {dict.hero.writtenIn}{" "}
                 <a
                   href={RUST_WIKI_URL}
                   target="_blank"
@@ -53,13 +55,12 @@ export async function Hero() {
             style={delay(80)}
           >
             <span className="sr-only">Horizon: </span>
-            <span className="block">The game you know,</span>
-            <span className="text-accent block pb-1">rebuilt in Rust.</span>
+            <span className="block">{dict.hero.titleLine1}</span>
+            <span className="text-accent block pb-1">{dict.hero.titleLine2}</span>
           </h1>
 
           <p className="rise mt-6 max-w-xl text-lg leading-relaxed text-white/70" style={delay(160)}>
-            The Minecraft: Java Edition 26.3 client and its game logic, rewritten in Rust and checked against the
-            vanilla game by 281 differential harnesses.
+            {dict.hero.subtitle}
           </p>
 
           <div className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style={delay(240)}>
@@ -68,14 +69,14 @@ export async function Hero() {
               className="inline-flex h-12 items-center justify-center gap-2.5 rounded-[10px] bg-[#6b4bff] px-5 text-[15px] font-medium text-white transition-colors hover:bg-[#7a5dff]"
             >
               <DownloadIcon className="size-[18px]" />
-              Download the launcher
+              {dict.hero.downloadLauncher}
             </LauncherLink>
             <a
               href={GITHUB_URL}
               className="inline-flex h-12 items-center justify-center gap-2.5 rounded-[10px] bg-white/[0.08] px-5 text-[15px] font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/[0.14]"
             >
               <GitHubIcon className="size-[17px]" />
-              View on GitHub
+              {dict.hero.viewOnGitHub}
             </a>
           </div>
 
@@ -83,11 +84,11 @@ export async function Hero() {
             <span className="flex items-center gap-4">
               <LauncherLink build={launcher} os="windows" className="inline-flex items-center gap-2 text-white/75 transition-colors hover:text-white">
                 <WindowsIcon className="size-3.5" />
-                Windows
+                {dict.hero.windows}
               </LauncherLink>
               <LauncherLink build={launcher} os="linux" className="inline-flex items-center gap-2 text-white/75 transition-colors hover:text-white">
                 <LinuxIcon className="size-4" />
-                Linux
+                {dict.hero.linux}
               </LauncherLink>
             </span>
             <span className="basis-full whitespace-nowrap sm:basis-auto">
