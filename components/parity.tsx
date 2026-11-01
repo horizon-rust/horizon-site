@@ -120,9 +120,9 @@ function Dot() {
 const LINK =
   "text-white/75 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60";
 
-export function Parity() {
+export function Parity({ lang }: { lang?: string } = {}) {
   return (
-    <section id="parity" aria-labelledby="parity-title" className="scroll-mt-14 pb-24 sm:pb-32">
+    <section id="parity" lang={lang} aria-labelledby="parity-title" className="scroll-mt-14 pb-24 sm:pb-32">
       <div className="mx-auto w-full max-w-6xl px-6 lg:px-10">
         <p className="reveal text-sm font-medium text-white/60"></p>
 

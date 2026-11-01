@@ -53,7 +53,7 @@ export function About({ locale = "en" }: { locale?: Locale }) {
             >
               {dict.about.visitContributors}
               <ExternalLinkIcon className="size-4" />
-              <span className="sr-only">(opens in a new tab)</span>
+              <span className="sr-only"> {dict.about.opensInNewTab}</span>
             </a>
           </div>
 
@@ -62,7 +62,7 @@ export function About({ locale = "en" }: { locale?: Locale }) {
           >
             <Image
               src="/about-wallpaper.jpg"
-              alt="A Minecraft windmill above a field of lavender"
+              alt={dict.about.wallpaperAlt}
               fill
               sizes="(min-width: 1024px) 39rem, 100vw"
               className="-scale-x-100 object-cover object-[30%_center]"

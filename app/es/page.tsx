@@ -6,6 +6,7 @@ export const metadata = pageMetadata({
   description:
     "Minecraft: Java Edition 26.3 reescrito en Rust. Gratuito, de código abierto y probado contra vanilla. Descarga el launcher de Horizon para Windows, macOS y Linux.",
   path: "/es",
+  locale: "es_ES",
 });
 
 export default function HomeSpanish() {

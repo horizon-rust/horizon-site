@@ -9,7 +9,7 @@ import { getDictionary } from "@/lib/i18n";
 
 const GITHUB_PRIVACY_URL = "https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement";
 
-function Out({ href, children }: { href: string; children: ReactNode }) {
+function Out({ href, children, srText = "(opens in a new tab)" }: { href: string; children: ReactNode; srText?: string }) {
   return (
     <a
       href={href}
@@ -18,7 +18,7 @@ function Out({ href, children }: { href: string; children: ReactNode }) {
       className="text-white/70 underline decoration-white/20 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
     >
       {children}
-      <span className="sr-only"> (opens in a new tab)</span>
+      <span className="sr-only"> {srText}</span>
     </a>
   );
 }
@@ -31,9 +31,10 @@ export function SiteFooter() {
   const pathname = usePathname();
   const isSpanish = pathname === "/es" || pathname.startsWith("/es/");
   const dict = getDictionary(isSpanish ? "es" : "en");
+  const srText = dict.footer.opensInNewTab;
 
   return (
-    <footer className="mt-auto border-t border-white/[0.08]">
+    <footer lang={isSpanish ? "es" : "en"} className="mt-auto border-t border-white/[0.08]">
       <div className="mx-auto w-full max-w-6xl px-6 pt-14 pb-10 lg:px-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between md:gap-16">
           <Link href={isSpanish ? "/es" : "/"} className="flex shrink-0 items-center gap-2 text-white">
@@ -55,17 +56,17 @@ export function SiteFooter() {
           <div>
             <Heading>{dict.footer.whoMakesItTitle}</Heading>
             <p className="mt-3">
-              {dict.footer.whoMakesItPart1} <Out href="https://lu4ovic.com">lu4ovic.com</Out>. {dict.footer.whoMakesItPart2}{" "}
-              <Out href="https://dezerx.com">DezerX</Out>
+              {dict.footer.whoMakesItPart1} <Out href="https://lu4ovic.com" srText={srText}>lu4ovic.com</Out>. {dict.footer.whoMakesItPart2}{" "}
+              <Out href="https://dezerx.com" srText={srText}>DezerX</Out>
               {dict.footer.whoMakesItPart3}
             </p>
           </div>
           <div>
             <Heading>{dict.footer.licencesTitle}</Heading>
             <p className="mt-3">
-              {dict.footer.licencesPart1} <Out href={`${GITHUB_URL}/blob/main/LICENSE`}>{dict.footer.mitLicence}</Out>
+              {dict.footer.licencesPart1} <Out href={`${GITHUB_URL}/blob/main/LICENSE`} srText={srText}>{dict.footer.mitLicence}</Out>
               {dict.footer.licencesPart2}{" "}
-              <Out href="https://openfontlicense.org">{dict.footer.silLicence}</Out>
+              <Out href="https://openfontlicense.org" srText={srText}>{dict.footer.silLicence}</Out>
               {dict.footer.licencesPart3}
             </p>
           </div>
@@ -73,9 +74,9 @@ export function SiteFooter() {
             <Heading>{dict.footer.privacyTitle}</Heading>
             <p className="mt-3">
               {dict.footer.privacyPart1}{" "}
-              <Out href={GITHUB_PRIVACY_URL}>{dict.footer.githubPrivacy}</Out>{" "}
+              <Out href={GITHUB_PRIVACY_URL} srText={srText}>{dict.footer.githubPrivacy}</Out>{" "}
               {dict.footer.privacyPart2}{" "}
-              <Out href={`${GITHUB_URL}/blob/main/docs/telemetry.md`}>{dict.footer.telemetryLink}</Out>.
+              <Out href={`${GITHUB_URL}/blob/main/docs/telemetry.md`} srText={srText}>{dict.footer.telemetryLink}</Out>.
             </p>
             <p className="mt-3">
               <Link
@@ -93,7 +94,7 @@ export function SiteFooter() {
             {dict.footer.madeInOpen}
             <RustIcon className="size-4" />
           </p>
-          <a href={GITHUB_URL} className="inline-flex items-center gap-2 transition-colors hover:text-white">
+          <a href={GITHUB_URL} lang="en" className="inline-flex items-center gap-2 transition-colors hover:text-white">
             <GitHubIcon className="size-4" />
             {GITHUB_URL.replace("https://github.com/", "")}
           </a>

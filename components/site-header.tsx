@@ -56,6 +56,7 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
 
   return (
     <header
+      lang={isSpanish ? "es" : "en"}
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-300 ${
         menuOpen ? "bg-[#100a1f]" : scrolled ? "bg-[#100a1f]/75 backdrop-blur-md" : ""
       }`}
@@ -96,11 +97,13 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
             className="inline-flex h-9 items-center rounded-lg px-2.5 text-xs font-semibold tracking-wider text-white/60 transition-colors hover:bg-white/10 hover:text-white"
             aria-label={dict.header.switchLanguage}
             title={dict.header.switchLanguage}
+            lang={isSpanish ? "en" : "es"}
           >
             {isSpanish ? "EN" : "ES"}
           </Link>
           <a
             href={GITHUB_URL}
+            lang="en"
             className="hidden h-9 items-center gap-2 px-3 text-sm text-white/65 transition-colors hover:text-white sm:inline-flex"
           >
             <GitHubIcon className="size-4" />
@@ -152,14 +155,21 @@ export function SiteHeader({ releaseIds = [], launcher = null }: { releaseIds?: 
                 onClick={() => setMenuOpen(false)}
                 className="flex h-12 items-center justify-between rounded-lg px-3 text-[17px] text-white/75 transition-colors hover:bg-white/[0.05]"
               >
-                <span>Idioma / Language</span>
-                <span className="text-sm font-semibold uppercase tracking-wider text-[#c4b5ff]">
+                <span>{dict.header.languageLabel}</span>
+                <span
+                  lang={isSpanish ? "en" : "es"}
+                  className="text-sm font-semibold uppercase tracking-wider text-[#c4b5ff]"
+                >
                   {isSpanish ? "English (EN)" : "Español (ES)"}
                 </span>
               </Link>
             </li>
             <li>
-              <a href={GITHUB_URL} className="flex h-12 items-center gap-2.5 rounded-lg px-3 text-[17px] text-white/75 transition-colors hover:bg-white/[0.05]">
+              <a
+                href={GITHUB_URL}
+                lang="en"
+                className="flex h-12 items-center gap-2.5 rounded-lg px-3 text-[17px] text-white/75 transition-colors hover:bg-white/[0.05]"
+              >
                 <GitHubIcon className="size-4" />
                 GitHub
               </a>

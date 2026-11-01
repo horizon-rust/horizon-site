@@ -87,11 +87,11 @@ export async function HomePage({ locale = "en" }: { locale?: Locale }) {
       />
       <Hero locale={locale} />
       <About locale={locale} />
-      <Sponsor />
+      <Sponsor lang={isSpanish ? "en" : undefined} />
       <Community locale={locale} />
       <Gallery locale={locale} />
-      <Contributors />
-      <Parity />
+      <Contributors lang={isSpanish ? "en" : undefined} />
+      <Parity lang={isSpanish ? "en" : undefined} />
     </main>
   );
 }

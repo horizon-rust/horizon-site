@@ -3,10 +3,10 @@ import { CopyCode } from "@/components/copy-code";
 import { HideButton, PartnersGate } from "@/components/hide-partners";
 import { SCULK_URL } from "@/components/links";
 
-export function Sponsor() {
+export function Sponsor({ lang }: { lang?: string } = {}) {
   return (
     <PartnersGate>
-      <section id="sculk" aria-labelledby="sculk-title" className="scroll-mt-14 pb-10 sm:pb-12">
+      <section id="sculk" lang={lang} aria-labelledby="sculk-title" className="scroll-mt-14 pb-10 sm:pb-12">
         <div className="reveal @container mx-auto w-full max-w-6xl">
           <div className="pt-6">
             <div className="relative flow-root rounded-2xl bg-[radial-gradient(ellipse_at_78%_60%,rgba(92,201,242,0.2),transparent_55%),linear-gradient(100deg,#0a0f17,#0d151f_50%,#10283a)]">

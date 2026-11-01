@@ -12,7 +12,8 @@
     "new": "nuevas",
     "openMenu": "Abrir el menú",
     "closeMenu": "Cerrar el menú",
-    "switchLanguage": "Switch to English"
+    "switchLanguage": "Switch to English",
+    "languageLabel": "Idioma"
   },
   "hero": {
     "gameVersion": "Minecraft: Java Edition 26.3",
@@ -30,6 +31,8 @@
     "title": "Mismas entradas, salidas idénticas.",
     "description": "Horizon, a veces llamado Minecraft Rust Edition, reconstruye Minecraft: Java Edition 26.3 en Rust, un subsistema a la vez, manteniendo cada parte con las mismas entradas que el juego vanilla hasta que las salidas sean idénticas.",
     "visitContributors": "Ver colaboradores",
+    "opensInNewTab": "(se abre en una nueva pestaña)",
+    "wallpaperAlt": "Un molino de viento de Minecraft sobre un campo de lavanda",
     "point1Title": "Tu propia copia",
     "point1Body": "Instala Java Edition con el launcher oficial y juega la versión 26.3 una vez. Horizon genera sus recursos a partir de esos archivos en tu equipo, y nunca descarga ni comparte archivos del juego.",
     "point2Title": "Nativo en tres plataformas",
@@ -56,9 +59,13 @@
     "titleHighlight": "6× más rápido.",
     "description": "Cada fotograma aquí fue renderizado por Horizon, con los modelos de bloques, iluminación, cielo y niebla de vanilla.",
     "shotNether": "Bosque carmesí",
+    "shotNetherAlt": "Un piglin con una espada de oro en un bosque carmesí sobre un mar de lava en el Nether",
     "shotVillage": "Aldea de sabana",
+    "shotVillageAlt": "Una aldea de sabana con casas de paja entre acacias bajo un cielo azul",
     "shotNight": "Aldea de noche",
-    "shotUnderwater": "Océano cálido"
+    "shotNightAlt": "Una aldea iluminada por antorchas bajo una luna cuadrada y un cielo nocturno estrellado",
+    "shotUnderwater": "Océano cálido",
+    "shotUnderwaterAlt": "Peces tropicales nadando sobre un arrecife de coral en un océano cálido"
   },
   "footer": {
     "disclaimer": "No es un producto oficial de Minecraft. No está aprobado ni asociado con Mojang o Microsoft.",
@@ -78,6 +85,7 @@
     "privacyPart2": "cubre esas solicitudes. El launcher no envía nada a menos que lo permitas:",
     "telemetryLink": "qué puede enviar y cómo eliminarlo",
     "privacyPolicy": "Política de privacidad",
-    "madeInOpen": "Creado en abierto, en Rust."
+    "madeInOpen": "Creado en abierto, en Rust.",
+    "opensInNewTab": "(se abre en una nueva pestaña)"
   }
 }

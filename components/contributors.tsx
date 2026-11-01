@@ -50,7 +50,7 @@ const committerCard = (c: Contributor): Card => ({
   url: c.url,
 });
 
-export async function Contributors() {
+export async function Contributors({ lang }: { lang?: string } = {}) {
   const contributors = await getContributors();
   const committers = FEATURED - TEAM.length;
   const cards: Card[] = [
@@ -61,7 +61,7 @@ export async function Contributors() {
   const rest = contributors?.slice(committers) ?? [];
 
   return (
-    <section id="contributors" aria-labelledby="contributors-title" className="scroll-mt-14 pb-8">
+    <section id="contributors" lang={lang} aria-labelledby="contributors-title" className="scroll-mt-14 pb-8">
       <div className="mx-auto w-full max-w-6xl px-6 lg:px-10">
         <div className="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
