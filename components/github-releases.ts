@@ -74,10 +74,12 @@ export async function getReleases(): Promise<Release[] | null> {
 export type DesktopOs = "windows" | "macos" | "linux";
 export type LauncherBuild = { version: string; files: Partial<Record<DesktopOs, { url: string; size: number }>> };
 
-const LAUNCHER_FILES: Record<DesktopOs, RegExp> = {
-  windows: /windows-x64\.zip$/i,
-  macos: /macos-arm64\.dmg$/i,
-  linux: /linux-x86_64\.tar\.gz$/i,
+// The file each system's Download button gets, the first match in order. On Windows that is the
+// setup, which installs the launcher; releases from before it have only the ZIP.
+const LAUNCHER_FILES: Record<DesktopOs, RegExp[]> = {
+  windows: [/^horizon-launcher-setup\.exe$/i, /windows-x64\.zip$/i],
+  macos: [/macos-arm64\.dmg$/i],
+  linux: [/linux-x86_64\.tar\.gz$/i],
 };
 
 export function launcherBuild(releases: Release[] | null): LauncherBuild | null {
@@ -85,8 +87,13 @@ export function launcherBuild(releases: Release[] | null): LauncherBuild | null 
   if (!release) return null;
   const files: LauncherBuild["files"] = {};
   for (const os of Object.keys(LAUNCHER_FILES) as DesktopOs[]) {
-    const asset = release.assets.find((a) => LAUNCHER_FILES[os].test(a.name));
-    if (asset) files[os] = { url: asset.url, size: asset.size };
+    for (const pattern of LAUNCHER_FILES[os]) {
+      const asset = release.assets.find((a) => pattern.test(a.name));
+      if (asset) {
+        files[os] = { url: asset.url, size: asset.size };
+        break;
+      }
+    }
   }
   return { version: release.tag.replace(/^launcher@/, ""), files };
 }
