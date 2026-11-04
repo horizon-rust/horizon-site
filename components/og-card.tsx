@@ -18,10 +18,23 @@ function loadAssets() {
   return assets;
 }
 
-type Card = { kicker: string; title: string; accent?: string; footer?: string };
+async function loadIcon(url?: string): Promise<string | null> {
+  if (!url || !url.startsWith("https://")) return null;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) return null;
+    const arrayBuffer = await res.arrayBuffer();
+    const contentType = res.headers.get("content-type") || "image/png";
+    return `data:${contentType};base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+  } catch {
+    return null;
+  }
+}
 
-export async function ogCard({ kicker, title, accent, footer = DEFAULT_FOOTER }: Card) {
-  const [semibold, medium, photo] = await loadAssets();
+type Card = { kicker: string; title: string; accent?: string; footer?: string; icon?: string };
+
+export async function ogCard({ kicker, title, accent, footer = DEFAULT_FOOTER, icon }: Card) {
+  const [[semibold, medium, photo], iconData] = await Promise.all([loadAssets(), loadIcon(icon)]);
   const length = title.length + (accent?.length ?? 0);
   const fontSize = length > 60 ? 60 : length > 40 ? 70 : 84;
 
@@ -50,11 +63,30 @@ export async function ogCard({ kicker, title, accent, footer = DEFAULT_FOOTER }:
             </svg>
             <span style={{ fontSize: 40, fontWeight: 600, letterSpacing: -0.8 }}>Horizon</span>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", maxWidth: 1000 }}>
-            <span style={{ fontSize: 30, fontWeight: 500, color: "rgba(255, 255, 255, 0.7)" }}>{kicker}</span>
-            <div style={{ display: "flex", flexDirection: "column", marginTop: 18, fontSize, fontWeight: 600, lineHeight: 1.04, letterSpacing: -fontSize * 0.035 }}>
-              <span>{title}</span>
-              {accent ? <span style={{ color: "#a98fff" }}>{accent}</span> : null}
+          <div style={{ display: "flex", alignItems: "center", gap: 36 }}>
+            {iconData ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={iconData}
+                width={128}
+                height={128}
+                alt=""
+                style={{
+                  width: 128,
+                  height: 128,
+                  borderRadius: 24,
+                  border: "2px solid rgba(255, 255, 255, 0.2)",
+                  backgroundColor: "rgba(34, 26, 58, 0.8)",
+                  objectFit: "cover",
+                }}
+              />
+            ) : null}
+            <div style={{ display: "flex", flexDirection: "column", maxWidth: iconData ? 840 : 1000 }}>
+              <span style={{ fontSize: 30, fontWeight: 500, color: "rgba(255, 255, 255, 0.7)" }}>{kicker}</span>
+              <div style={{ display: "flex", flexDirection: "column", marginTop: 18, fontSize, fontWeight: 600, lineHeight: 1.04, letterSpacing: -fontSize * 0.035 }}>
+                <span>{title}</span>
+                {accent ? <span style={{ color: "#a98fff" }}>{accent}</span> : null}
+              </div>
             </div>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, fontWeight: 500, color: "rgba(255, 255, 255, 0.6)" }}>
