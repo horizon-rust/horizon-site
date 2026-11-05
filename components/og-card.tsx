@@ -1,11 +1,19 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { cacheLife } from "next/cache";
 import { ImageResponse } from "next/og";
 import { SITE_HOST } from "@/components/site";
 
 const OG_WIDTH = 1200;
 const OG_HEIGHT = 630;
 const DEFAULT_FOOTER = "Free and open source · Windows, macOS and Linux";
+const MAX_ICON_BYTES = 512 * 1024;
+const ALLOWED_ICON_HOSTS = new Set([
+  "horizon-rust.github.io",
+  "cdn.modrinth.com",
+  "raw.githubusercontent.com",
+  "media.forgecdn.net",
+]);
 
 let assets: Promise<[Buffer, Buffer, string]> | null = null;
 
@@ -18,15 +26,107 @@ function loadAssets() {
   return assets;
 }
 
-async function loadIcon(url?: string): Promise<string | null> {
-  if (!url || !url.startsWith("https://")) return null;
+function detectImageMime(buffer: Buffer): "image/png" | "image/jpeg" | null {
+  if (
+    buffer.length >= 8 &&
+    buffer[0] === 0x89 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x4e &&
+    buffer[3] === 0x47
+  ) {
+    return "image/png";
+  }
+  if (
+    buffer.length >= 3 &&
+    buffer[0] === 0xff &&
+    buffer[1] === 0xd8 &&
+    buffer[2] === 0xff
+  ) {
+    return "image/jpeg";
+  }
+  return null;
+}
+
+async function readBodyWithCap(res: Response, maxBytes: number): Promise<Buffer | null> {
+  if (!res.body) return null;
+  const reader = res.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
   try {
-    const res = await fetch(url, { signal: AbortSignal.timeout(3000) });
-    if (!res.ok) return null;
-    const arrayBuffer = await res.arrayBuffer();
-    const contentType = res.headers.get("content-type") || "image/png";
-    return `data:${contentType};base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value) {
+        totalBytes += value.byteLength;
+        if (totalBytes > maxBytes) {
+          await reader.cancel();
+          return null;
+        }
+        chunks.push(value);
+      }
+    }
+    return Buffer.concat(chunks);
   } catch {
+    return null;
+  }
+}
+
+export async function loadIcon(url?: string): Promise<string | null> {
+  "use cache";
+  if (!url) return null;
+
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    cacheLife("minutes");
+    return null;
+  }
+
+  if (parsed.protocol !== "https:" || !ALLOWED_ICON_HOSTS.has(parsed.hostname.toLowerCase())) {
+    cacheLife("hours");
+    return null;
+  }
+
+  try {
+    const res = await fetch(url, {
+      redirect: "error",
+      signal: AbortSignal.timeout(3000),
+    });
+    if (!res.ok) {
+      cacheLife("minutes");
+      return null;
+    }
+
+    const rawContentType = res.headers.get("content-type")?.toLowerCase() || "";
+    const [contentType] = rawContentType.split(";").map((s) => s.trim());
+    if (contentType !== "image/png" && contentType !== "image/jpeg") {
+      cacheLife("minutes");
+      return null;
+    }
+
+    const contentLength = res.headers.get("content-length");
+    if (contentLength && Number.parseInt(contentLength, 10) > MAX_ICON_BYTES) {
+      cacheLife("minutes");
+      return null;
+    }
+
+    const buffer = await readBodyWithCap(res, MAX_ICON_BYTES);
+    if (!buffer) {
+      cacheLife("minutes");
+      return null;
+    }
+
+    const mime = detectImageMime(buffer);
+    if (!mime || mime !== contentType) {
+      cacheLife("minutes");
+      return null;
+    }
+
+    cacheLife("hours");
+    return `data:${mime};base64,${buffer.toString("base64")}`;
+  } catch {
+    cacheLife("minutes");
     return null;
   }
 }
