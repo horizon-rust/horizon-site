@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { HorizonLogo } from "@/components/icons";
 
 const WIDE = "(min-width: 1024px) 44rem, 100vw";
 const NARROW = "(min-width: 1024px) 22rem, (min-width: 640px) 50vw, 100vw";
@@ -41,11 +40,7 @@ export function Gallery() {
       <div className="mx-auto w-full max-w-6xl px-6 lg:px-10">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto_12rem_14rem]">
           <div className="reveal mb-6 sm:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-start-1 lg:mb-0 lg:pl-4">
-            <p className="flex items-center gap-2.5 text-sm font-medium text-white/60">
-              Drawn by
-              <HorizonLogo className="h-4 w-auto" />
-              <span className="sr-only">Horizon</span>
-            </p>
+            <p className="text-sm font-medium text-white/60">Gallery</p>
             <h2
               id="gallery-title"
               className="mt-5 font-display text-[clamp(2rem,3.6vw,3rem)] leading-[1.08] font-semibold tracking-[-0.03em] text-balance text-white"

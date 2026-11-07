@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ChipIcon, CodeIcon, DriveIcon, ExternalLinkIcon, HorizonLogo } from "@/components/icons";
+import { ChipIcon, CodeIcon, DriveIcon, ExternalLinkIcon } from "@/components/icons";
 import { CONTRIBUTORS_URL } from "@/components/links";
 
 const POINTS = [
@@ -26,10 +26,7 @@ export function About() {
       <div className="mx-auto w-full max-w-6xl px-6 lg:px-10">
         <div className="grid lg:grid-cols-[minmax(0,25rem)_3rem_minmax(0,1fr)_3rem_23rem]">
           <div className="reveal relative z-20 lg:col-start-1 lg:row-start-1">
-            <p className="flex items-center gap-2.5 text-sm font-medium text-white/60">
-              What it is
-              <HorizonLogo className="h-4 w-auto" />
-            </p>
+            <p className="text-sm font-medium text-white/60">What it is</p>
             <h2
               id="about-title"
               className="mt-5 font-display text-[clamp(2rem,3.6vw,3rem)] leading-[1.08] font-semibold tracking-[-0.03em] text-balance text-white"
