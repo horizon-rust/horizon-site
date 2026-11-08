@@ -248,6 +248,13 @@ export function apiLabel(api?: string) {
   return native ? `made on Horizon ${native[1].slice(0, 7)}` : `API ${api}`;
 }
 
+/** Whether a native version builds on Horizon beyond the commit it was made on: the registry's daily check, or its hook points. */
+export function buildsOn(v: ModVersion): { ok: boolean; text: string } | null {
+  const broken = v.broken_on?.[0];
+  if (broken) return { ok: false, text: `Doesn't build on Horizon ${broken.horizon.slice(0, 7)} (${broken.code})` };
+  return v.hooks ? { ok: true, text: `Builds on every Horizon with native hook points v${v.hooks}` } : null;
+}
+
 const LOGIN = /^(?!-)(?!.*--)[A-Za-z0-9-]{1,39}(?<!-)$/;
 export const owners = (p: ModProject) => (p.owners ?? []).filter((o) => LOGIN.test(o));
 
