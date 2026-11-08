@@ -8,6 +8,10 @@ export type ModVersion = {
   side?: string;
   capabilities?: string[];
   requires?: { id: string; version: string }[];
+  /** A native mod's hook points version: it builds on any Horizon that has them. */
+  hooks?: number;
+  /** The Horizon commits the registry's daily check found it doesn't build on, with the error. */
+  broken_on?: { horizon: string; code: string }[];
   file: ModFile;
 };
 export type ModProject = {
