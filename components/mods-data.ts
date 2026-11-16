@@ -1,33 +1,36 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { githubFetch } from "@/components/github-api";
 import { rawMainUrl, TAGS } from "@/components/github-fresh";
-import { KINDS, type ModProject, type Ratings } from "@/components/mods-logic";
+import { currentVersion, KINDS, type ModProject, type Ratings } from "@/components/mods-logic";
 
-const INDEX_URL = "https://horizon-rust.github.io/horizon-mods/index.json";
+const INDEX_URL = process.env.REGISTRY_INDEX_URL || "https://horizon-rust.github.io/horizon-mods/index.json";
 function ratingsUrl() {
   const upstream = process.env.REGISTRY_UPSTREAM;
   if (!upstream) return "https://playhorizon.dev/api/mods/ratings";
   return new URL("/api/mods/ratings", /^https?:\/\//.test(upstream) ? upstream : `http://${upstream}`).toString();
 }
-const SCHEMA = 1;
 const FRESH = { stale: 300, revalidate: 900, expire: 86400 };
 const KNOWN = new Set<string>(KINDS.map(([k]) => k));
 
 function readIndex(index: unknown): ModProject[] | null {
   if (!index || typeof index !== "object") return null;
   const { schema, projects } = index as { schema?: number; projects?: unknown };
-  if (typeof schema !== "number" || schema > SCHEMA || !Array.isArray(projects)) return null;
-  return projects.filter(
-    (p): p is ModProject =>
-      p &&
-      typeof p === "object" &&
-      KNOWN.has(p.kind) &&
-      typeof p.name === "string" &&
-      /^[a-z0-9_]{1,64}$/.test(p.id) &&
-      Array.isArray(p.versions) &&
-      p.versions.length > 0 &&
-      typeof p.versions[0]?.file?.name === "string",
-  );
+  if (schema !== 1 || !Array.isArray(projects)) return null;
+  return projects
+    .filter(
+      (p): p is ModProject =>
+        p &&
+        typeof p === "object" &&
+        KNOWN.has(p.kind) &&
+        typeof p.name === "string" &&
+        /^[a-z0-9_]{1,64}$/.test(p.id) &&
+        Array.isArray(p.versions),
+    )
+    .map((p) => ({
+      ...p,
+      versions: p.versions.filter((v) => v && typeof v.file?.name === "string" && currentVersion(p.kind, v)),
+    }))
+    .filter((p) => p.versions.length > 0);
 }
 
 export async function getMods(): Promise<ModProject[] | null> {

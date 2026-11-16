@@ -51,6 +51,41 @@ Dockerfile, railway.json   the Railway service
 
 The `/docs/api/*` pages come from `docs/api/` in the game's repository, read from GitHub.
 
+The mod-authoring pages under `content/docs/` are a route map to the game's authoritative
+[`docs/modding/src/` book](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/introduction.md),
+not a second API reference. The book follows main, so these pages explicitly distinguish that source contract
+from published Nightly availability. Current packages use `.hmod`; native compatibility is an exact revision
+pair, host and toolchain, never a historical hook-counter minimum. WebAssembly stays in the existing `mod`
+catalogue kind. Historical `.hnmod` versions are excluded from live installation views, not converted or
+treated as a runtime fallback.
+
+### Mod-runtime activation and browser checks
+
+Coordinate this site's release with a reviewed launcher, signed SDK and matching prebuilt game for the exact
+main commit (including the shared `horizon-wasm-std.wasm` runtime), and the registry's checked live index and
+submission service. The registry must archive historical native entries without deleting their signed release
+assets or leaving live modpack references to them. Do not advertise a candidate as shipped merely because its
+source or registry pull request merged.
+
+For a local catalogue canary, serve the **real verified candidate index** over loopback and start:
+
+```sh
+REGISTRY_INDEX_URL=http://127.0.0.1:4317/index.json npm run dev -- --hostname 127.0.0.1 --port 3000
+```
+
+`REGISTRY_INDEX_URL` changes server-rendered catalogue reads only; it does not redirect submissions, downloads,
+signatures or the live client-side project-page lookup. Never submit a canary to production to test the UI.
+Check `/docs/make-a-mod`, `/docs/mod-manifest`, `/docs/mod-code`, `/docs/content-mods`, `/docs/test-a-mod`,
+`/docs/publish-a-mod`, `/docs/mods` and `/docs/apis`, then `/mods`, `/es/mods`, the candidate native and wasm
+`/mods/<id>` pages, `/mods/mine` and `/mods/submit`. Native versions must show exact full revision pairs, never
+“every later Horizon” or an unobserved newest-Nightly success. A wasm package must remain `mod`, with no invented
+wasm kind or claim that the index distinguishes wasm from data-only content. The submit form accepts `.hmod`
+for both current mod kinds and refuses `.hnmod`.
+
+Run `npm run typecheck` after the final changes. Browser rendering and real candidate metadata checks are release
+proofs, not substitutes for SDK signature, build, launcher-install and wasm-runtime verification.
+
+
 ## The performance viewer
 
 `/perf` opens `.hzperf` captures recorded by the game's `/profiler`, `horizon-ctl profile` or a server's `profile`
@@ -162,6 +197,7 @@ Railway service variables:
 | `REVALIDATE_SECRET` | The bearer token Kira sends to `POST /api/revalidate` (1Password `Site revalidate secret`; the same value is Kira's `KIRA_SITE_REVALIDATE_SECRET`). Without it the route answers 404 |
 | `GITHUB_PROXY_URL` | `https://mcp.playhorizon.dev/github/proxy`: GitHub's REST API read through Kira (its GitHub App and ETag cache, with `REVALIDATE_SECRET` as the bearer), since this service has no GitHub token; when Kira doesn't answer, reads go to api.github.com directly |
 | `REGISTRY_UPSTREAM` | The registry's submission service; `/api/mods/*` is proxied to it |
+| `REGISTRY_INDEX_URL` | Optional server-side catalogue index URL; defaults to the official registry Pages index. Use a real candidate served on loopback for browser checks; unset for normal production |
 | `STAFF_UPSTREAM`, `STAFF_PROXY_KEY` | Kira's staff service and the key both sides hold; `/staff/api/*` is proxied to it |
 | `RELEASE_VIEWS_SALT` | Salt for the hashed release views. Without it the server keeps one in `.data/` |
 | `TELEMETRY_URL` | Optional, defaults to `https://telemetry.playhorizon.dev` |

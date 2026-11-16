@@ -8,8 +8,6 @@ export type ModVersion = {
   side?: string;
   capabilities?: string[];
   requires?: { id: string; version: string }[];
-  /** A native mod's hook points version: it builds on any Horizon that has them. */
-  hooks?: number;
   /** The Horizon commits the registry's daily check found it doesn't build on, with the error. */
   broken_on?: { horizon: string; code: string }[];
   file: ModFile;
@@ -259,17 +257,18 @@ export function matches(p: ModSummary, kind: string, text: string, category = ""
     .every((w) => hay.includes(w));
 }
 
-export function apiLabel(api?: string) {
-  if (!api) return "";
-  const native = /^native-\d+\/([0-9a-f]{40})\//.exec(api);
-  return native ? `made on Horizon ${native[1].slice(0, 7)}` : `API ${api}`;
+/** Exact source-package revisions; unknown or historical API encodings are not current native packages. */
+export function nativePin(api?: string): { horizon: string; mixins: string } | null {
+  const pin = /^native-1\/([0-9a-f]{40})\/([0-9a-f]{40})$/.exec(api ?? "");
+  return pin ? { horizon: pin[1], mixins: pin[2] } : null;
 }
 
-/** Whether a native version builds on Horizon beyond the commit it was made on: the registry's daily check, or its hook points. */
-export function buildsOn(v: ModVersion): { ok: boolean; text: string } | null {
-  const broken = v.broken_on?.[0];
-  if (broken) return { ok: false, text: `Doesn't build on Horizon ${broken.horizon.slice(0, 7)} (${broken.code})` };
-  return v.hooks ? { ok: true, text: `Builds on every Horizon with native hook points v${v.hooks}` } : null;
+/** Keep current package routes only. Historical .hnmod releases belong in the registry archive. */
+export function currentVersion(kind: string, v: ModVersion): boolean {
+  if (kind !== "mod" && kind !== "native-mod") return true;
+  if (!v.file?.name?.endsWith(".hmod")) return false;
+  if (typeof v.api !== "string") return false;
+  return kind === "native-mod" ? nativePin(v.api) !== null : !v.api.startsWith("native-");
 }
 
 const LOGIN = /^(?!-)(?!.*--)[A-Za-z0-9-]{1,39}(?<!-)$/;

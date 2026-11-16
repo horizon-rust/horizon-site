@@ -1,36 +1,33 @@
 # Mods and data packs
 
-Horizon has its own mods, made for Horizon and not compatible with Java mods. Data packs work in part. This page says what you can do with each today.
+Horizon mods target Horizon, not Java's Fabric, NeoForge or Forge runtimes. The [engine book's installation chapter](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/start/installing.md) is the authoritative guide to the current mod loader.
 
 ## Mods
 
-Horizon has two kinds of mod:
+All current mod routes use **`.hmod`**:
 
-- **Content mods** (`.hmod`) add blocks and items from data and assets: models, textures, recipes, loot tables, tags and structures, with no code. They work in single player today. This is also what the launcher's [modpack](/docs/modpacks) carry-over produces.
-- **Native mods** (`.hnmod`) are Rust code built into the game: a HUD, keys, commands, settings, new behaviour. Horizon's own Zoom, FPS Counter, Keystrokes and Minimap are native mods. They work in single player, on LAN and on servers (only what runs in your own game, on a server you join).
+| Route | Manual installation, beside `options.txt` | Runs as |
+| --- | --- | --- |
+| Content: data and assets | `horizon-mods/` | No executable mod code |
+| WebAssembly: a package with `mod.wasm` | `horizon-mods/` | Sandboxed code, with runtime limits |
+| Native: a package with Rust source | `horizon-native-mods/` | Code compiled against the exact prebuilt game, with your rights |
 
-> **Early.** Reviewed mods are listed at [playhorizon.dev/mods](/mods) and on the launcher's Mods page.
+**Release availability:** the book describes main. These instructions do not mean the current public Nightly, SDK, launcher and registry have all shipped the new runtime. Check [release notes](/releases) and the [SDK requirements](/docs/make-a-mod#check-release-availability-first) for the exact build you use. A missing matching SDK is an error, not a reason to select an older runtime. Historical `.hnmod` bundles are not supported current-runtime packages.
 
-**Content mods**
+## Install and enable
 
-1. Install one from the launcher's **Mods** page (pick **Horizon** beside Modrinth), or put its `.hmod` file in the `horizon-mods` folder of the game folder (see [Install](/docs/install#first-launch) for where that is).
-2. Open **Options, Mods...**. Each mod is listed with what it may do ("May add blocks and items to your worlds") and a switch. Content mods start off.
-3. Start the game again after a switch: content loads when the game starts. A mod that failed to load shows why, in red, on its row.
+1. Pick the instance in the launcher and install from its **Mods** page. The registry and launcher must support the package's runtime and exact build. You can also copy the `.hmod` to the folder in the table.
+2. Turn it on in the launcher, or use `horizon-launcher mods enable <project>`. A manually copied mod is enabled by `mod.<id>:true` in `horizon-mods.txt`, beside `options.txt`.
+3. For native source, build for that instance only after reviewing the named code and accepting the native-code warning. The launcher uses the pinned SDK/toolchain and prebuilt game; it does not rebuild the full game for every mod.
+4. Start the instance. **Options > Mods** lists installed mods, settings where supplied, and load failures with a reason. That screen has no on/off switch.
 
-**Native mods**
+Native code, including its build scripts and procedural macros, is **not sandboxed**: it can read files and use the network with your rights. Install only source you trust. A package signature and registry review are not a sandbox.
 
-A native mod is code, not sandboxed: it can do anything you can on your computer. So the launcher builds it into a game of its own, for one instance, and only when you say so:
+The game's **Options > Mods > Browse Mods** installs content mods only; native and wasm packages use the launcher or manual installation. Asset-only and reloadable content may reload immediately, while registry or world-generation changes require a restart. See the [installation chapter](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/start/installing.md) for the exact reload rules.
 
-1. Pick an instance on the left of the launcher, and install the mod from its **Mods** page. The first time, the launcher says what native mods are.
-2. In the **Native build of {instance}** row, press **Build**. The launcher names the mods and warns you in red; **I trust these mods: build** starts it. The first build downloads Rust and takes 20 to 30 minutes and a few GB of disk; later builds take a few minutes.
-3. Play that instance. Your other instances never run the mods.
-4. In the game, **Options > Mods** lists each native mod with a switch and, when it has some, a **Settings** page and keys to rebind. Turn one off there and the next build leaves it out.
+## Make a mod
 
-Install only mods whose authors you trust. The registry lists a native mod only after a maintainer has read its source, and each one's page links it. Horizon's own mods say "Made by Horizon"; every other mod's page says who made it.
-
-**Making a mod**
-
-[Make a mod](/docs/make-a-mod) is the full guide, for both kinds: the tools, your mod in the game, the hook points with a worked example, content mods, testing, and publishing on [the registry](/mods).
+[Make a mod](/docs/make-a-mod) maps content, native and wasm authoring to the engine book's SDK, Hooks, Host, handles and Parts guides. [Publishing](/docs/publish-a-mod) covers checked packages and the registry.
 
 Java mod jars don't run in Horizon: their code calls and patches Minecraft's Java classes, and Horizon has none. What carries over is the data and assets inside a jar ([modpacks](/docs/modpacks)).
 

@@ -6,6 +6,7 @@ import { Suspense, type ReactNode } from "react";
 import { markdown } from "@/components/docs-markdown";
 import { DocsProse } from "@/components/docs-page-tools";
 import { ShieldIcon } from "@/components/icons";
+import { format, getMessages } from "@/components/i18n";
 import { JsonLd } from "@/components/json-ld";
 import { ModDownload } from "@/components/mod-download";
 import { ModEditLink } from "@/components/mod-edit-link";
@@ -17,8 +18,6 @@ import {
   KIND_NAMES,
   POLICY_URL,
   REGISTRY,
-  apiLabel,
-  buildsOn,
   categoriesOf,
   categoryLabel,
   downloadsText,
@@ -28,6 +27,7 @@ import {
   installCommand,
   isOfficial,
   owners,
+  nativePin,
   ratingOf,
   safeDownloads,
   screenshotsOf,
@@ -103,6 +103,7 @@ function ModJsonLd({ p, rating }: { p: ModProject; rating: ReturnType<typeof rat
 
 const CODE = "rounded bg-white/[0.07] px-1 py-0.5 font-mono text-[0.88em] text-[#e7e1ff]";
 const LINK = "text-[#c4b5ff] underline underline-offset-4 hover:text-white";
+const runtimeText = getMessages("en").mods.runtime;
 
 function Dot() {
   return (
@@ -121,21 +122,10 @@ function Part({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-function byHand(kind: string): ReactNode {
-  if (kind === "mod")
-    return (
-      <>
-        put it in <code className={CODE}>horizon-mods/</code> beside <code className={CODE}>options.txt</code> in the game folder, then turn it on in the
-        game: Options, then Mods
-      </>
-    );
-  if (kind === "native-mod")
-    return (
-      <>
-        unzip it into a folder, then build the game with it: <code className={CODE}>horizon-launcher native-build FOLDER --trust-native-code</code>. It
-        plays in the Native mods instance
-      </>
-    );
+function byHand(p: ModProject): ReactNode {
+  const kind = p.kind;
+  if (kind === "mod") return format(runtimeText.modByHand, { id: p.id });
+  if (kind === "native-mod") return runtimeText.nativeByHand;
   if (kind === "resourcepack")
     return (
       <>
@@ -366,7 +356,7 @@ async function ModContent({ params }: Pick<PageProps<"/mods/[id]">, "params">) {
             )}
 
             {p.kind === "mod" && (
-              <Part title="What it may do">
+              <Part title={runtimeText.capabilitiesTitle}>
                 {caps.length ? (
                   <ul className="space-y-2 text-[16px] text-white/75">
                     {caps.map((c) => (
@@ -379,24 +369,24 @@ async function ModContent({ params }: Pick<PageProps<"/mods/[id]">, "params">) {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-[16px] text-white/75">It asks for nothing beyond writing its own log.</p>
+                  <p className="text-[16px] text-white/75">{runtimeText.noCapabilities}</p>
                 )}
                 <p className="mt-3 text-sm leading-relaxed text-white/50">
-                  Mods run in a sandbox with no file, network or clock access. The game refuses a mod whose code uses more than this list.
+                  {runtimeText.contentOrWasm}
                 </p>
+                <p className="mt-3 text-sm leading-relaxed text-white/50">{runtimeText.availability}</p>
               </Part>
             )}
 
             {p.kind === "native-mod" && (
-              <Part title="Native code">
+              <Part title={runtimeText.nativeTitle}>
                 <p className="text-[16px] leading-relaxed text-white/70">
-                  A native mod is Rust code that the launcher compiles into a game of its own, the Native mods instance. It is not sandboxed: it can do anything
-                  you can on this computer. The launcher builds it only after a warning that names it, and a reviewer read its source before it was listed. Read
-                  the source yourself before you build it.{" "}
+                  {runtimeText.nativeTrust}{" "}
                   <Link href="/docs/mods" className={LINK}>
-                    How native mods work
+                    {runtimeText.installation}
                   </Link>
                 </p>
+                <p className="mt-3 text-sm leading-relaxed text-white/50">{runtimeText.availability}</p>
               </Part>
             )}
 
@@ -417,24 +407,34 @@ async function ModContent({ params }: Pick<PageProps<"/mods/[id]">, "params">) {
 
             <Part title="Versions">
               <ul className="divide-y divide-white/[0.06] rounded-2xl bg-[#18112c]">
-                {p.versions.map((x) => (
-                  <li key={x.version} className="px-5 py-4 sm:px-6">
-                    <p className="flex flex-wrap items-baseline gap-x-2">
-                      <span className="font-semibold text-white">{x.version}</span>
-                      <span className="text-sm text-white/50">
-                        {[x.published, `for Minecraft ${x.game}`, apiLabel(x.api)].filter(Boolean).join(" · ")}
-                      </span>
-                    </p>
-                    {buildsOn(x) && (
-                      <p className={`mt-1 text-sm ${buildsOn(x)?.ok ? "text-[#8be0b4]" : "text-[#f07a6a]"}`}>{buildsOn(x)?.text}</p>
-                    )}
-                    {x.changelog && (
-                      <div className="mt-2 text-[15px]">
-                        <DocsProse html={markdown(x.changelog)} />
-                      </div>
-                    )}
-                  </li>
-                ))}
+                {p.versions.map((x) => {
+                  const pin = nativePin(x.api);
+                  const broken = x.broken_on?.[0];
+                  const api = pin
+                    ? format(runtimeText.nativePin, pin)
+                    : x.api ? format(runtimeText.api, { api: x.api }) : "";
+                  return (
+                    <li key={x.version} className="px-5 py-4 sm:px-6">
+                      <p className="flex flex-wrap items-baseline gap-x-2">
+                        <span className="font-semibold text-white">{x.version}</span>
+                        <span className="text-sm break-all text-white/50">
+                          {[x.published, `for Minecraft ${x.game}`, api].filter(Boolean).join(" · ")}
+                        </span>
+                      </p>
+                      {pin && <p className="mt-1 text-sm text-white/60">{runtimeText.nativeCompatibility}</p>}
+                      {broken && (
+                        <p className="mt-1 text-sm text-[#f07a6a]">
+                          {format(runtimeText.broken, { horizon: broken.horizon, code: broken.code })}
+                        </p>
+                      )}
+                      {x.changelog && (
+                        <div className="mt-2 text-[15px]">
+                          <DocsProse html={markdown(x.changelog)} />
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </Part>
           </div>
@@ -448,7 +448,7 @@ async function ModContent({ params }: Pick<PageProps<"/mods/[id]">, "params">) {
               version={v.version}
               command={installCommand(p.id)}
               signed={Boolean(p.key)}
-              byHand={byHand(p.kind)}
+              byHand={byHand(p)}
             />
             <FileFacts p={p} />
             <Publisher p={p} />

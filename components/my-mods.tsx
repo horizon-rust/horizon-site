@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 import { ModIcon } from "@/components/mods-ui";
 import { KIND_NAMES, SUBMIT_URL } from "@/components/mods-logic";
 
-/** A version as "Your mods" lists it: what Horizon it is made for and, for the newest, whether it still builds. */
+/** A version's exact compatibility label and any registry build diagnostic. */
 export type OwnedVersion = {
   version: string;
   published: string;
   madeFor: string;
-  broken: { horizon: string; code: string } | null;
-  native: boolean;
+  status: { ok: boolean; text: string } | null;
 };
 
 /** A listed project, with the owners the index names, for "Your mods". */
@@ -36,14 +35,7 @@ const CARD = "rounded-2xl bg-[#18112c] px-5 py-5 sm:px-6";
 const LOGIN = "/api/mods/auth/login?back=/mods/mine";
 
 function Status({ v }: { v: OwnedVersion }) {
-  if (v.broken) {
-    return (
-      <span className="text-[#f07a6a]" title={`The registry's daily check: ${v.broken.code} on Horizon ${v.broken.horizon.slice(0, 7)}`}>
-        Doesn&apos;t build on the newest Nightly ({v.broken.code})
-      </span>
-    );
-  }
-  return v.native ? <span className="text-[#8be0b4]">Builds on the newest Nightly</span> : null;
+  return v.status ? <span className={v.status.ok ? "text-white/60" : "text-[#f07a6a]"}>{v.status.text}</span> : null;
 }
 
 function Project({ p }: { p: OwnedProject }) {
