@@ -5,6 +5,7 @@ import { githubFetch } from "@/components/github-api";
 import { format, getMessages, NUMBER_LOCALE, rich, type Locale } from "@/components/i18n";
 import { ClaudeIcon, ExternalLinkIcon } from "@/components/icons";
 import { GITHUB_URL } from "@/components/links";
+import { MOD_API_COMMITS } from "@/components/mod-api-commits";
 
 const REPO = "horizon-rust/horizon";
 
@@ -39,7 +40,14 @@ export async function getContributors(): Promise<Contributor[] | null> {
   cacheLife("hours");
   return all
     .filter((c) => c.type === "User" && !NOT_PEOPLE.has(c.login))
-    .map((c) => ({ login: c.login, avatar: c.avatar_url, url: c.html_url, commits: c.contributions }));
+    .map((c) => ({
+      login: c.login,
+      avatar: c.avatar_url,
+      url: c.html_url,
+      commits: c.contributions - (MOD_API_COMMITS[c.login.toLowerCase()] ?? 0),
+    }))
+    .filter((c) => c.commits > 0)
+    .sort((a, b) => b.commits - a.commits);
 }
 
 export async function Contributors({ locale }: { locale: Locale }) {
