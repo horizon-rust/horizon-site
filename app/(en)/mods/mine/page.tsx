@@ -1,24 +1,26 @@
 import Link from "next/link";
+import { format, getMessages } from "@/components/i18n";
 import { getMods } from "@/components/mods-data";
-import { https, type ModProject } from "@/components/mods-logic";
+import { https, nativePin, type ModProject } from "@/components/mods-logic";
 import { MyMods, type OwnedProject } from "@/components/my-mods";
 import { pageMetadata } from "@/components/site";
 
 export const metadata = {
   ...pageMetadata({
     title: "Your mods on Horizon's registry",
-    description: "The mods you submitted to Horizon's registry: their versions, whether they still build on the newest Nightly, and what waits for review.",
+    description: "The mods you submitted to Horizon's registry, their exact compatibility pins, and what waits for review.",
     path: "/mods/mine",
   }),
   robots: { index: false },
 };
 
-/** What Horizon a version is made for, from its `api` line (`native-1/<commit>/<mixins>`) or hook points. */
+const runtimeText = getMessages("en").mods.runtime;
+
+/** Native compatibility is an exact revision pair, never a historical hook-counter promise. */
 function madeFor(v: ModProject["versions"][number]): string {
-  if (typeof v.hooks === "number") return `Any Horizon with hook points v${v.hooks}`;
-  const pin = v.api?.startsWith("native-1/") ? v.api.split("/")[1] : "";
-  if (pin) return `Horizon ${pin.slice(0, 7)}`;
-  return v.api ? `Minecraft ${v.game}, API ${v.api}` : `Minecraft ${v.game}`;
+  const pin = nativePin(v.api);
+  if (pin) return format(runtimeText.nativePin, pin);
+  return v.api ? `Minecraft ${v.game}, ${format(runtimeText.api, { api: v.api })}` : `Minecraft ${v.game}`;
 }
 
 function owned(p: ModProject): OwnedProject {
@@ -33,8 +35,9 @@ function owned(p: ModProject): OwnedProject {
       version: v.version,
       published: v.published ?? "",
       madeFor: madeFor(v),
-      broken: v.broken_on?.[0] ?? null,
-      native: p.kind === "native-mod",
+      status: v.broken_on?.[0]
+        ? { ok: false, text: format(runtimeText.broken, { horizon: v.broken_on[0].horizon, code: v.broken_on[0].code }) }
+        : p.kind === "native-mod" ? { ok: true, text: runtimeText.nativeStatus } : null,
     })),
   };
 }

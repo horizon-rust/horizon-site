@@ -532,6 +532,28 @@
       "body": "The list of mods couldn't be loaded just now. It will try again in a minute, or you can browse it on the official site.",
       "link": "Mods on playhorizon.dev"
     },
+    "runtime": {
+      "api": "API {api}",
+      "nativePin": "Exact Horizon {horizon} · mixins {mixins}",
+      "nativeCompatibility": "Requires the matching signed SDK, prebuilt game, host target and pinned toolchain. This is not a promise of compatibility with later Nightlies.",
+      "broken": "Registry build check failed on Horizon {horizon} ({code})",
+      "nativeStatus": "Exact-build native source",
+      "contentOrWasm": "A .hmod may contain data and assets, or sandboxed WebAssembly code. The package manifest declares its capabilities; the game validates them before loading. This index does not identify which route this file uses.",
+      "capabilitiesTitle": "Declared capabilities",
+      "noCapabilities": "No capabilities are listed in this index. That does not identify the package as content-only.",
+      "nativeTitle": "Native code",
+      "nativeTrust": "Native source is compiled against its exact prebuilt game for the selected instance. It is not sandboxed: the mod, build scripts and procedural macros run with your rights. Review the source before trusting it.",
+      "installation": "Installation and trust",
+      "modByHand": "Put the .hmod in horizon-mods/ beside options.txt. Enable it in the launcher or add mod.{id}:true to horizon-mods.txt, then restart the game.",
+      "nativeByHand": "Put the .hmod in horizon-native-mods/ beside options.txt. Enable it in the launcher, then build for the selected instance only after reviewing the native-code warning. The exact signed SDK and prebuilt game must be available.",
+      "availability": "A catalogue entry does not guarantee that its matching SDK, game or launcher is available. Check the release requirements before installing.",
+      "hmodChoice": "A .hmod is either a Mod (content or WebAssembly) or a Native mod (Rust source). Pick the kind declared by its manifest.",
+      "modOption": "Mod (.hmod: content or WebAssembly)",
+      "nativeOption": "Native mod (.hmod: Rust source)",
+      "unsupportedFile": "{name} isn't a .hmod, .hpack, .hshader or .zip. Historical .hnmod bundles are not supported.",
+      "fileHint": "Content, WebAssembly and native-source mods all use .hmod. Choose Mod for content or WebAssembly, Native mod for native source. Historical .hnmod bundles must be migrated, not renamed.",
+      "submitLead": "Submit a content, WebAssembly or native-source mod, a modpack of registry mods, a resource pack, a shader pack or a data pack made for Horizon. The form checks the file and opens a pull request. Checks, review and successful registry publication are required before it appears here or in the launcher."
+    },
     "list": {
       "search": "Search {n} projects",
       "searchLabel": "Search mods",

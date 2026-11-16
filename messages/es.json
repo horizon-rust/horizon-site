@@ -532,6 +532,28 @@
       "body": "No se pudo cargar la lista de mods. Se volverá a intentar en un minuto, o puedes verla en el sitio oficial.",
       "link": "Mods en playhorizon.dev"
     },
+    "runtime": {
+      "api": "API {api}",
+      "nativePin": "Horizon exacto {horizon} · mixins {mixins}",
+      "nativeCompatibility": "Requiere el SDK firmado, el juego precompilado, la plataforma y la cadena de herramientas exactos. No garantiza compatibilidad con Nightlies posteriores.",
+      "broken": "Falló la comprobación del registro en Horizon {horizon} ({code})",
+      "nativeStatus": "Código nativo para una compilación exacta",
+      "contentOrWasm": "Un .hmod puede contener datos y recursos, o código WebAssembly aislado. El manifiesto declara sus capacidades; el juego las valida antes de cargarlo. Este índice no identifica qué ruta usa el archivo.",
+      "capabilitiesTitle": "Capacidades declaradas",
+      "noCapabilities": "Este índice no enumera capacidades. Eso no identifica el paquete como un mod solo de contenido.",
+      "nativeTitle": "Código nativo",
+      "nativeTrust": "El código nativo se compila para la instancia elegida contra su juego precompilado exacto. No está aislado: el mod, los scripts de compilación y las macros procedurales se ejecutan con tus permisos. Revisa el código antes de confiar en él.",
+      "installation": "Instalación y confianza",
+      "modByHand": "Pon el .hmod en horizon-mods/ junto a options.txt. Actívalo en el launcher o añade mod.{id}:true a horizon-mods.txt y reinicia el juego.",
+      "nativeByHand": "Pon el .hmod en horizon-native-mods/ junto a options.txt. Actívalo en el launcher y compílalo para la instancia elegida solo después de revisar la advertencia de código nativo. Deben estar disponibles el SDK firmado y el juego precompilado exactos.",
+      "availability": "Una entrada del catálogo no garantiza que estén disponibles el SDK, el juego o el launcher correspondientes. Comprueba los requisitos de la versión antes de instalar.",
+      "hmodChoice": "Un .hmod es un Mod (contenido o WebAssembly) o un Mod nativo (código Rust). Elige el tipo declarado en su manifiesto.",
+      "modOption": "Mod (.hmod: contenido o WebAssembly)",
+      "nativeOption": "Mod nativo (.hmod: código Rust)",
+      "unsupportedFile": "{name} no es un .hmod, .hpack, .hshader ni .zip. Los paquetes históricos .hnmod no son compatibles.",
+      "fileHint": "Los mods de contenido, WebAssembly y código nativo usan .hmod. Elige Mod para contenido o WebAssembly y Mod nativo para código Rust. Los paquetes históricos .hnmod deben migrarse, no renombrarse.",
+      "submitLead": "Envía un mod de contenido, WebAssembly o código nativo, un modpack del registro o un paquete de recursos, shaders o datos para Horizon. El formulario comprueba el archivo y abre una pull request. Se necesitan las comprobaciones, la revisión y una publicación correcta del registro antes de que aparezca aquí o en el launcher."
+    },
     "list": {
       "search": "Buscar entre {n} proyectos",
       "searchLabel": "Buscar mods",
