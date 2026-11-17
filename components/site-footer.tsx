@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { GitHubIcon, HorizonMark, MicrosoftIcon, MojangIcon, RustIcon } from "@/components/icons";
@@ -91,10 +92,28 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-white/[0.08] pt-6 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
-          <p className="flex items-center gap-2">
-            {t.madeInRust}
-            <RustIcon className="size-4" />
-          </p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <p className="flex items-center gap-2">
+              {t.madeInRust}
+              <RustIcon className="size-4" />
+            </p>
+            {/* Blacksmith covers our CI build minutes and asked for its sponsor logo on the site. */}
+            <a
+              href="https://blacksmith.sh"
+              target="_blank"
+              rel="sponsored noopener"
+              className="block opacity-80 transition-opacity hover:opacity-100"
+            >
+              <Image
+                src="/media/blacksmith-powered.png"
+                alt="CI powered by Blacksmith"
+                width={736}
+                height={252}
+                className="h-9 w-auto rounded-md"
+              />
+              <span className="sr-only"> {common.newTab}</span>
+            </a>
+          </div>
           {/* One line on every width, so the language links add no height (horizon-site#29). */}
           <div className="flex items-center gap-4">
             <LanguageSwitch
