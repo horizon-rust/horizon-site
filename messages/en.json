@@ -139,10 +139,11 @@
       "title": "Built by {n} people.",
       "claude": "…and<claude/>Claude too",
       "titleFallback": "Built by its contributors.",
-      "lead": "Everyone with commits in {repo}, most commits first, and the people behind this site.",
+      "lead": "Everyone with merged pull requests or reviews in {repo} (the mod fork's included), most first, and the people behind this site.",
       "all": "All contributors on GitHub",
       "oneCommit": "1 commit",
       "commits": "{n} commits",
+      "work": "{prs} pull requests · {reviews} reviews",
       "webDeveloper": "Website Developer"
     },
     "parity": {

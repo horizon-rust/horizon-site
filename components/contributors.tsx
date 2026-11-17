@@ -5,7 +5,7 @@ import { githubFetch } from "@/components/github-api";
 import { format, getMessages, NUMBER_LOCALE, rich, type Locale } from "@/components/i18n";
 import { ClaudeIcon, ExternalLinkIcon } from "@/components/icons";
 import { GITHUB_URL } from "@/components/links";
-import { MOD_FORK_EXTRA_COMMITS } from "@/components/mod-api-commits";
+import { MOD_FORK_EXTRA_COMMITS, MOD_FORK_WORK } from "@/components/mod-api-commits";
 
 const REPO = "horizon-rust/horizon";
 
@@ -16,7 +16,9 @@ const TEAM = [{ name: "Anthony S", role: "webDeveloper" as const, avatar: "/medi
 const FEATURED = 6;
 
 type GitHubContributor = { login: string; avatar_url: string; html_url: string; contributions: number; type: string };
-type Contributor = { login: string; avatar: string; url: string; commits: number };
+// `prs` and `reviews` are set when the list counts work (merged pull requests plus reviews of other people's pull
+// requests, here and in the mod fork); without them `count` is GitHub's commit count.
+type Contributor = { login: string; avatar: string; url: string; count: number; prs?: number; reviews?: number };
 type Card = { name: string; detail: string; avatar: string; url: string };
 
 export async function getContributors(): Promise<Contributor[] | null> {
@@ -38,25 +40,77 @@ export async function getContributors(): Promise<Contributor[] | null> {
   }
 
   cacheLife("hours");
-  return all
-    .filter((c) => c.type === "User" && !NOT_PEOPLE.has(c.login))
-    .map((c) => ({
-      login: c.login,
-      avatar: c.avatar_url,
-      url: c.html_url,
-      commits: c.contributions - (MOD_FORK_EXTRA_COMMITS[c.login.toLowerCase()] ?? 0),
-    }))
-    .filter((c) => c.commits > 0)
-    .sort((a, b) => b.commits - a.commits);
+  const people = all.filter((c) => c.type === "User" && !NOT_PEOPLE.has(c.login));
+  let work: Map<string, Work> | null = null;
+  try {
+    work = await workOnMain(people.map((c) => c.login));
+  } catch (error) {
+    console.error(`Couldn't count pull requests and reviews in ${REPO}: listing commits instead`, error);
+  }
+  const listed: Contributor[] = people.map((c) => {
+    const key = c.login.toLowerCase();
+    const base = { login: c.login, avatar: c.avatar_url, url: c.html_url };
+    if (!work) return { ...base, count: c.contributions - (MOD_FORK_EXTRA_COMMITS[key] ?? 0) };
+    const main = work.get(key) ?? { prs: 0, reviews: 0 };
+    const fork = MOD_FORK_WORK[key] ?? { prs: 0, reviews: 0 };
+    const prs = main.prs + fork.prs;
+    const reviews = main.reviews + fork.reviews;
+    return { ...base, prs, reviews, count: prs + reviews };
+  });
+  return listed.filter((c) => c.count > 0).sort((a, b) => b.count - a.count);
+}
+
+type Work = { prs: number; reviews: number };
+
+// Each person's merged pull requests and reviews of other people's pull requests in REPO, from GitHub's search: ten
+// people per GraphQL request, four requests at a time. Merging branches into each other counts for nothing; a pull
+// request counts once however many commits it has. Needs GITHUB_TOKEN (GraphQL doesn't answer without one).
+async function workOnMain(logins: string[]): Promise<Map<string, Work> | null> {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) return null;
+  const chunks: string[][] = [];
+  for (let i = 0; i < logins.length; i += 10) chunks.push(logins.slice(i, i + 10));
+  const work = new Map<string, Work>();
+  for (let i = 0; i < chunks.length; i += 4) {
+    await Promise.all(
+      chunks.slice(i, i + 4).map(async (chunk) => {
+        const fields = chunk.flatMap((login, j) => [
+          `p${j}: search(query: ${JSON.stringify(`repo:${REPO} is:pr is:merged author:${login}`)}, type: ISSUE, first: 0) { issueCount }`,
+          `r${j}: search(query: ${JSON.stringify(`repo:${REPO} is:pr reviewed-by:${login} -author:${login}`)}, type: ISSUE, first: 0) { issueCount }`,
+        ]);
+        const res = await fetch("https://api.github.com/graphql", {
+          method: "POST",
+          headers: { Accept: "application/vnd.github+json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ query: `query { ${fields.join(" ")} }` }),
+          signal: AbortSignal.timeout(20_000),
+        });
+        if (!res.ok) throw new Error(`GraphQL: ${res.status} from GitHub`);
+        const { data, errors } = (await res.json()) as {
+          data?: Record<string, { issueCount: number } | null>;
+          errors?: { message: string }[];
+        };
+        if (errors?.length || !data) throw new Error(`GraphQL: ${errors?.[0]?.message ?? "no data"}`);
+        chunk.forEach((login, j) => {
+          work.set(login.toLowerCase(), { prs: data[`p${j}`]?.issueCount ?? 0, reviews: data[`r${j}`]?.issueCount ?? 0 });
+        });
+      }),
+    );
+  }
+  return work;
 }
 
 export async function Contributors({ locale }: { locale: Locale }) {
   const { common, home } = getMessages(locale);
   const t = home.contributors;
-  const commitCount = (n: number) => (n === 1 ? t.oneCommit : format(t.commits, { n: n.toLocaleString(NUMBER_LOCALE[locale]) }));
+  const fmt = (n: number) => n.toLocaleString(NUMBER_LOCALE[locale]);
+  const commitCount = (n: number) => (n === 1 ? t.oneCommit : format(t.commits, { n: fmt(n) }));
+  const workOf = (c: Contributor) =>
+    c.prs === undefined || c.reviews === undefined
+      ? commitCount(c.count)
+      : format(t.work, { prs: fmt(c.prs), reviews: fmt(c.reviews) });
   const committerCard = (c: Contributor): Card => ({
     name: c.login,
-    detail: commitCount(c.commits),
+    detail: workOf(c),
     avatar: c.avatar,
     url: c.url,
   });
@@ -138,7 +192,7 @@ export async function Contributors({ locale }: { locale: Locale }) {
                   href={c.url}
                   target="_blank"
                   rel="noreferrer"
-                  title={`${c.login} · ${commitCount(c.commits)}`}
+                  title={`${c.login} · ${workOf(c)}`}
                   className="block rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#a98fff]"
                 >
                   <Image
