@@ -1,10 +1,66 @@
-// Commits that reached horizon-rust/horizon's main through the mod API merge (#16941, landed as #17145 on 2026-11-16)
-// came from arismoko/horizon, where people committed many times per pull request. On main each pull request is one
-// squashed commit, so the site counts the same way for the fork: one commit per merged pull request, at least one
-// per person. Each number below is the person's fork commits minus that, and the site subtracts it from GitHub's count.
-//   fork commits: git log --format=%aE b8b91dcd1a --not 85b5bcca7c^1, each email matched to its GitHub account
-//   pull requests: GitHub search "repo:arismoko/horizon is:pr is:merged author:<login>"
-// The fork no longer syncs, so these numbers do not change.
+// The mod API reached horizon-rust/horizon's main through one merge (#16941, landed as #17145 on 2026-11-16), so
+// the pull requests and reviews behind it live in arismoko/horizon, not in this repository. The contributor list
+// counts them like the game repository's own: per person, the fork's pull requests merged before 2026-11-16T01:32:48Z
+//   repo:arismoko/horizon is:pr is:merged merged:<2026-11-16T01:32:48Z author:<login>
+// and the fork's pull requests by others that the person reviewed, opened before then
+//   repo:arismoko/horizon is:pr created:<2026-11-16T01:32:48Z reviewed-by:<login> -author:<login>
+// The fork no longer feeds main, so these numbers don't change.
+export const MOD_FORK_WORK: Record<string, { prs: number; reviews: number }> = {
+  "arismoko": { prs: 1887, reviews: 1052 },
+  "levzzz5154": { prs: 232, reviews: 0 },
+  "olahulleberg": { prs: 184, reviews: 0 },
+  "xmilon": { prs: 163, reviews: 0 },
+  "merenotnoonereal": { prs: 100, reviews: 0 },
+  "kbronez": { prs: 71, reviews: 0 },
+  "mayonesu0": { prs: 59, reviews: 0 },
+  "qwerner88880": { prs: 34, reviews: 0 },
+  "mnntn": { prs: 25, reviews: 0 },
+  "hinzee": { prs: 24, reviews: 0 },
+  "d3xc0": { prs: 22, reviews: 0 },
+  "solenopsisbot": { prs: 20, reviews: 0 },
+  "hiuoy": { prs: 15, reviews: 0 },
+  "joeypc6": { prs: 15, reviews: 0 },
+  "juanluci": { prs: 15, reviews: 0 },
+  "giantcookie392": { prs: 13, reviews: 0 },
+  "vnsmoreira": { prs: 13, reviews: 0 },
+  "detimes": { prs: 12, reviews: 0 },
+  "sylviromi": { prs: 12, reviews: 0 },
+  "zaccou": { prs: 12, reviews: 0 },
+  "kerlann": { prs: 11, reviews: 0 },
+  "valkdzx": { prs: 9, reviews: 0 },
+  "a2z453": { prs: 8, reviews: 0 },
+  "j5casey": { prs: 7, reviews: 0 },
+  "foudretbr": { prs: 6, reviews: 0 },
+  "afrobamayt": { prs: 4, reviews: 0 },
+  "bpmichon": { prs: 4, reviews: 0 },
+  "dawnforger": { prs: 4, reviews: 0 },
+  "lonestarrr": { prs: 4, reviews: 0 },
+  "umbx-dot": { prs: 4, reviews: 0 },
+  "theapple05": { prs: 3, reviews: 0 },
+  "tiggertakkyttt": { prs: 3, reviews: 0 },
+  "cheezer1656": { prs: 2, reviews: 0 },
+  "cocofirehd": { prs: 2, reviews: 0 },
+  "reservedbytes": { prs: 2, reviews: 0 },
+  "sirrayi": { prs: 2, reviews: 0 },
+  "vaspyyy": { prs: 2, reviews: 0 },
+  "zenilea": { prs: 2, reviews: 0 },
+  "arslanarm": { prs: 1, reviews: 0 },
+  "bct8925": { prs: 1, reviews: 0 },
+  "bvironn": { prs: 1, reviews: 0 },
+  "erikkalikas": { prs: 1, reviews: 0 },
+  "interfixet": { prs: 1, reviews: 0 },
+  "mathewneves": { prs: 1, reviews: 0 },
+  "nixotica": { prs: 1, reviews: 0 },
+  "oloion": { prs: 1, reviews: 0 },
+  "rlc248": { prs: 1, reviews: 0 },
+  "thelion102009": { prs: 1, reviews: 0 },
+  "ufuk-a": { prs: 1, reviews: 0 },
+  "umceko": { prs: 1, reviews: 0 },
+};
+
+// Without a GitHub token the list falls back to GitHub's commit counts. Those include every commit the fork made,
+// several per pull request, so this table takes off each person's fork commits beyond one per merged pull request:
+//   fork commits: git log --format=%aE b8b91dcd1a --not 85b5bcca7c^1, each email matched to its GitHub account.
 export const MOD_FORK_EXTRA_COMMITS: Record<string, number> = {
   "arismoko": 12637,
   "levzzz5154": 602,
