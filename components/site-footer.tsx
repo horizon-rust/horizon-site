@@ -109,7 +109,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
                 alt="CI powered by Blacksmith"
                 width={736}
                 height={252}
-                className="h-9 w-auto rounded-md"
+                className="h-12 w-auto rounded-md"
               />
               <span className="sr-only"> {common.newTab}</span>
             </a>
