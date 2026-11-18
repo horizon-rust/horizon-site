@@ -7,7 +7,7 @@ Horizon is built to be built on. Mods, shaders, agents, server panels, launchers
 | Surface | For | Today | Stability |
 | --- | --- | --- | --- |
 | **Mods** | mod authors | One `.hmod` package with a `horizon-mod.toml` manifest (`api = "0.2"`). Content mods: data-driven blocks, items, recipes and structures. Code mods: Rust on the `mod_api` crate's hooks, either native (compiled by the launcher against the prebuilt game) or WebAssembly (run in the game's sandbox) | experimental |
-| **Shaders** | shader authors | shader API 0.2: WGSL packs on stages of Horizon's renderer, with typed inputs and options. Packs for 0.1 no longer load | experimental |
+| **Shaders** | shader authors | shader API 0.2: WGSL packs on stages of Horizon's renderer, with typed inputs and options. Packs for 0.1 no longer load | shader API 0.2 |
 | **Agent control** | AI agents, scripts, tests | `horizon-ctl` and its MCP server: 96 commands to watch and play the game | preview |
 | **Servers** | hosts, panels, bots | `horizon-server`'s commands, `server.toml` and a local HTTP control API | stable |
 | **Launcher** | your agent, pack makers | `horizon-launcher`'s 46 commands and its MCP server | preview |
