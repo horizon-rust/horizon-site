@@ -52,13 +52,13 @@ greeter/
 
 ## See it in the game
 
-A native mod, built by the launcher for an instance:
+A native mod, built by the launcher for an instance. Install the instance's Horizon build first, then choose **Prepare & play** in the launcher or run `horizon-launcher prepare --version <version>`. Then build:
 
 ```sh
 horizon-launcher native-build . --instance "My Instance" --trust-native-code
 ```
 
-Install the instance's Horizon build first, then choose **Prepare & play** in the launcher or run `horizon-launcher prepare --version <version>`. The first build fetches that build's SDK and the launcher's own Rust tools, which can be several hundred MB.
+The launcher fetches any missing SDK parts for the pinned build and installs its own Rust and linker tools as needed. With an empty cache, that can be several hundred MB of downloads.
 
 `--trust-native-code` records that you allow native code on this install: the mod runs with your rights. Run `native-build` again after each edit; a failed build's compiler output is in the [build log](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/native-mods/05-build-log.md).
 
