@@ -45,7 +45,7 @@ export default function PrivacyPage() {
         </h1>
         <p className="mt-6 text-lg text-white/70">
           What this website keeps about you, and what it doesn&apos;t. The Horizon launcher and game have their own rules, set by the Horizon project:
-          they are on <Out href="https://playhorizon.dev/privacy">Horizon&apos;s privacy page</Out>.
+          they are on <Out href="https://github.com/horizon-rust/horizon/blob/main/docs/telemetry.md">the game&apos;s telemetry page</Out>.
         </p>
 
         <Part title="In short">
@@ -54,6 +54,9 @@ export default function PrivacyPage() {
             <li>No analytics, trackers or ads.</li>
             <li>One thing is kept on the server: a one-way hash of your IP address when you open a release, so each release counts each visitor once.</li>
             <li>A few choices you make stay in your own browser, and never leave it.</li>
+            <li>
+              Telemetry sent by the launcher and game is kept raw for 180 days and bug report text for 90; the anonymous player count is described below.
+            </li>
           </ul>
         </Part>
 
@@ -117,8 +120,23 @@ export default function PrivacyPage() {
           <p>
             What the Horizon launcher and game can send, the &ldquo;I&apos;m playing&rdquo; ping, the mod registry&apos;s sign-in and Horizon&apos;s Discord
             are run by the Horizon project, and Ludovic Marie is responsible for them. Read{" "}
-            <Out href="https://playhorizon.dev/privacy">Horizon&apos;s privacy page</Out> for what they keep, and write through{" "}
+            <Out href="https://github.com/horizon-rust/horizon/blob/main/docs/telemetry.md">the game&apos;s telemetry page</Out> for what is sent,
+            how long it is kept and how to delete it, and write through{" "}
             <Out href="https://lu4ovic.com/#contact">lu4ovic.com</Out> about it.
+          </p>
+        </Part>
+
+        <Part title="How long telemetry is kept">
+          <p>
+            The telemetry server keeps raw telemetry rows for 180 days; after that, only anonymous daily totals remain. The text of a bug report is
+            kept for 90 days. The anonymous &ldquo;I&apos;m playing&rdquo; ping stays in memory only: a session counts while its
+            last ping is under two minutes old, and the public history is kept minute by minute for 7 days, hourly for 90 days, then daily; that
+            history has no session, version or address in it.
+          </p>
+          <p>
+            The cosmetics service treats an account as playing Horizon for 3 hours after its last &ldquo;Show me as Horizon&rdquo; report, and forgets it
+            at once when you turn the setting off. On your computer, items waiting to be sent sit in a queue of at most 200 items or 2 MiB, oldest
+            first.
           </p>
         </Part>
 
@@ -155,7 +173,7 @@ export default function PrivacyPage() {
             what it holds about you, or have it deleted, through dezerx.com. Because only a hash of your address is kept, include the IP address you used,
             so your entry can be found. You can also complain to the data protection authority where you live.
           </p>
-          <p className="text-sm text-white/45">Last updated on 4 November 2026.</p>
+          <p className="text-sm text-white/45">Last updated on 18 November 2026.</p>
         </Part>
       </article>
     </main>
