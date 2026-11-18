@@ -8,7 +8,7 @@ Horizon has three kinds of mod, all in one file format, `.hmod`:
 
 - **Content mods** add blocks and items from data and assets: models, textures, recipes, loot tables, tags and structures, with no code. This is also what the launcher's [modpack](/docs/modpacks) carry-over produces.
 - **Native mods** are Rust code that the launcher compiles on your computer: a HUD, keys, commands, settings, new behaviour. They are not sandboxed.
-- **WebAssembly mods** are code that the game runs in a sandbox, with limits on time and memory. You need no Rust: the game compiles a mod's `mod.wasm` itself the first time and keeps the result in a cache ([Compiled module cache](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/wasm-mods.md#compiled-module-cache)).
+- **WebAssembly mods** are code that the game runs in a sandbox, with limits on time and memory. You need no Rust toolchain: the game compiles a mod's `mod.wasm` itself, on your computer.
 
 Old native mods in the `.hnmod` format don't load in current launchers; their authors republish them as `.hmod`.
 

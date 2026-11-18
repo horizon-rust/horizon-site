@@ -18,7 +18,7 @@ In the mod's folder:
 cargo horizon-mod check
 ```
 
-It checks the package rules, runs `cargo check` for your computer and for WebAssembly against the pinned SDK, and says what the mod uses of the API. The WebAssembly check needs Rust's `wasm32-unknown-unknown` target: `rustup target add wasm32-unknown-unknown`. `cargo horizon-mod fits` says whether the mod still fits the current Nightly; a mod's own scheduled CI can run it to learn of a break before players do. For a mod made for exactly one build (one with native tables or internals) it answers "cannot tell" instead of a verdict ([Commands](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/reference/sdk/05-commands.md)).
+It checks the package rules, runs `cargo check` for your computer and for WebAssembly against the pinned SDK, and says what the mod uses of the API. The WebAssembly check needs Rust's `wasm32-unknown-unknown` target: `rustup target add wasm32-unknown-unknown`. `cargo horizon-mod fits` says whether the mod still fits the current Nightly; a mod's own scheduled CI can run it to learn of a break before players do. A mod made for exactly one build (one with a nested `[native.*]` table, or that declares game internals) gets no verdict: `fits` answers "cannot tell", and `check` says the mod has no usage table ([Commands](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/reference/sdk/05-commands.md)).
 
 ### In the game
 
