@@ -25,14 +25,14 @@ const MAX_FILE = 64 << 20;
 // Each extension and the kinds it can be. A .zip is one of three: the form reads its folders, or asks.
 const EXTENSIONS: Record<string, string[]> = {
   hmod: ["mod"],
-  hnmod: ["native-mod"],
   hpack: ["modpack"],
   hshader: ["shader"],
   zip: ["resourcepack", "datapack", "shaderpack"],
 };
+// The kinds the form offers. No native mods: launchers from 0.2.70 on refuse .hnmod, and the form can't take an .hmod
+// made with the new SDK yet.
 const KIND_OPTIONS: Record<string, string> = {
   mod: "Mod (.hmod)",
-  "native-mod": "Native mod (.hnmod)",
   modpack: "Modpack (.hpack)",
   resourcepack: "Resource pack (.zip)",
   shader: "Shader pack (.hshader, Horizon's own format)",
@@ -135,7 +135,7 @@ export function ModSubmitForm({ known }: { known: KnownProject[] }) {
     const kinds = EXTENSIONS[extension(name)];
     setProblems((p) => ({ ...p, file: undefined, kind: undefined }));
     setZipNote("");
-    const m = name.match(/^([a-z0-9_]{1,64})-([A-Za-z0-9][A-Za-z0-9._-]*)\.(hmod|hnmod|hpack|zip|hshader)$/);
+    const m = name.match(/^([a-z0-9_]{1,64})-([A-Za-z0-9][A-Za-z0-9._-]*)\.(hmod|hpack|zip|hshader)$/);
     if (m) {
       const version = control("version");
       if (!id) setId(m[1]);
@@ -163,7 +163,7 @@ export function ModSubmitForm({ known }: { known: KnownProject[] }) {
     const found: Problems = {};
     const kinds = picked ? EXTENSIONS[extension(picked.name)] : undefined;
     if (!picked) found.file = "Pick the file to submit.";
-    else if (!kinds) found.file = `${picked.name} isn't a .hmod, .hnmod, .hpack, .hshader or .zip.`;
+    else if (!kinds) found.file = `${picked.name} isn't a .hmod, .hpack, .hshader or .zip.`;
     else if (picked.size > MAX_FILE) found.file = `${picked.name} is over 64 MB, the registry's limit.`;
     else if (!kinds.includes(kind))
       found.kind = kinds.length > 1 ? `A .zip is ${ZIP_KINDS}: pick which.` : `A .${extension(picked.name)} is a ${KIND_NAMES[kinds[0]].toLowerCase()}: pick that kind.`;
@@ -297,6 +297,14 @@ export function ModSubmitForm({ known }: { known: KnownProject[] }) {
 
   return (
     <div className="space-y-8">
+      <p className="text-[15px] text-white/65">
+        The form can&apos;t take <code className={code}>.hmod</code> files made with the new SDK yet. Open a pull request on
+        horizon-mods instead:{" "}
+        <a href="https://github.com/horizon-rust/horizon-mods#publishing-without-the-form" className={LINK}>
+          Publishing without the form
+        </a>
+        .
+      </p>
       <div aria-live="polite">{auth}</div>
       {me && !closed && (
         <form ref={form} onSubmit={submit} className="space-y-8">
@@ -310,7 +318,7 @@ export function ModSubmitForm({ known }: { known: KnownProject[] }) {
                     Pick the kind
                   </option>
                 )}
-                {KINDS.map(([k]) => (
+                {KINDS.filter(([k]) => k in KIND_OPTIONS).map(([k]) => (
                   <option key={k} value={k}>
                     {KIND_OPTIONS[k]}
                   </option>
@@ -324,7 +332,7 @@ export function ModSubmitForm({ known }: { known: KnownProject[] }) {
                 type="file"
                 // iOS greys out files whose extension it has no type for (.hmod…): application/octet-stream lets
                 // any file through there, and submit checks the extension.
-                accept=".hmod,.hnmod,.hpack,.zip,.hshader,application/zip,application/octet-stream"
+                accept=".hmod,.hpack,.zip,.hshader,application/zip,application/octet-stream"
                 required
                 onChange={onFile}
                 aria-invalid={Boolean(problems.file)}
@@ -333,7 +341,7 @@ export function ModSubmitForm({ known }: { known: KnownProject[] }) {
               {zipNote && <span className="mt-1.5 block text-[13px] text-white/70">{zipNote}</span>}
               <Problem id="file-problem" text={problems.file} />
               <Hint>
-                A .hmod, a native mod&apos;s .hnmod, a .hpack, a .hshader, or a .zip: a resource pack, a data pack (<code className={code}>pack.mcmeta</code> and{" "}
+                A .hmod, a .hpack, a .hshader, or a .zip: a resource pack, a data pack (<code className={code}>pack.mcmeta</code> and{" "}
                 <code className={code}>data/</code>) or a shader pack with a <code className={code}>shaders/</code> folder. At most 64 MB. Run{" "}
                 <code className={code}>cargo horizon-mod check</code> on a mod first. A .hshader is what <code className={code}>horizon-shader pack</code> makes (
                 <Link href="/docs/api/shaders" className={LINK}>
