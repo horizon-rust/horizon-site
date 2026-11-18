@@ -58,6 +58,8 @@ A native mod, built by the launcher for an instance:
 horizon-launcher native-build . --instance "My Instance" --trust-native-code
 ```
 
+Install the instance's Horizon build first, then choose **Prepare & play** in the launcher or run `horizon-launcher prepare --version <version>`. The first build fetches that build's SDK and the launcher's own Rust tools, which can be several hundred MB.
+
 `--trust-native-code` records that you allow native code on this install: the mod runs with your rights. Run `native-build` again after each edit; a failed build's compiler output is in the [build log](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/native-mods/05-build-log.md).
 
 A WebAssembly mod: `cargo horizon-mod build --wasm`, then copy `target/horizon-mod/<id>.hmod` into the game folder's `horizon-mods/` and add the line `mod.<id>:true` to `horizon-mods.txt`, beside `options.txt`.
