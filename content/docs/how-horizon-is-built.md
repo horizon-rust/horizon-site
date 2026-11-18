@@ -29,11 +29,11 @@ Not every line is read by a person. Instead, every change is checked against the
 ## What it doesn't contain
 
 - **No Minecraft files.** Horizon contains no Minecraft code, assets or data, and never downloads them. The launcher builds the game files on your computer from your own copy of Minecraft: Java Edition 26.3. A check that runs on every pull request (`tools/check_public_tree.py`) keeps game files and decompiled code out of the repository and its history.
-- **No code from other mods.** Since 24 October 2026, Horizon's code may only be written from Minecraft 26.3 itself and public documentation, never from another mod, loader or renderer ([the rule](https://github.com/horizon-rust/horizon/blob/main/CONTRIBUTING.md#only-original-code)). That day shader packs were removed ([#1561](https://github.com/horizon-rust/horizon/pull/1561)), after a developer of Iris showed that our shader pack code had been written from Iris's source. They are being written again from a description of the pack format only.
+- **Code from other projects only under a fitting licence.** Code taken from another project must be under a licence Horizon's LGPL-3.0 accepts, and keeps its copyright and licence notice ([the rule](https://github.com/horizon-rust/horizon/blob/main/CONTRIBUTING.md#licence)). On 24 October 2026 shader packs were removed ([#1561](https://github.com/horizon-rust/horizon/pull/1561)), after a developer of Iris showed that our shader pack code had been written from Iris's source. They are being written again from a description of the pack format only.
 
 ## Check it yourself
 
 - **Read the code and its checks.** [The source](https://github.com/horizon-rust/horizon), [the checks on every pull request](https://github.com/horizon-rust/horizon/actions/workflows/ci.yml) and [the release builds](https://github.com/horizon-rust/horizon/actions/workflows/release.yml).
 - **Compare the fingerprints.** Put a release's files and its `SHA256SUMS` in one folder and run `sha256sum -c SHA256SUMS --ignore-missing` (on macOS `shasum -a 256 -c SHA256SUMS --ignore-missing`, on Windows `Get-FileHash <file>` in PowerShell). Each file should say `OK`.
 - **Check the signature.** Download a whole release into a folder, then from a clone of the repository run `cargo run -p horizon-release-sign -- verify --tag <tag> <folder>`. The public key is in `crates/horizon-release-sign/release-keys.txt`.
-- **Build it yourself.** The README explains how to [build from source](https://github.com/horizon-rust/horizon#build-from-source).
+- **Build it yourself.** [Run from a checkout](https://github.com/horizon-rust/horizon/blob/main/docs/native-client.md#run-from-a-checkout) explains how to build it.

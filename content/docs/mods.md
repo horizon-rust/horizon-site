@@ -8,7 +8,7 @@ Horizon has three kinds of mod, all in one file format, `.hmod`:
 
 - **Content mods** add blocks and items from data and assets: models, textures, recipes, loot tables, tags and structures, with no code. This is also what the launcher's [modpack](/docs/modpacks) carry-over produces.
 - **Native mods** are Rust code that the launcher compiles on your computer: a HUD, keys, commands, settings, new behaviour. They are not sandboxed.
-- **WebAssembly mods** are code that the game runs in a sandbox, with limits on time and memory. Nothing is compiled on your computer.
+- **WebAssembly mods** are code that the game runs in a sandbox, with limits on time and memory. You need no Rust: the game compiles a mod's `mod.wasm` itself the first time and keeps the result in a cache ([Compiled module cache](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/wasm-mods.md#compiled-module-cache)).
 
 Old native mods in the `.hnmod` format don't load in current launchers; their authors republish them as `.hmod`.
 
@@ -17,7 +17,7 @@ Old native mods in the `.hnmod` format don't load in current launchers; their au
 **Installing a mod**
 
 1. Pick an instance on the left of the launcher, and install the mod from its **Mods** page (pick **Horizon** beside Modrinth). Or copy the file by hand into the game folder (the folder that holds `options.txt`; see [Install](/docs/install#first-launch)): content and WebAssembly mods go in `horizon-mods/`, native mods in `horizon-native-mods/`.
-2. Turn it on. A newly installed mod is off. A mod installed from the Mods page turns on there; one you copied in by hand turns on with a line `mod.<id>:true` in `horizon-mods.txt`, beside `options.txt`.
+2. Turn it on. A mod you install from the Mods page is on at once. A mod you copied in by hand is off until you add a line `mod.<id>:true` to `horizon-mods.txt`, beside `options.txt`.
 3. Start the game again. A mod that adds blocks, items or world generation loads when the game starts.
 
 The game's **Mods** screen (on the title screen, and in **Options > Mods**) lists each installed mod with its details, a **Config** button for a mod with settings, and, for a mod that could not load, the reason in red. It has no on/off switch: the launcher and `horizon-mods.txt` decide which mods run. [Installing and using mods](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/start/installing.md) has the details.

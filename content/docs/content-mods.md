@@ -103,16 +103,16 @@ Everything else uses vanilla 26.3's own formats, so the [Minecraft Wiki's](https
 
 ## Namespaces
 
-Your files go under your mod's id (`assets/ruby/`, `data/ruby/`), plus vanilla's and the convention tags (`data/minecraft/tags/`, `data/c/tags/`). Tags are the only files a mod may put under `minecraft`.
+Your files go under your mod's id (`assets/ruby/`, `data/ruby/`), plus vanilla's and the convention tags (`data/minecraft/tags/`, `data/c/tags/`). Under `minecraft`, a mod may put only tags and sources added to vanilla's atlases (`assets/minecraft/atlases/`).
 
-A mod made from a Java mod whose files use other names lists them in its manifest: `namespaces = ["kaisyn", "towns_and_towers"]`. A listed namespace is the mod's own, as its id is, but blocks and items are still declared under `data/<id>/horizon/`. `minecraft`, `c` and `horizon` can't be listed, and two mods that are on can't own the same namespace: the game keeps the first and logs the clash.
+A mod made from a Java mod whose files use other names lists them in its manifest: `namespaces = ["kaisyn", "towns_and_towers"]`. A listed namespace is the mod's own, as its id is: blocks, items and the other declarations may go under `data/<that namespace>/horizon/` too ([Namespaces and limits](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/content-mods.md#namespaces-and-limits)). `minecraft`, `c` and `horizon` can't be listed, and two mods that are on can't own the same namespace: the game keeps the first and logs the clash.
 
 ## Limits
 
 - A mod's files use vanilla's resource-name characters: at most 65,536 files, 16 MiB each and 512 MiB in all.
 - A file the game can't read (a block model that doesn't parse, a recipe with a typo) is logged and skipped, as vanilla does: the rest of the mod still loads. Read the log while you work.
 - Unknown keys in a block or item file are refused, and the mod stays off with the reason on its row.
-- Content mods work in single player today. Playing them together on a server is planned.
+- Multiplayer works when the server and its players run the same content mods. A player whose mods add different blocks, items, effects, entity types or menus is refused on joining ([Modpacks](https://github.com/horizon-rust/horizon/blob/main/docs/modpacks.md#registries-02-data-driven-blocks-items-and-mob-effects)).
 
 ## Start one
 

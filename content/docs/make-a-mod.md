@@ -37,7 +37,7 @@ cargo horizon-mod new greeter --template native       # a native mod
 cargo horizon-mod new greeter --template wasm         # a WebAssembly mod
 ```
 
-A code mod is pinned to the game build of the current Nightly (or `--horizon <build>`), and `new` fetches that build's SDK into `.horizon/sdk/`. Keep that folder out of git; any `cargo horizon-mod` command fetches it again after a fresh clone. `cargo horizon-mod update` moves the pin to a newer build.
+A code mod is pinned to the game build of the current Nightly (or `--horizon <build>`), and `new` fetches that build's SDK into `.horizon/sdk/`. Keep that folder out of git; after a fresh clone, run `cargo horizon-mod check` in the project to fetch it again. `cargo horizon-mod update` moves the pin to a newer build.
 
 A native project:
 
