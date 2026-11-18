@@ -43,14 +43,14 @@ capabilities = ["registries"]
 
 | Key | What it is |
 | --- | --- |
-| `id` | The mod's id: 1 to 64 characters of `a-z`, `0-9` and `_`. It is the namespace of its blocks and items (`ruby:ruby_block`), and names its switch in Options > Mods. Keep it once you have published the mod. |
+| `id` | The mod's id: 1 to 64 characters of `a-z`, `0-9` and `_`. It is the namespace of its blocks and items (`ruby:ruby_block`), and names it in `horizon-mods.txt`. Keep it once you have published the mod. |
 | `name` | The name players see. |
 | `version` | Your mod's version, such as `0.1.0`. Each version you publish needs a new one. |
 | `description` | One or two sentences for the Mods screen. |
 | `authors` | A list of names. |
 | `api` | `"0.2"`, the content format. |
-| `side` | `"both"`. |
-| `capabilities` | `["registries"]`. Options > Mods shows it as "May add blocks and items to your worlds". |
+| `side` | `"client"` (the default), `"both"` or `"server"`. |
+| `capabilities` | `["registries"]`. |
 | `namespaces` | Optional: more namespaces the mod's files use ([below](#namespaces)). |
 
 Unknown keys are refused, so a typo is an error, not something silently ignored.
@@ -99,7 +99,7 @@ Everything else uses vanilla 26.3's own formats, so the [Minecraft Wiki's](https
 - **Block states, models, item models and textures** in `assets/<id>/`, as in a resource pack. Models can use vanilla's parents, such as `minecraft:block/cube_all`.
 - **Names** in `assets/<id>/lang/en_us.json`: `"block.ruby.ruby_block": "Block of Ruby"`, `"item.ruby.ruby": "Ruby"`.
 
-**Structures.** A content mod can also carry structures, template pools and structure sets in its namespace, and add its own pieces to vanilla's villages or to another mod's pools. The [mod design page](https://github.com/horizon-rust/horizon/blob/main/docs/mods.md#content-mods-api-02) has the details.
+**Structures.** A content mod can also carry structures, template pools and structure sets in its namespace, and add its own pieces to vanilla's villages or to another mod's pools. The book's [content mods page](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/content-mods.md) has the details.
 
 ## Namespaces
 
@@ -119,8 +119,8 @@ A mod made from a Java mod whose files use other names lists them in its manifes
 Install `cargo horizon-mod`, the tool that makes, builds and checks content mods. It needs [Rust](https://rustup.rs) to install, and builds from source in a few minutes; run it again later to update it:
 
 ```sh
-cargo install --git https://github.com/horizon-rust/horizon cargo-horizon-mod
-cargo horizon-mod new my-blocks --template content
+cargo install --locked --git https://github.com/horizon-rust/horizon cargo-horizon-mod
+cargo horizon-mod new my-blocks
 ```
 
 makes a content mod with one block, Glowing Amethyst: an amethyst block that gives light, with its block state, model (using vanilla's amethyst texture), item model, name, loot table, a recipe (an amethyst block and glowstone dust) and the pickaxe tag. Rename and copy its files to add your own.
@@ -136,8 +136,8 @@ cargo horizon-mod build
 cargo horizon-mod check target/horizon-mod/ruby.hmod
 ```
 
-`build` checks the files as the game will and packs the manifest, `assets/` and `data/` into `target/horizon-mod/<id>.hmod`, with no compiler involved. `check` reads it as the registry does and says "no code: content only, nothing to run". Players put that file in their `horizon-mods` folder and turn it on in **Options, Mods...**, and you can [publish it](/docs/publish-a-mod) like any mod.
+`build` checks the files as the game will and packs the manifest, `assets/` and `data/` into `target/horizon-mod/<id>.hmod`, with no compiler involved. `check` reads it as the registry does and says "no code: content only, nothing to run". Players put that file in their `horizon-mods` folder and turn it on ([Mods](/docs/mods)), and you can [publish it](/docs/publish-a-mod) like any mod.
 
-A content mod has no code. For behaviour (a HUD, a command, a key), make a [native mod](/docs/make-a-mod); it can come beside a content mod that holds its blocks and items.
+A content mod has no code. For behaviour (a HUD, a command, a key), make a [code mod](/docs/make-a-mod); it can come beside a content mod that holds its blocks and items.
 
 Next: [test it](/docs/test-a-mod).

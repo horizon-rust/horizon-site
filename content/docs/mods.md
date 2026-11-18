@@ -4,33 +4,35 @@ Horizon has its own mods, made for Horizon and not compatible with Java mods. Da
 
 ## Mods
 
-Horizon has two kinds of mod:
+Horizon has three kinds of mod, all in one file format, `.hmod`:
 
-- **Content mods** (`.hmod`) add blocks and items from data and assets: models, textures, recipes, loot tables, tags and structures, with no code. They work in single player today. This is also what the launcher's [modpack](/docs/modpacks) carry-over produces.
-- **Native mods** (`.hnmod`) are Rust code built into the game: a HUD, keys, commands, settings, new behaviour. Horizon's own Zoom, FPS Counter, Keystrokes and Minimap are native mods. They work in single player, on LAN and on servers (only what runs in your own game, on a server you join).
+- **Content mods** add blocks and items from data and assets: models, textures, recipes, loot tables, tags and structures, with no code. This is also what the launcher's [modpack](/docs/modpacks) carry-over produces.
+- **Native mods** are Rust code that the launcher compiles on your computer: a HUD, keys, commands, settings, new behaviour. They are not sandboxed.
+- **WebAssembly mods** are code that the game runs in a sandbox, with limits on time and memory. Nothing is compiled on your computer.
+
+Old native mods in the `.hnmod` format don't load in current launchers; their authors republish them as `.hmod`.
 
 > **Early.** Reviewed mods are listed at [playhorizon.dev/mods](/mods) and on the launcher's Mods page.
 
-**Content mods**
+**Installing a mod**
 
-1. Install one from the launcher's **Mods** page (pick **Horizon** beside Modrinth), or put its `.hmod` file in the `horizon-mods` folder of the game folder (see [Install](/docs/install#first-launch) for where that is).
-2. Open **Options, Mods...**. Each mod is listed with what it may do ("May add blocks and items to your worlds") and a switch. Content mods start off.
-3. Start the game again after a switch: content loads when the game starts. A mod that failed to load shows why, in red, on its row.
+1. Pick an instance on the left of the launcher, and install the mod from its **Mods** page (pick **Horizon** beside Modrinth). Or copy the file by hand into the game folder (the folder that holds `options.txt`; see [Install](/docs/install#first-launch)): content and WebAssembly mods go in `horizon-mods/`, native mods in `horizon-native-mods/`.
+2. Turn it on. A newly installed mod is off. A mod installed from the Mods page turns on there; one you copied in by hand turns on with a line `mod.<id>:true` in `horizon-mods.txt`, beside `options.txt`.
+3. Start the game again. A mod that adds blocks, items or world generation loads when the game starts.
+
+The game's **Mods** screen (on the title screen, and in **Options > Mods**) lists each installed mod with its details, a **Config** button for a mod with settings, and, for a mod that could not load, the reason in red. It has no on/off switch: the launcher and `horizon-mods.txt` decide which mods run. [Installing and using mods](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/start/installing.md) has the details.
 
 **Native mods**
 
-A native mod is code, not sandboxed: it can do anything you can on your computer. So the launcher builds it into a game of its own, for one instance, and only when you say so:
+A native mod is code, not sandboxed: it can do anything you can on your computer. So the launcher builds it only for the instance you install it in, and only when you say so. The first time, it tells you what native mods are. Before each build it names the mods and their versions in a red warning; build only mods you trust. The launcher compiles the mods against the prebuilt game of the instance's Horizon build: the game itself is not rebuilt.
 
-1. Pick an instance on the left of the launcher, and install the mod from its **Mods** page. The first time, the launcher says what native mods are.
-2. In the **Native build of {instance}** row, press **Build**. The launcher names the mods and warns you in red; **I trust these mods: build** starts it. The first build downloads Rust and takes 20 to 30 minutes and a few GB of disk; later builds take a few minutes.
-3. Play that instance. Your other instances never run the mods.
-4. In the game, **Options > Mods** lists each native mod with a switch and, when it has some, a **Settings** page and keys to rebind. Turn one off there and the next build leaves it out.
+On a server you join, a mod that runs on both sides must match the server's: the game names the missing, extra or different mods. A dedicated server runs native mods from a server build the launcher exports ([Multiplayer](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/native-mods/11-multiplayer.md)).
 
-Install only mods whose authors you trust. The registry lists a native mod only after a maintainer has read its source, and each one's page links it. Horizon's own mods say "Made by Horizon"; every other mod's page says who made it.
+Install only mods whose authors you trust. Every mod on the registry was reviewed by a person, and a native mod's source also gets a security review. Each mod's page says who made it.
 
 **Making a mod**
 
-[Make a mod](/docs/make-a-mod) is the full guide, for both kinds: the tools, your mod in the game, the hook points with a worked example, content mods, testing, and publishing on [the registry](/mods).
+[Make a mod](/docs/make-a-mod) is the full guide, for every kind: the tool, your mod in the game, mod code, content mods, testing, and publishing on [the registry](/mods).
 
 Java mod jars don't run in Horizon: their code calls and patches Minecraft's Java classes, and Horizon has none. What carries over is the data and assets inside a jar ([modpacks](/docs/modpacks)).
 

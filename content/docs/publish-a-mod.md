@@ -1,30 +1,17 @@
 # Publish a mod
 
-Horizon's registry lists content mods, native mods, modpacks, resource packs and shader packs made for Horizon. Players find them at [playhorizon.dev/mods](/mods) and on the launcher's Mods page, which checks every file before it installs it. Each project is reviewed by a person before it is published. This page takes your mod from a file on your computer to the registry.
+Horizon's registry lists mods, modpacks and resource packs made for Horizon. Players find them at [playhorizon.dev/mods](/mods) and on the launcher's Mods page, which checks every file against the SHA-256 the registry lists before it installs it. A person reviews each project before it is published. The registry lives in [horizon-rust/horizon-mods](https://github.com/horizon-rust/horizon-mods).
 
 ## Before you submit
 
-1. **Choose a version.** Set `version` in the manifest (`horizon-mod.toml` for a content mod, `horizon-mixin.toml` for a native mod), such as `1.0.0`. Every version you publish needs a new one, and a published file never changes.
-2. **Make the file.** A content mod: `cargo horizon-mod build` writes `target/horizon-mod/<id>.hmod`. A native mod: [package it](#package-a-native-mod). A shader pack in Horizon's own format: `horizon-shader pack <folder>` writes `<id>-<version>.hshader` ([the format](/docs/api/shaders); Iris and OptiFine packs aren't listed). That file is what you submit.
-3. **Check it.** `cargo horizon-mod check <file>` must pass ([Test a mod](/docs/test-a-mod#check-it-as-the-registry-does)).
+1. **Choose a version.** Set `version` in `horizon-mod.toml`, such as `1.0.0`. Every version you publish needs a new one, and a published file never changes.
+2. **Make the file.** `cargo horizon-mod build` (with `--wasm` for a WebAssembly mod) writes `target/horizon-mod/<id>.hmod`. That file is what you submit.
+3. **Check it.** `cargo horizon-mod check target/horizon-mod/<id>.hmod` must pass ([Test a mod](/docs/test-a-mod#check-it-as-the-registry-does)).
 4. **Publish the source.** Put the mod's source in a public repository, under a licence that lets players use it (MIT, Apache-2.0, GPL and so on, as an [SPDX](https://spdx.org/licenses/) name). Reviewers read it, and the file must be made from it.
-
-## Package a native mod
-
-From your clone of [horizon-mods](https://github.com/horizon-rust/horizon-mods):
-
-```sh
-python3 native/tools/native.py check /path/to/playtime
-python3 native/tools/native.py package /path/to/playtime
-```
-
-`package` writes `native/target/<id>-<version>.hnmod` and prints its size and SHA-256. It holds `horizon-native.json`, made from your `compatibility.json`, and your bundle's `.rs` and `.toml` files. `horizon-mixin.toml` and `compatibility.json` must name the same Horizon commit: `package` refuses the mod when they don't. The same files always give the same `.hnmod`, so anyone can make it again from your source and compare.
-
-Before you submit a native mod, build it on the Horizon players play: `native.py check --horizon latest` for the newest Nightly ([Test a mod](/docs/test-a-mod#check-it-against-horizon)).
 
 ## Sign it
 
-Signing is optional and recommended. When your project has a public key, every later version must be signed with the matching secret key, so nobody else can publish an update in your name, even with access to your GitHub account.
+Signing is optional and recommended. When your project has a public key, every later version must be signed with the matching secret key, so nobody else can publish an update in your name.
 
 Horizon uses [minisign](https://jedisct1.github.io/minisign/) signatures. Install minisign (`brew install minisign`, `scoop install minisign`, or your Linux distribution's package), then make a key pair once:
 
@@ -37,34 +24,34 @@ Keep `horizon-mods.key` and its password private and backed up: losing it means 
 Sign each file you publish, and check the signature as the registry will:
 
 ```sh
-minisign -S -s horizon-mods.key -m native/target/playtime-0.1.0.hnmod
-cargo horizon-mod check native/target/playtime-0.1.0.hnmod --key "RW…your public key…" --signature native/target/playtime-0.1.0.hnmod.minisig
+minisign -S -s horizon-mods.key -m target/horizon-mod/greeter.hmod
+cargo horizon-mod check target/horizon-mod/greeter.hmod --key "RW…your public key…" --signature target/horizon-mod/greeter.hmod.minisig
 ```
-
-The report then says "signature verified".
 
 ## Submit it
 
-Open [playhorizon.dev/mods/submit](/mods/submit) and sign in with GitHub. The page reads only your public profile. Then fill in:
+The upload form at [playhorizon.dev/mods/submit](/mods/submit) can't take `.hmod` mods yet. Until it can, publish a mod with a pull request on horizon-mods: attach the file to a release of your own repository, then open a pull request that adds `mods/<id>.toml` with the version, the file's name and its SHA-256. The horizon-mods README says how, step by step: [Publishing without the form](https://github.com/horizon-rust/horizon-mods#publishing-without-the-form).
 
-- **The file**: the kind (mod, native mod or shader pack), the `.hmod`, `.hnmod` or `.hshader`, its id (the manifest's `id`), its version, the Minecraft version (26.3) and what changed.
-- **Its page**: the name, a one-line summary for the list, a description (Markdown), the authors, the licence, the source address and, optionally, a square PNG icon (at most 256 KiB).
-- **Signature**: your public key (for a new project) and the file's `.minisig`.
-
-**Submit for review** checks the file again and opens a pull request in [horizon-rust/horizon-mods](https://github.com/horizon-rust/horizon-mods). It adds `mods/<id>.toml`, with you as the project's owner. The repository's checks run `cargo horizon-mod check` on the file again and post their report on the pull request.
+The repository's checks run `cargo horizon-mod check` on the file and post their report on the pull request.
 
 ## Review and publication
 
-A reviewer reads the pull request, your source and the checks' report. For a native mod, the `.hnmod` is the source: a maintainer reads every line of it, since it runs with the player's rights, and its description should say what it does and what it doesn't. Questions and requests for changes come as comments on the pull request: answer them there, and submit a new version from the form when the file must change.
+A reviewer reads the pull request, your source and the checks' report. A native mod runs with the player's rights, so its source also gets a security review; its description should say what it does and what it doesn't. Questions and requests for changes come as comments on the pull request: answer them there.
 
-When the reviewer merges it, the file becomes a release of horizon-mods within minutes, and the project gets its page at `playhorizon.dev/mods/<id>` and shows in the launcher. The page shows your source, licence and the file's SHA-256; a native mod's page says it is code the launcher compiles, with no sandbox. Players install a native mod from the launcher's Mods page, and the launcher compiles the game with it after a warning that names it.
+When the pull request is merged, the file becomes a release of horizon-mods within minutes, and the project gets its page at `playhorizon.dev/mods/<id>` and shows in the launcher. The [mod policy](/mods/policy) says what the registry takes.
 
 ## Updates
 
-An update is the same form with a new version: it adds the version to your project's entry. The project's owners publish updates of a content mod without a reviewer's extra look; every version of a native mod is read again. If the project has a key, the new file must be signed with it.
+An update is a new version in your project's entry, made the same way. Only the entry's owners can add versions, and every version of a native mod is reviewed again. If the project has a key, the new file must be signed with it. The registry's file formats are in [the mod index reference](/docs/api/mod-index).
 
-Without the form, you can open the pull request by hand: the [horizon-mods README](https://github.com/horizon-rust/horizon-mods) says how. The registry's file formats are in [the mod index reference](/docs/api/mod-index).
+## Old .hnmod mods
+
+Launchers from 0.2.70 on don't load native mods in the old `.hnmod` format (`horizon-mixin.toml`, `compatibility.json`). Make the mod again as a `.hmod` ([Make a mod](/docs/make-a-mod)) and publish it as a new version.
+
+## Shader packs
+
+A shader pack is made with `horizon-shader` ([the shader API](/docs/api/shaders)). Packs for shader API 0.1 no longer load: move a pack to API 0.2.
 
 ## Reports and takedowns
 
-Anyone can report a project from its page (**Report it**). A project that does harm is taken down: the launcher then refuses its files and turns installed copies off, telling players why.
+Anyone can report a project from its page. A project that does harm is taken down: the launcher then refuses its files and turns installed copies off, telling players why.
