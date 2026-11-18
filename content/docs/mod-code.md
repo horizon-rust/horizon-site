@@ -56,6 +56,6 @@ If what your mod needs isn't there, [open an issue](https://github.com/horizon-r
 
 ## Mods and Nightlies
 
-A mod is made for the build it pins. A native mod that uses only the mod API (no native tables) also runs on later builds where nothing it uses changed: the launcher checks and compiles it there. `cargo horizon-mod fits` tells you whether your mod fits the current Nightly, and `cargo horizon-mod update` lists what a newer build breaks in it, line by line, before it moves the pin. [Checking a mod against a build](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/native-mods/14-checking-a-mod-against-a-build.md) has the details.
+A mod is made for the build it pins. A native mod that uses only the mod API (no nested `[native.*]` tables and no declared game internals) also runs on later builds where nothing it uses changed: the launcher checks and compiles it there. `cargo horizon-mod fits` tells you whether your mod fits the current Nightly, and `cargo horizon-mod update` lists what a newer build breaks in it, line by line, before it moves the pin. [Checking a mod against a build](https://github.com/horizon-rust/horizon/blob/main/docs/modding/src/how-to/native-mods/14-checking-a-mod-against-a-build.md) has the details.
 
 Next: [content mods](/docs/content-mods).
