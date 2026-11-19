@@ -1,41 +1,41 @@
 {
- "generatedAt": "2026-11-19T17:26:09.556Z",
- "rule": "merged-prs-with-coauthors+reviews/1",
+ "generatedAt": "2026-11-19T18:09:57.637Z",
+ "rule": "merged-prs-with-coauthors+reviews/2",
  "contributors": [
   {
    "login": "ludovic111",
    "avatarUrl": "https://avatars.githubusercontent.com/u/136255825?v=4",
-   "prs": 2624,
+   "prs": 2564,
    "reviews": 1014
   },
   {
    "login": "arismoko",
    "avatarUrl": "https://avatars.githubusercontent.com/u/19542195?v=4",
-   "prs": 1994,
+   "prs": 1969,
    "reviews": 1102
   },
   {
    "login": "rdbtCVS",
    "avatarUrl": "https://avatars.githubusercontent.com/u/87152661?v=4",
-   "prs": 521,
+   "prs": 510,
    "reviews": 1153
   },
   {
    "login": "levzzz5154",
    "avatarUrl": "https://avatars.githubusercontent.com/u/86072227?v=4",
-   "prs": 601,
+   "prs": 577,
    "reviews": 960
   },
   {
    "login": "kacpherek",
    "avatarUrl": "https://avatars.githubusercontent.com/u/54669067?v=4",
-   "prs": 753,
+   "prs": 744,
    "reviews": 573
   },
   {
    "login": "MSedgeMC",
    "avatarUrl": "https://avatars.githubusercontent.com/u/151820093?v=4",
-   "prs": 766,
+   "prs": 751,
    "reviews": 0
   },
   {
@@ -47,19 +47,13 @@
   {
    "login": "NikitaMGrimm",
    "avatarUrl": "https://avatars.githubusercontent.com/u/65914808?v=4",
-   "prs": 350,
+   "prs": 344,
    "reviews": 19
   },
   {
    "login": "TheMrZZ",
    "avatarUrl": "https://avatars.githubusercontent.com/u/30944236?v=4",
-   "prs": 331,
-   "reviews": 0
-  },
-  {
-   "login": "Xmilon",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/185131663?v=4",
-   "prs": 282,
+   "prs": 321,
    "reviews": 0
   },
   {
@@ -69,15 +63,21 @@
    "reviews": 0
   },
   {
+   "login": "Xmilon",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/185131663?v=4",
+   "prs": 253,
+   "reviews": 0
+  },
+  {
    "login": "OlaHulleberg",
    "avatarUrl": "https://avatars.githubusercontent.com/u/74724224?v=4",
-   "prs": 252,
+   "prs": 251,
    "reviews": 0
   },
   {
    "login": "DUzzL",
    "avatarUrl": "https://avatars.githubusercontent.com/u/98381970?v=4",
-   "prs": 208,
+   "prs": 204,
    "reviews": 0
   },
   {
@@ -101,19 +101,19 @@
   {
    "login": "CocofireHD",
    "avatarUrl": "https://avatars.githubusercontent.com/u/192959833?v=4",
-   "prs": 56,
+   "prs": 55,
    "reviews": 103
   },
   {
    "login": "KBroneZ",
    "avatarUrl": "https://avatars.githubusercontent.com/u/192155842?v=4",
-   "prs": 148,
+   "prs": 146,
    "reviews": 0
   },
   {
    "login": "merenotnoonereal",
    "avatarUrl": "https://avatars.githubusercontent.com/u/171196092?v=4",
-   "prs": 138,
+   "prs": 137,
    "reviews": 0
   },
   {
@@ -123,52 +123,28 @@
    "reviews": 16
   },
   {
-   "login": "martipops",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/15958874?v=4",
-   "prs": 79,
-   "reviews": 50
-  },
-  {
-   "login": "arslanarm",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/72556944?v=4",
-   "prs": 125,
-   "reviews": 0
-  },
-  {
    "login": "Detimes",
    "avatarUrl": "https://avatars.githubusercontent.com/u/165512828?v=4",
-   "prs": 124,
+   "prs": 123,
    "reviews": 0
   },
   {
    "login": "Mayonesu0",
    "avatarUrl": "https://avatars.githubusercontent.com/u/350298764?v=4",
-   "prs": 124,
+   "prs": 123,
    "reviews": 0
   },
   {
-   "login": "HrafnaValkyrja",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/189506598?v=4",
-   "prs": 116,
+   "login": "arslanarm",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/72556944?v=4",
+   "prs": 121,
    "reviews": 0
   },
   {
-   "login": "xFedeT",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/76874696?v=4",
-   "prs": 115,
-   "reviews": 0
-  },
-  {
-   "login": "vnsmoreira",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/76014502?v=4",
-   "prs": 114,
-   "reviews": 0
-  },
-  {
-   "login": "voidsipp",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/67880125?v=4",
-   "prs": 114,
-   "reviews": 0
+   "login": "martipops",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/15958874?v=4",
+   "prs": 68,
+   "reviews": 50
   },
   {
    "login": "Joansitoh",
@@ -177,9 +153,33 @@
    "reviews": 0
   },
   {
+   "login": "vnsmoreira",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/76014502?v=4",
+   "prs": 112,
+   "reviews": 0
+  },
+  {
+   "login": "xFedeT",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/76874696?v=4",
+   "prs": 111,
+   "reviews": 0
+  },
+  {
    "login": "d3grando",
    "avatarUrl": "https://avatars.githubusercontent.com/u/36463198?v=4",
-   "prs": 111,
+   "prs": 108,
+   "reviews": 0
+  },
+  {
+   "login": "voidsipp",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/67880125?v=4",
+   "prs": 105,
+   "reviews": 0
+  },
+  {
+   "login": "HrafnaValkyrja",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/189506598?v=4",
+   "prs": 102,
    "reviews": 0
   },
   {
@@ -187,12 +187,6 @@
    "avatarUrl": "https://avatars.githubusercontent.com/u/103129948?v=4",
    "prs": 75,
    "reviews": 25
-  },
-  {
-   "login": "Qwerner88880",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/87478350?v=4",
-   "prs": 88,
-   "reviews": 0
   },
   {
    "login": "yahya-nusseibeh",
@@ -207,15 +201,15 @@
    "reviews": 0
   },
   {
-   "login": "Ragbie",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/162304235?v=4",
-   "prs": 73,
+   "login": "Qwerner88880",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/87478350?v=4",
+   "prs": 75,
    "reviews": 0
   },
   {
-   "login": "Online5277",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/84875247?v=4",
-   "prs": 67,
+   "login": "Ragbie",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/162304235?v=4",
+   "prs": 73,
    "reviews": 0
   },
   {
@@ -225,27 +219,21 @@
    "reviews": 0
   },
   {
-   "login": "masa-masa-0314",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/348336850?v=4",
-   "prs": 64,
+   "login": "Online5277",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/84875247?v=4",
+   "prs": 66,
    "reviews": 0
   },
   {
-   "login": "reservedbytes",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/94451745?v=4",
-   "prs": 59,
+   "login": "masa-masa-0314",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/348336850?v=4",
+   "prs": 60,
    "reviews": 0
   },
   {
    "login": "TiggerTakkyTTT",
    "avatarUrl": "https://avatars.githubusercontent.com/u/212331760?v=4",
-   "prs": 59,
-   "reviews": 0
-  },
-  {
-   "login": "d3xc0",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/136307382?v=4",
-   "prs": 54,
+   "prs": 56,
    "reviews": 0
   },
   {
@@ -261,20 +249,14 @@
    "reviews": 0
   },
   {
-   "login": "Sylviromi",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/56453014?v=4",
-   "prs": 49,
+   "login": "d3xc0",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/136307382?v=4",
+   "prs": 50,
    "reviews": 0
   },
   {
-   "login": "glitchsnake",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/204201845?v=4",
-   "prs": 48,
-   "reviews": 0
-  },
-  {
-   "login": "Mnntn",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/22291105?v=4",
+   "login": "reservedbytes",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/94451745?v=4",
    "prs": 48,
    "reviews": 0
   },
@@ -287,12 +269,6 @@
   {
    "login": "Hiuoy",
    "avatarUrl": "https://avatars.githubusercontent.com/u/119734912?v=4",
-   "prs": 47,
-   "reviews": 0
-  },
-  {
-   "login": "ThatCakeIsAPie",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/67918737?v=4",
    "prs": 47,
    "reviews": 0
   },
@@ -315,9 +291,9 @@
    "reviews": 0
   },
   {
-   "login": "k3yh",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/115393708?v=4",
-   "prs": 45,
+   "login": "Mnntn",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/22291105?v=4",
+   "prs": 44,
    "reviews": 0
   },
   {
@@ -327,8 +303,8 @@
    "reviews": 0
   },
   {
-   "login": "UMCEKO",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/11256132?v=4",
+   "login": "glitchsnake",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/204201845?v=4",
    "prs": 40,
    "reviews": 0
   },
@@ -339,15 +315,9 @@
    "reviews": 0
   },
   {
-   "login": "iLostName",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/55976057?v=4",
+   "login": "ThatCakeIsAPie",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/67918737?v=4",
    "prs": 38,
-   "reviews": 0
-  },
-  {
-   "login": "elythepreciouscat",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/78264512?v=4",
-   "prs": 37,
    "reviews": 0
   },
   {
@@ -363,9 +333,33 @@
    "reviews": 0
   },
   {
+   "login": "k3yh",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/115393708?v=4",
+   "prs": 37,
+   "reviews": 0
+  },
+  {
    "login": "sirrayi",
    "avatarUrl": "https://avatars.githubusercontent.com/u/191805916?v=4",
    "prs": 37,
+   "reviews": 0
+  },
+  {
+   "login": "elythepreciouscat",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/78264512?v=4",
+   "prs": 36,
+   "reviews": 0
+  },
+  {
+   "login": "Sylviromi",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/56453014?v=4",
+   "prs": 36,
+   "reviews": 0
+  },
+  {
+   "login": "iLostName",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/55976057?v=4",
+   "prs": 34,
    "reviews": 0
   },
   {
@@ -375,21 +369,9 @@
    "reviews": 0
   },
   {
-   "login": "JustKarkat",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/50185858?v=4",
-   "prs": 33,
-   "reviews": 0
-  },
-  {
    "login": "xxaxio",
    "avatarUrl": "https://avatars.githubusercontent.com/u/171145711?v=4",
    "prs": 33,
-   "reviews": 0
-  },
-  {
-   "login": "FusselTV",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/89834718?v=4",
-   "prs": 32,
    "reviews": 0
   },
   {
@@ -405,21 +387,21 @@
    "reviews": 0
   },
   {
-   "login": "Stink-O",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/180130752?v=4",
+   "login": "UMCEKO",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/11256132?v=4",
    "prs": 31,
-   "reviews": 0
-  },
-  {
-   "login": "ErikKalikas",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/231414480?v=4",
-   "prs": 29,
    "reviews": 0
   },
   {
    "login": "foudretbr",
    "avatarUrl": "https://avatars.githubusercontent.com/u/86318354?v=4",
    "prs": 29,
+   "reviews": 0
+  },
+  {
+   "login": "FusselTV",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/89834718?v=4",
+   "prs": 28,
    "reviews": 0
   },
   {
@@ -441,9 +423,15 @@
    "reviews": 0
   },
   {
+   "login": "JustKarkat",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/50185858?v=4",
+   "prs": 25,
+   "reviews": 0
+  },
+  {
    "login": "Joeypc6",
    "avatarUrl": "https://avatars.githubusercontent.com/u/35495484?v=4",
-   "prs": 26,
+   "prs": 24,
    "reviews": 0
   },
   {
@@ -543,6 +531,12 @@
    "reviews": 0
   },
   {
+   "login": "Stink-O",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/180130752?v=4",
+   "prs": 18,
+   "reviews": 0
+  },
+  {
    "login": "vermingov",
    "avatarUrl": "https://avatars.githubusercontent.com/u/183540171?v=4",
    "prs": 18,
@@ -564,6 +558,12 @@
    "login": "lightcodegit",
    "avatarUrl": "https://avatars.githubusercontent.com/u/152764744?v=4",
    "prs": 17,
+   "reviews": 0
+  },
+  {
+   "login": "ErikKalikas",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/231414480?v=4",
+   "prs": 16,
    "reviews": 0
   },
   {
@@ -617,12 +617,6 @@
   {
    "login": "GabrielNichols",
    "avatarUrl": "https://avatars.githubusercontent.com/u/81190081?v=4",
-   "prs": 14,
-   "reviews": 0
-  },
-  {
-   "login": "readerkid",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/74160180?v=4",
    "prs": 14,
    "reviews": 0
   },
@@ -681,18 +675,6 @@
    "reviews": 0
   },
   {
-   "login": "jaszkus",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/103733654?v=4",
-   "prs": 12,
-   "reviews": 0
-  },
-  {
-   "login": "navinor",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/50366676?v=4",
-   "prs": 12,
-   "reviews": 0
-  },
-  {
    "login": "NerfPhaselock",
    "avatarUrl": "https://avatars.githubusercontent.com/u/34256878?v=4",
    "prs": 12,
@@ -717,8 +699,8 @@
    "reviews": 0
   },
   {
-   "login": "contactjayclatty",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/295590129?v=4",
+   "login": "navinor",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/50366676?v=4",
    "prs": 11,
    "reviews": 0
   },
@@ -743,12 +725,6 @@
   {
    "login": "BPMichon",
    "avatarUrl": "https://avatars.githubusercontent.com/u/79258091?v=4",
-   "prs": 10,
-   "reviews": 0
-  },
-  {
-   "login": "Dawnforger",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/73370299?v=4",
    "prs": 10,
    "reviews": 0
   },
@@ -819,6 +795,12 @@
    "reviews": 0
   },
   {
+   "login": "Dawnforger",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/73370299?v=4",
+   "prs": 9,
+   "reviews": 0
+  },
+  {
    "login": "hectoreccles",
    "avatarUrl": "https://avatars.githubusercontent.com/u/80791403?v=4",
    "prs": 9,
@@ -845,6 +827,12 @@
   {
    "login": "feeldev12",
    "avatarUrl": "https://avatars.githubusercontent.com/u/190163587?v=4",
+   "prs": 8,
+   "reviews": 0
+  },
+  {
+   "login": "jaszkus",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/103733654?v=4",
    "prs": 8,
    "reviews": 0
   },
@@ -891,20 +879,8 @@
    "reviews": 0
   },
   {
-   "login": "repositorykreml1n",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/271232376?v=4",
-   "prs": 7,
-   "reviews": 0
-  },
-  {
    "login": "RVZO6",
    "avatarUrl": "https://avatars.githubusercontent.com/u/66844656?v=4",
-   "prs": 7,
-   "reviews": 0
-  },
-  {
-   "login": "Username59138",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/195308149?v=4",
    "prs": 7,
    "reviews": 0
   },
@@ -951,6 +927,18 @@
    "reviews": 0
   },
   {
+   "login": "readerkid",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/74160180?v=4",
+   "prs": 6,
+   "reviews": 0
+  },
+  {
+   "login": "repositorykreml1n",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/271232376?v=4",
+   "prs": 6,
+   "reviews": 0
+  },
+  {
    "login": "Rocklarper",
    "avatarUrl": "https://avatars.githubusercontent.com/u/314045512?v=4",
    "prs": 6,
@@ -969,12 +957,6 @@
    "reviews": 0
   },
   {
-   "login": "Teiwazikk",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/171943209?v=4",
-   "prs": 6,
-   "reviews": 0
-  },
-  {
    "login": "wxundup",
    "avatarUrl": "https://avatars.githubusercontent.com/u/123507841?v=4",
    "prs": 6,
@@ -989,6 +971,12 @@
   {
    "login": "Art34222",
    "avatarUrl": "https://avatars.githubusercontent.com/u/127204156?v=4",
+   "prs": 5,
+   "reviews": 0
+  },
+  {
+   "login": "contactjayclatty",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/295590129?v=4",
    "prs": 5,
    "reviews": 0
   },
@@ -1029,12 +1017,6 @@
    "reviews": 0
   },
   {
-   "login": "lucasmts59",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/93907884?v=4",
-   "prs": 5,
-   "reviews": 0
-  },
-  {
    "login": "M0-kii",
    "avatarUrl": "https://avatars.githubusercontent.com/u/121222602?v=4",
    "prs": 5,
@@ -1049,6 +1031,12 @@
   {
    "login": "Slavik-85",
    "avatarUrl": "https://avatars.githubusercontent.com/u/79378317?v=4",
+   "prs": 5,
+   "reviews": 0
+  },
+  {
+   "login": "Teiwazikk",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/171943209?v=4",
    "prs": 5,
    "reviews": 0
   },
@@ -1077,12 +1065,6 @@
    "reviews": 0
   },
   {
-   "login": "InterFixet",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/155942187?v=4",
-   "prs": 4,
-   "reviews": 0
-  },
-  {
    "login": "jedev3095",
    "avatarUrl": "https://avatars.githubusercontent.com/u/277763085?v=4",
    "prs": 4,
@@ -1091,6 +1073,12 @@
   {
    "login": "LoneStarrr",
    "avatarUrl": "https://avatars.githubusercontent.com/u/62477472?v=4",
+   "prs": 4,
+   "reviews": 0
+  },
+  {
+   "login": "lucasmts59",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/93907884?v=4",
    "prs": 4,
    "reviews": 0
   },
@@ -1115,6 +1103,12 @@
   {
    "login": "testatanucleare13-create",
    "avatarUrl": "https://avatars.githubusercontent.com/u/351235290?v=4",
+   "prs": 4,
+   "reviews": 0
+  },
+  {
+   "login": "Username59138",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/195308149?v=4",
    "prs": 4,
    "reviews": 0
   },
@@ -1215,12 +1209,6 @@
    "reviews": 0
   },
   {
-   "login": "Louistuis",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/179310784?v=4",
-   "prs": 3,
-   "reviews": 0
-  },
-  {
    "login": "matyden",
    "avatarUrl": "https://avatars.githubusercontent.com/u/194990071?v=4",
    "prs": 3,
@@ -1247,12 +1235,6 @@
   {
    "login": "tarzinio",
    "avatarUrl": "https://avatars.githubusercontent.com/u/29274594?v=4",
-   "prs": 3,
-   "reviews": 0
-  },
-  {
-   "login": "TJKDev1",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/58661780?v=4",
    "prs": 3,
    "reviews": 0
   },
@@ -1383,12 +1365,6 @@
    "reviews": 0
   },
   {
-   "login": "hauserdew-ui",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/252628032?v=4",
-   "prs": 2,
-   "reviews": 0
-  },
-  {
    "login": "hhamaj",
    "avatarUrl": "https://avatars.githubusercontent.com/u/348371234?v=4",
    "prs": 2,
@@ -1401,6 +1377,12 @@
    "reviews": 0
   },
   {
+   "login": "InterFixet",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/155942187?v=4",
+   "prs": 2,
+   "reviews": 0
+  },
+  {
    "login": "isaaclins",
    "avatarUrl": "https://avatars.githubusercontent.com/u/104733575?v=4",
    "prs": 0,
@@ -1409,12 +1391,6 @@
   {
    "login": "IsT3RiK",
    "avatarUrl": "https://avatars.githubusercontent.com/u/91830375?v=4",
-   "prs": 2,
-   "reviews": 0
-  },
-  {
-   "login": "iwaneth",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/211213342?v=4",
    "prs": 2,
    "reviews": 0
   },
@@ -1445,6 +1421,12 @@
   {
    "login": "Lostpold88",
    "avatarUrl": "https://avatars.githubusercontent.com/u/226571479?v=4",
+   "prs": 2,
+   "reviews": 0
+  },
+  {
+   "login": "Louistuis",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/179310784?v=4",
    "prs": 2,
    "reviews": 0
   },
@@ -1833,6 +1815,12 @@
    "reviews": 0
   },
   {
+   "login": "hauserdew-ui",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/252628032?v=4",
+   "prs": 1,
+   "reviews": 0
+  },
+  {
    "login": "hernan-lc",
    "avatarUrl": "https://avatars.githubusercontent.com/u/271117930?v=4",
    "prs": 1,
@@ -1859,6 +1847,12 @@
   {
    "login": "ItzKubass",
    "avatarUrl": "https://avatars.githubusercontent.com/u/186874487?v=4",
+   "prs": 1,
+   "reviews": 0
+  },
+  {
+   "login": "iwaneth",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/211213342?v=4",
    "prs": 1,
    "reviews": 0
   },
@@ -2189,6 +2183,12 @@
   {
    "login": "TheGaner",
    "avatarUrl": "https://avatars.githubusercontent.com/u/49899433?v=4",
+   "prs": 1,
+   "reviews": 0
+  },
+  {
+   "login": "TJKDev1",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/58661780?v=4",
    "prs": 1,
    "reviews": 0
   },

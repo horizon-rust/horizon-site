@@ -11,11 +11,12 @@
 // A person is credited once per merged pull request when they are its author, an author or co-author of its merge
 // commit (squash merges carry the branch's Co-authored-by trailers there), or an author or co-author of one of its
 // own commits. Commits with two or more parents earn nothing: merging main into a branch is not work on it, and the
-// merge commit of a pull request merged that way is authored by whoever pressed the button.
+// merge commit of a pull request merged that way is authored by whoever pressed the button. A commit earns credit only
+// in the first merged pull request that contains it, by merge time across both repositories.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-const RULE = "merged-prs-with-coauthors+reviews/1";
+const RULE = "merged-prs-with-coauthors+reviews/2";
 const MAIN = "horizon-rust/horizon";
 const FORK = "arismoko/horizon";
 // The mod API reached main through one merge (#16941, landed as #17145); the fork's work after it doesn't count.
@@ -107,14 +108,6 @@ const isPerson = (login, type = "User") =>
 
 const USER = "login databaseId";
 
-// When each commit of main's merged pull requests (their branches' commits and their merge commits) reached main.
-// The fork's "sync upstream" pull requests carry commits main already had: they were counted on main, so in the
-// fork they earn nothing, as merging main into a branch earns nothing. Fork commits that reached main later (the mod
-// API merge) still count for the fork pull request that brought them first.
-const mainCommits = new Map();
-const onMain = (oid, mergedAt) => {
-  if (!(mainCommits.get(oid) <= mergedAt)) mainCommits.set(oid, mergedAt);
-};
 const AUTHORS = `authors(first: 10) { pageInfo { hasNextPage endCursor } nodes { user { ${USER} } } }`;
 const COMMITS = (n) =>
   `commits(first: ${n}${n === 100 ? ", after: $after" : ""}) { pageInfo { hasNextPage endCursor } nodes { commit { id oid parents { totalCount } ${AUTHORS} } } }`;
@@ -142,26 +135,32 @@ async function commitAuthors(commit) {
   return logins;
 }
 
-const stats = { mergerOnly: { [MAIN]: 0, [FORK]: 0 } };
+const stats = { mergerOnly: { [MAIN]: 0, [FORK]: 0 }, repeated: { [MAIN]: 0, [FORK]: 0 } };
 
-// One merged pull request: { a: its author, c: everyone else credited, r: its reviewers }, people only.
+// Commits are kept by the first 12 hex digits of their SHA: across some 10^5 commits a collision is about as likely
+// as one in 50,000, and the cache stays a few megabytes.
+const sha = (oid) => oid.slice(0, 12);
+
+// One merged pull request: { a: its author, t: when it merged, k: its single-parent commits (the merge commit of a
+// squash merge included) as [sha, ...people], r: its reviewers }. Which commits earn credit here is decided later,
+// across every pull request (see `credit`).
 async function mergedPr(repo, pr) {
   const author = isPerson(pr.author?.login, pr.author?.__typename) ? remember(pr.author) : undefined;
+  const commitList = [];
   const credited = new Set();
+  const add = async (commit) => {
+    const people = [...new Set(await commitAuthors(commit))].filter((l) => isPerson(l)).sort();
+    people.forEach((l) => credited.add(l));
+    if (people.length) commitList.push([sha(commit.oid), ...people]);
+  };
   let mergers = [];
-  if (repo === MAIN && pr.mergeCommit) onMain(pr.mergeCommit.oid, pr.mergedAt);
   if (pr.mergeCommit) {
-    const logins = await commitAuthors(pr.mergeCommit);
-    if (pr.mergeCommit.parents.totalCount < 2) logins.forEach((l) => credited.add(l));
-    else mergers = logins;
+    if (pr.mergeCommit.parents.totalCount < 2) await add(pr.mergeCommit);
+    else mergers = await commitAuthors(pr.mergeCommit);
   }
   let commits = pr.commits;
   for (;;) {
-    for (const { commit } of commits.nodes) {
-      if (repo === MAIN) onMain(commit.oid, pr.mergedAt);
-      else if (mainCommits.get(commit.oid) < pr.mergedAt) continue;
-      if (commit.parents.totalCount < 2) (await commitAuthors(commit)).forEach((l) => credited.add(l));
-    }
+    for (const { commit } of commits.nodes) if (commit.parents.totalCount < 2) await add(commit);
     if (!commits.pageInfo.hasNextPage) break;
     const data = await graphql(`query($id: ID!, $after: String) { node(id: $id) { ... on PullRequest { ${COMMITS(100)} } } }`, {
       id: pr.id,
@@ -169,10 +168,8 @@ async function mergedPr(repo, pr) {
     });
     commits = data.node.commits;
   }
-  credited.delete(author);
-  for (const login of [...credited]) if (!isPerson(login)) credited.delete(login);
   if (mergers.some((l) => isPerson(l) && l !== author && !credited.has(l))) stats.mergerOnly[repo]++;
-  return { a: author, c: [...credited].sort(), r: await reviewers(pr) };
+  return { a: author, t: pr.mergedAt, k: commitList, r: await reviewers(pr) };
 }
 
 async function reviewers(pr) {
@@ -300,6 +297,32 @@ cache.since = nextSince;
 const mainReviewers = new Set([...Object.values(cache.main.merged).flatMap((p) => p.r), ...Object.values(cache.main.other).flat()]);
 const mainReviews = await reviewCounts([...mainReviewers].sort(), `repo:${MAIN}`);
 
+// Who each merged pull request credits: its author, and the people of each of its commits for which it is the first
+// merged pull request (main's and the fork's together, by merge time) to contain that commit. A branch that carries
+// commits merged before (a fork's sync with main, a branch cut from a stale one) earns nothing for them; fork commits
+// that reached main later through the mod API merge count for the fork pull request that brought them.
+function credit() {
+  const prs = [
+    ...Object.entries(cache.main.merged).map(([n, pr]) => ({ repo: MAIN, n: Number(n), pr })),
+    ...Object.entries(cache.fork.merged).map(([n, pr]) => ({ repo: FORK, n: Number(n), pr })),
+  ].sort((a, b) => (a.pr.t < b.pr.t ? -1 : a.pr.t > b.pr.t ? 1 : a.repo === b.repo ? a.n - b.n : a.repo === FORK ? -1 : 1));
+  const seen = new Set();
+  for (const entry of prs) {
+    entry.credited = new Set(entry.pr.a ? [entry.pr.a] : []);
+    entry.repeated = new Set();
+    for (const [commit, ...people] of entry.pr.k) {
+      if (seen.has(commit)) people.forEach((l) => entry.repeated.add(l));
+      else {
+        seen.add(commit);
+        people.forEach((l) => entry.credited.add(l));
+      }
+    }
+    // Only what the rule took away: people with no first commit in this pull request and not its author.
+    stats.repeated[entry.repo] += [...entry.repeated].filter((l) => !entry.credited.has(l)).length;
+  }
+  return prs;
+}
+
 // Logins are case-insensitive; the spelling GitHub gives last wins.
 const people = new Map();
 const person = (login) => {
@@ -307,9 +330,7 @@ const person = (login) => {
   if (!people.has(key)) people.set(key, { login, prs: 0, reviews: 0 });
   return people.get(key);
 };
-for (const part of [cache.main, cache.fork]) {
-  for (const pr of Object.values(part.merged)) for (const login of [pr.a, ...pr.c].filter(Boolean)) person(login).prs++;
-}
+for (const { credited } of credit()) for (const login of credited) person(login).prs++;
 for (const counts of [mainReviews, cache.fork.reviews]) {
   for (const [login, n] of Object.entries(counts)) if (n > 0) person(login).reviews += n;
 }
@@ -331,6 +352,7 @@ console.log(
   `${contributors.length} people, ${Object.keys(cache.main.merged).length} merged PRs in ${MAIN}, ` +
     `${Object.keys(cache.fork.merged).length} in ${FORK}; ${requests} requests, ${points} points, ` +
     `${Math.round((Date.now() - started) / 1000)} s; merge-commit-only credits left out this run: ` +
-    `${stats.mergerOnly[MAIN]} (${MAIN}), ${stats.mergerOnly[FORK]} (${FORK}); ` +
+    `${stats.mergerOnly[MAIN]} (${MAIN}), ${stats.mergerOnly[FORK]} (${FORK}); credits left out for commits an ` +
+    `earlier pull request had: ${stats.repeated[MAIN]} (${MAIN}), ${stats.repeated[FORK]} (${FORK}); ` +
     `${listChanged ? "list changed" : "list unchanged"}`,
 );
