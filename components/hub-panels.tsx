@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import type { Contributor } from "@/components/contributors";
 import { DiscordIcon, ExternalLinkIcon, GitHubIcon } from "@/components/icons";
 import {
   areaName,
@@ -450,7 +451,6 @@ export function JournalPanel({ entries, roadmap }: { entries: JournalEntry[]; ro
   );
 }
 
-type Contributor = { login: string; avatar: string; url: string; commits: number };
 
 const WAYS = [
   {
@@ -600,7 +600,7 @@ export function ContributePanel({
       {contributors && contributors.length > 0 && (
         <Block title="Contributors" id="hub-contributors">
           <p className="mt-2 text-[15px] text-white/60">
-            Everyone with commits in Horizon. On Discord, <code className="text-white/75">/link-github &lt;your login&gt; credit:True</code> adds
+            Everyone with merged pull requests or reviews in Horizon, the mod fork included. On Discord, <code className="text-white/75">/link-github &lt;your login&gt; credit:True</code> adds
             your Discord name next to yours.
           </p>
           <ul className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
@@ -611,7 +611,8 @@ export function ContributePanel({
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-medium text-white">{c.login}</span>
                     <span className="block text-xs text-white/45">
-                      {c.commits.toLocaleString("en-US")} {c.commits === 1 ? "commit" : "commits"}
+                      {c.prs.toLocaleString("en-US")} {c.prs === 1 ? "pull request" : "pull requests"} · {c.reviews.toLocaleString("en-US")}{" "}
+                      {c.reviews === 1 ? "review" : "reviews"}
                     </span>
                   </span>
                 </a>

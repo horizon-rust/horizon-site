@@ -1,0 +1,49 @@
+# Counts the contributors on the home page and the hub (scripts/contributors-data.mjs) and keeps the result on the
+# orphan branch contributors-data, which the site reads through GitHub's contents API. Each run reads only the pull
+# requests updated since the last one; a failed run pushes nothing, so the last good list stays.
+name: Contributors data
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contributors-data
+  cancel-in-progress: false
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    # The first run reads every pull request and waits out the token's hourly GraphQL budget several times.
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check out the data branch
+        run: |
+          if git ls-remote --exit-code --heads origin contributors-data; then
+            git fetch --depth=1 origin contributors-data
+            git worktree add "$RUNNER_TEMP/data" FETCH_HEAD
+          else
+            git worktree add --detach "$RUNNER_TEMP/data"
+            git -C "$RUNNER_TEMP/data" checkout --orphan contributors-data
+            git -C "$RUNNER_TEMP/data" rm -rfq .
+          fi
+      - name: Count
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/contributors-data.mjs "$RUNNER_TEMP/data"
+      - name: Push when it changed
+        working-directory: ${{ runner.temp }}/data
+        run: |
+          git add contributors.json prs.json
+          if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -qm "Contributors data $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push origin HEAD:contributors-data

@@ -141,8 +141,6 @@
       "titleFallback": "Hecho por sus colaboradores.",
       "lead": "Todos los que tienen pull requests fusionados o revisiones en {repo} (incluido el fork de mods), primero los que más, y las personas detrás de este sitio.",
       "all": "Todos los colaboradores en GitHub",
-      "oneCommit": "1 commit",
-      "commits": "{n} commits",
       "work": "{prs} pull requests · {reviews} revisiones",
       "webDeveloper": "Desarrollador web"
     },

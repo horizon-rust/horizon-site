@@ -124,8 +124,16 @@ kept every duration (`SpanSummary.timing`) show the lows as unavailable: the vie
 
 ## Where the data comes from
 
-- **GitHub's API**: releases, contributors, the roadmap's issues and pull requests. Cached for about 15 minutes.
+- **GitHub's API**: releases, the roadmap's issues and pull requests. Cached for about 15 minutes.
   `GITHUB_TOKEN` lifts the rate limit.
+- **Contributors**: the `contributors-data` workflow runs `scripts/contributors-data.mjs` every six hours and keeps
+  `contributors.json` on this repository's orphan branch `contributors-data`, with `prs.json`, the per-pull-request
+  cache that lets each run read only what changed. A person counts once for each merged pull request they authored or
+  co-authored (the merge commit's and the branch's commits' authors and `Co-authored-by` trailers; commits with two
+  parents earn nothing) and once for each pull request of someone else they reviewed, in horizon-rust/horizon and in
+  the mod fork (arismoko/horizon) before the mod API merge at 2026-11-16T01:32:48Z. Bots and the agent accounts the
+  script names are left out. The site reads the file through the contents API, keeps the last good list when a read
+  fails, and starts from `data/contributors-snapshot.json` (written once by the same script) before the first read.
 - **Fresh within a minute**: every GitHub loader carries a cache tag (`components/github-fresh.ts`: the game's main,
   its issues and pull requests, its releases, horizon-mods' main). Kira gets GitHub's organization webhook and calls
   `POST /api/revalidate` (`Authorization: Bearer $REVALIDATE_SECRET`, body `{"tags": [...]}`) for what changed; the
