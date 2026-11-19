@@ -16,7 +16,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-const RULE = "merged-prs-with-coauthors+reviews/2";
+// Bumped whenever the cache's format or the counting changes: a cache with another value is discarded and rebuilt.
+const RULE = "merged-prs-with-coauthors+reviews/3";
 const MAIN = "horizon-rust/horizon";
 const FORK = "arismoko/horizon";
 // The mod API reached main through one merge (#16941, landed as #17145); the fork's work after it doesn't count.
@@ -51,7 +52,8 @@ if (!dir || !token) {
 let requests = 0;
 let points = 0;
 
-async function graphql(query, variables = {}) {
+// `missingNodes`: errors about node IDs that no longer resolve (a deleted account) are expected, not a failure.
+async function graphql(query, variables = {}, { missingNodes = false } = {}) {
   for (let attempt = 1; ; attempt++) {
     let res;
     try {
@@ -88,7 +90,8 @@ async function graphql(query, variables = {}) {
     }
     if (!res.ok) throw new Error(`GraphQL: ${res.status} ${await res.text()}`);
     const { data, errors } = await res.json();
-    if (errors?.length || !data) throw new Error(`GraphQL: ${errors?.[0]?.message ?? "no data"}`);
+    const failures = (errors ?? []).filter((e) => !(missingNodes && e.type === "NOT_FOUND" && e.path?.[0] === "nodes"));
+    if (failures.length || !data) throw new Error(`GraphQL: ${failures[0]?.message ?? "no data"}`);
     const { cost, remaining, resetAt } = data.rateLimit;
     points += cost;
     // The workflow's token gets about 1,000 points an hour, less than the first full run needs: wait for the reset.
@@ -106,52 +109,50 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, Math.max(0, m
 const isPerson = (login, type = "User") =>
   !!login && type === "User" && !login.endsWith("[bot]") && !NOT_PEOPLE.has(login.toLowerCase());
 
-const USER = "login databaseId";
+const USER = "id login databaseId";
 
 const AUTHORS = `authors(first: 10) { pageInfo { hasNextPage endCursor } nodes { user { ${USER} } } }`;
 const COMMITS = (n) =>
   `commits(first: ${n}${n === 100 ? ", after: $after" : ""}) { pageInfo { hasNextPage endCursor } nodes { commit { id oid parents { totalCount } ${AUTHORS} } } }`;
 const REVIEWS = (after) =>
-  `reviews(first: ${after ? 100 : 30}${after ? ", after: $after" : ""}) { pageInfo { hasNextPage endCursor } nodes { author { __typename login ... on User { databaseId } } } }`;
+  `reviews(first: ${after ? 100 : 30}${after ? ", after: $after" : ""}) { pageInfo { hasNextPage endCursor } nodes { author { __typename login ... on User { id databaseId } } } }`;
 
-// Avatars by login, as the site's image allowlist expects them: https://avatars.githubusercontent.com/u/<id>?v=4.
-let ids = {};
-const remember = (user) => {
-  if (user?.login && user.databaseId) ids[user.login] = user.databaseId;
-  return user?.login;
+// People are kept by their GitHub account ID (databaseId), which a rename doesn't change, with the node ID that
+// reads their current login back each run. Returns the account ID, or undefined for a bot, an agent or no account.
+let users = {};
+const remember = (user, type = "User") => {
+  if (!user?.databaseId || !isPerson(user.login, type)) return undefined;
+  users[user.databaseId] = { login: user.login, node: user.id };
+  return user.databaseId;
 };
 
 async function commitAuthors(commit) {
-  const logins = commit.authors.nodes.map((a) => remember(a.user));
+  const people = commit.authors.nodes.map((a) => remember(a.user));
   let page = commit.authors.pageInfo;
   while (page.hasNextPage) {
     const data = await graphql(
       `query($id: ID!, $after: String) { node(id: $id) { ... on Commit { authors(first: 100, after: $after) { pageInfo { hasNextPage endCursor } nodes { user { ${USER} } } } } }`,
       { id: commit.id, after: page.endCursor },
     );
-    logins.push(...data.node.authors.nodes.map((a) => remember(a.user)));
+    people.push(...data.node.authors.nodes.map((a) => remember(a.user)));
     page = data.node.authors.pageInfo;
   }
-  return logins;
+  return people.filter(Boolean);
 }
 
 const stats = { mergerOnly: { [MAIN]: 0, [FORK]: 0 }, repeated: { [MAIN]: 0, [FORK]: 0 } };
 
-// Commits are kept by the first 12 hex digits of their SHA: across some 10^5 commits a collision is about as likely
-// as one in 50,000, and the cache stays a few megabytes.
-const sha = (oid) => oid.slice(0, 12);
-
 // One merged pull request: { a: its author, t: when it merged, k: its single-parent commits (the merge commit of a
-// squash merge included) as [sha, ...people], r: its reviewers }. Which commits earn credit here is decided later,
+// squash merge included) as [sha, ...people], r: its reviewers }, people as account IDs. Which commits earn credit here is decided later,
 // across every pull request (see `credit`).
 async function mergedPr(repo, pr) {
-  const author = isPerson(pr.author?.login, pr.author?.__typename) ? remember(pr.author) : undefined;
+  const author = remember(pr.author, pr.author?.__typename);
   const commitList = [];
   const credited = new Set();
   const add = async (commit) => {
-    const people = [...new Set(await commitAuthors(commit))].filter((l) => isPerson(l)).sort();
+    const people = [...new Set(await commitAuthors(commit))].sort((a, b) => a - b);
     people.forEach((l) => credited.add(l));
-    if (people.length) commitList.push([sha(commit.oid), ...people]);
+    if (people.length) commitList.push([commit.oid, ...people]);
   };
   let mergers = [];
   if (pr.mergeCommit) {
@@ -168,15 +169,18 @@ async function mergedPr(repo, pr) {
     });
     commits = data.node.commits;
   }
-  if (mergers.some((l) => isPerson(l) && l !== author && !credited.has(l))) stats.mergerOnly[repo]++;
+  if (mergers.some((l) => l !== author && !credited.has(l))) stats.mergerOnly[repo]++;
   return { a: author, t: pr.mergedAt, k: commitList, r: await reviewers(pr) };
 }
 
 async function reviewers(pr) {
-  const logins = new Set();
+  const people = new Set();
   let reviews = pr.reviews;
   for (;;) {
-    for (const { author } of reviews.nodes) if (isPerson(author?.login, author?.__typename)) logins.add(remember(author));
+    for (const { author } of reviews.nodes) {
+      const id = remember(author, author?.__typename);
+      if (id) people.add(id);
+    }
     if (!reviews.pageInfo.hasNextPage) break;
     const data = await graphql(`query($id: ID!, $after: String) { node(id: $id) { ... on PullRequest { ${REVIEWS(true)} } } }`, {
       id: pr.id,
@@ -184,7 +188,7 @@ async function reviewers(pr) {
     });
     reviews = data.node.reviews;
   }
-  return [...logins].sort();
+  return [...people].sort((a, b) => a - b);
 }
 
 // Pages of a repository's pull requests updated since `since` (all of them without it), newest update first. A pull
@@ -198,7 +202,7 @@ async function* pullRequests(repo, states, fields, since) {
     const data = await graphql(
       `query($owner: String!, $name: String!, $after: String) { repository(owner: $owner, name: $name) {
         pullRequests(states: [${states}], first: 50, after: $after, orderBy: { field: UPDATED_AT, direction: DESC }) {
-          pageInfo { hasNextPage endCursor } nodes { id number createdAt updatedAt mergedAt author { __typename login ... on User { databaseId } } ${fields} } } } }`,
+          pageInfo { hasNextPage endCursor } nodes { id number createdAt updatedAt mergedAt author { __typename login ... on User { id databaseId } } ${fields} } } } }`,
       { owner, name, after },
     );
     const page = data.repository.pullRequests;
@@ -242,25 +246,42 @@ async function walk(repo, part, since, before) {
   }
 }
 
-// The number of pull requests (any state) in `query`'s scope that each login reviewed without being their author:
-// GitHub's search, ten people per request, four requests at a time.
-async function reviewCounts(logins, scope) {
+// The number of pull requests (any state) in `scope` that each person reviewed without being their author, by account
+// ID: GitHub's search under their current login, ten people per request, four requests at a time.
+async function reviewCounts(people, scope) {
   const counts = {};
   const chunks = [];
-  for (let i = 0; i < logins.length; i += 10) chunks.push(logins.slice(i, i + 10));
+  for (let i = 0; i < people.length; i += 10) chunks.push(people.slice(i, i + 10));
   for (let i = 0; i < chunks.length; i += 4) {
     await Promise.all(
       chunks.slice(i, i + 4).map(async (chunk) => {
-        const fields = chunk.map(
-          (login, j) =>
-            `r${j}: search(query: ${JSON.stringify(`${scope} is:pr reviewed-by:${login} -author:${login}`)}, type: ISSUE, first: 0) { issueCount }`,
-        );
+        const fields = chunk.map((id, j) => {
+          const login = users[id].login;
+          return `r${j}: search(query: ${JSON.stringify(`${scope} is:pr reviewed-by:${login} -author:${login}`)}, type: ISSUE, first: 0) { issueCount }`;
+        });
         const data = await graphql(`query { ${fields.join(" ")} }`);
-        chunk.forEach((login, j) => (counts[login] = data[`r${j}`].issueCount));
+        chunk.forEach((id, j) => (counts[id] = data[`r${j}`].issueCount));
       }),
     );
   }
   return counts;
+}
+
+// Reads every known person's current login, so a rename shows the same way whether the cache is old or fresh. An
+// account that no longer exists is dropped, as a fresh run would never see it.
+async function refreshLogins() {
+  const known = Object.keys(users);
+  for (let i = 0; i < known.length; i += 100) {
+    const chunk = known.slice(i, i + 100);
+    const data = await graphql(`query($ids: [ID!]!) { nodes(ids: $ids) { ... on User { login databaseId } } }`, {
+      ids: chunk.map((id) => users[id].node),
+    }, { missingNodes: true });
+    chunk.forEach((id, j) => {
+      const user = data.nodes[j];
+      if (user?.databaseId === Number(id)) users[id].login = user.login;
+      else delete users[id];
+    });
+  }
 }
 
 const readJson = async (path) => {
@@ -277,25 +298,24 @@ const cachePath = join(dir, "prs.json");
 const outPath = join(dir, "contributors.json");
 const empty = () => ({ merged: {}, other: {} });
 const old = await readJson(cachePath);
-const cache = old?.rule === RULE ? old : { rule: RULE, since: null, ids: {}, main: empty(), fork: null };
+const cache = old?.rule === RULE ? old : { rule: RULE, since: null, users: {}, main: empty(), fork: empty() };
 const before = JSON.stringify({ ...old, since: null });
-ids = cache.ids;
+users = cache.users;
 
-// Start the next run an hour before this one started, so pull requests updated during the walk aren't missed.
+// Both repositories are read the same way, fresh or from the cache, so the result doesn't depend on when the cache
+// was started: only pull requests updated since the last run are read again (the fork's limited to those merged or
+// opened before the cutoff), and everyone's reviews are counted again each run. Start the next run an hour before
+// this one started, so pull requests updated during the walk aren't missed.
 const nextSince = new Date(started - 3_600_000).toISOString().replace(/\.\d+Z$/, "Z");
 await walk(MAIN, cache.main, cache.since);
-// The fork no longer feeds main: its part is read once and kept.
-if (!cache.fork) {
-  const fork = { ...empty(), reviews: {} };
-  await walk(FORK, fork, null, FORK_CUTOFF);
-  const forkReviewers = new Set([...Object.values(fork.merged).flatMap((p) => p.r), ...Object.values(fork.other).flat()]);
-  fork.reviews = await reviewCounts([...forkReviewers].sort(), `repo:${FORK} created:<${FORK_CUTOFF}`);
-  cache.fork = fork;
-}
+await walk(FORK, cache.fork, cache.since, FORK_CUTOFF);
 cache.since = nextSince;
+await refreshLogins();
 
-const mainReviewers = new Set([...Object.values(cache.main.merged).flatMap((p) => p.r), ...Object.values(cache.main.other).flat()]);
-const mainReviews = await reviewCounts([...mainReviewers].sort(), `repo:${MAIN}`);
+const reviewersOf = (part) =>
+  [...new Set([...Object.values(part.merged).flatMap((p) => p.r), ...Object.values(part.other).flat()])].filter((id) => users[id]);
+const mainReviews = await reviewCounts(reviewersOf(cache.main), `repo:${MAIN}`);
+const forkReviews = await reviewCounts(reviewersOf(cache.fork), `repo:${FORK} created:<${FORK_CUTOFF}`);
 
 // Who each merged pull request credits: its author, and the people of each of its commits for which it is the first
 // merged pull request (main's and the fork's together, by merge time) to contain that commit. A branch that carries
@@ -323,20 +343,19 @@ function credit() {
   return prs;
 }
 
-// Logins are case-insensitive; the spelling GitHub gives last wins.
+// One card per account, under its current login.
 const people = new Map();
-const person = (login) => {
-  const key = login.toLowerCase();
-  if (!people.has(key)) people.set(key, { login, prs: 0, reviews: 0 });
-  return people.get(key);
+const person = (id) => {
+  if (!people.has(id)) people.set(id, { id, prs: 0, reviews: 0 });
+  return people.get(id);
 };
-for (const { credited } of credit()) for (const login of credited) person(login).prs++;
-for (const counts of [mainReviews, cache.fork.reviews]) {
-  for (const [login, n] of Object.entries(counts)) if (n > 0) person(login).reviews += n;
+for (const { credited } of credit()) for (const id of credited) person(Number(id)).prs++;
+for (const counts of [mainReviews, forkReviews]) {
+  for (const [id, n] of Object.entries(counts)) if (n > 0) person(Number(id)).reviews += n;
 }
 const contributors = [...people.values()]
-  .filter((p) => isPerson(p.login) && ids[p.login])
-  .map((p) => ({ login: p.login, avatarUrl: `https://avatars.githubusercontent.com/u/${ids[p.login]}?v=4`, prs: p.prs, reviews: p.reviews }))
+  .filter((p) => users[p.id] && isPerson(users[p.id].login))
+  .map((p) => ({ login: users[p.id].login, avatarUrl: `https://avatars.githubusercontent.com/u/${p.id}?v=4`, prs: p.prs, reviews: p.reviews }))
   .sort((a, b) => b.prs + b.reviews - (a.prs + a.reviews) || a.login.localeCompare(b.login));
 
 const previous = await readJson(outPath);

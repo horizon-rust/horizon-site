@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-11-19T18:09:57.637Z",
- "rule": "merged-prs-with-coauthors+reviews/2",
+ "generatedAt": "2026-11-19T19:06:43.494Z",
+ "rule": "merged-prs-with-coauthors+reviews/3",
  "contributors": [
   {
    "login": "ludovic111",
@@ -47,7 +47,7 @@
   {
    "login": "NikitaMGrimm",
    "avatarUrl": "https://avatars.githubusercontent.com/u/65914808?v=4",
-   "prs": 344,
+   "prs": 345,
    "reviews": 19
   },
   {
