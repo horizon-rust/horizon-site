@@ -226,22 +226,28 @@ async function eachLimited(items, task) {
 
 const MERGED_FIELDS = `mergeCommit { id oid parents { totalCount } ${AUTHORS} } ${COMMITS(10)} ${REVIEWS(false)}`;
 
-// The merged pull requests (`merged`) and the reviewers of the others (`other`) of one repository.
+// The merged pull requests (`merged`) and the reviewers of the others (`other`) of one repository. With `before`
+// (the fork's cutoff), a pull request merged at or after it earns no pull request credit, but its reviewers still
+// count when it was opened before it, like those of a pull request still open or closed unmerged.
 async function walk(repo, part, since, before) {
+  const otherReviewers = async (pr) => {
+    const r = await reviewers(pr);
+    if (r.length) part.other[pr.number] = r;
+    else delete part.other[pr.number];
+  };
   for await (const page of pullRequests(repo, "MERGED", MERGED_FIELDS, since)) {
     await eachLimited(
-      page.filter((pr) => !before || pr.mergedAt < before),
-      async (pr) => (part.merged[pr.number] = await mergedPr(repo, pr)),
+      page.filter((pr) => !before || pr.createdAt < before),
+      async (pr) => {
+        if (!before || pr.mergedAt < before) part.merged[pr.number] = await mergedPr(repo, pr);
+        else await otherReviewers(pr);
+      },
     );
   }
   for await (const page of pullRequests(repo, "OPEN, CLOSED", REVIEWS(false), since)) {
     await eachLimited(
       page.filter((pr) => !before || pr.createdAt < before),
-      async (pr) => {
-        const r = await reviewers(pr);
-        if (r.length) part.other[pr.number] = r;
-        else delete part.other[pr.number];
-      },
+      otherReviewers,
     );
   }
 }
