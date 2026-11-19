@@ -32,7 +32,7 @@ cargo horizon-mod check target/horizon-mod/greeter.hmod --key "RW…your public 
 
 Publish with a pull request on horizon-mods: attach the file to a release of your own repository, then open a pull request that adds or updates `mods/<id>.toml` with the version, the file's name and its SHA-256, and put the file's download link (`https://github.com/<you>/<repo>/releases/download/<tag>/<file>`) in the pull request's description. The horizon-mods README says how, step by step: [Submit](https://github.com/horizon-rust/horizon-mods#submit). The upload form at [playhorizon.dev/mods/submit](/mods/submit) can't take `.hmod` mods or newer shader packs yet.
 
-The registry fetches the linked file, checks its name and SHA-256 and stages it, so you don't wait for a maintainer. Then the repository's checks run `cargo horizon-mod check` on the file and post their report on the pull request.
+The registry fetches the linked file, checks its name and SHA-256 and runs the checker on it, then stages it for the checks, with no maintainer needed. A file linked anywhere else, or more than three in one pull request, is staged by a maintainer instead ([Staging by hand](https://github.com/horizon-rust/horizon-mods#staging-by-hand)). Then the repository's checks run `cargo horizon-mod check` on the file and post their report on the pull request.
 
 ## Review and publication
 

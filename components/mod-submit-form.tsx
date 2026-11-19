@@ -299,8 +299,8 @@ export function ModSubmitForm({ known }: { known: KnownProject[] }) {
     <div className="space-y-8">
       <p className="text-[15px] text-white/65">
         The form can&apos;t take <code className={code}>.hmod</code> files made with the new SDK, or newer shader packs, yet.
-        Open a pull request on horizon-mods instead and link the file in its description; the registry stages it for the
-        checks:{" "}
+        Open a pull request on horizon-mods instead, with the file&apos;s GitHub release download link in its description; the
+        registry stages it for the checks:{" "}
         <a href="https://github.com/horizon-rust/horizon-mods#submit" className={LINK}>
           Submit with a pull request
         </a>
