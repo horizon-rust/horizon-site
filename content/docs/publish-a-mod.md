@@ -42,7 +42,9 @@ When the pull request is merged, the file becomes a release of horizon-mods with
 
 ## Updates
 
-An update is a new version in your project's entry, made the same way. Only the entry's owners can add versions, and every version of a native mod is reviewed again. If the project has a key, the new file must be signed with it. The registry's file formats are in [the mod index reference](/docs/api/mod-index).
+An update is a new version in your project's entry, made the same way. Only the entry's owners can add versions, and every version of a mod is reviewed again. If the project has a key, the new file must be signed with it. The registry's file formats are in [the mod index reference](/docs/api/mod-index).
+
+An owner's update of a resource pack, a shader pack in Horizon's own format (`.hshader`) or a data pack publishes as soon as its checks pass, without waiting for a reviewer, when the pull request only adds versions to that entry and is opened by an account listed in its `owner_ids`. Put the new version above any version published the same day. The [horizon-mods README](https://github.com/horizon-rust/horizon-mods#submit) has the full rule.
 
 ## Old .hnmod mods
 
