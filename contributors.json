@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T19:45:09.980Z",
+ "generatedAt": "2026-11-20T07:17:15.939Z",
  "rule": "merged-prs-with-coauthors+reviews/3",
  "contributors": [
   {
@@ -17,7 +17,7 @@
   {
    "login": "rdbtCVS",
    "avatarUrl": "https://avatars.githubusercontent.com/u/87152661?v=4",
-   "prs": 510,
+   "prs": 514,
    "reviews": 1153
   },
   {
@@ -29,7 +29,7 @@
   {
    "login": "kacpherek",
    "avatarUrl": "https://avatars.githubusercontent.com/u/54669067?v=4",
-   "prs": 744,
+   "prs": 745,
    "reviews": 573
   },
   {
@@ -39,16 +39,16 @@
    "reviews": 0
   },
   {
+   "login": "NikitaMGrimm",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/65914808?v=4",
+   "prs": 412,
+   "reviews": 19
+  },
+  {
    "login": "Solenopsisbot",
    "avatarUrl": "https://avatars.githubusercontent.com/u/101841422?v=4",
    "prs": 81,
    "reviews": 313
-  },
-  {
-   "login": "NikitaMGrimm",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/65914808?v=4",
-   "prs": 348,
-   "reviews": 19
   },
   {
    "login": "TheMrZZ",
@@ -125,7 +125,7 @@
   {
    "login": "Detimes",
    "avatarUrl": "https://avatars.githubusercontent.com/u/165512828?v=4",
-   "prs": 123,
+   "prs": 126,
    "reviews": 0
   },
   {
@@ -173,7 +173,7 @@
   {
    "login": "voidsipp",
    "avatarUrl": "https://avatars.githubusercontent.com/u/67880125?v=4",
-   "prs": 105,
+   "prs": 106,
    "reviews": 0
   },
   {
@@ -299,7 +299,7 @@
   {
    "login": "Keel0n",
    "avatarUrl": "https://avatars.githubusercontent.com/u/96615388?v=4",
-   "prs": 41,
+   "prs": 42,
    "reviews": 0
   },
   {
@@ -321,6 +321,12 @@
    "reviews": 0
   },
   {
+   "login": "5oscow",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/191805916?v=4",
+   "prs": 37,
+   "reviews": 0
+  },
+  {
    "login": "gigamans442",
    "avatarUrl": "https://avatars.githubusercontent.com/u/125603364?v=4",
    "prs": 37,
@@ -335,12 +341,6 @@
   {
    "login": "k3yh",
    "avatarUrl": "https://avatars.githubusercontent.com/u/115393708?v=4",
-   "prs": 37,
-   "reviews": 0
-  },
-  {
-   "login": "sirrayi",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/191805916?v=4",
    "prs": 37,
    "reviews": 0
   },
@@ -483,8 +483,20 @@
    "reviews": 0
   },
   {
+   "login": "vinycalves",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/130791766?v=4",
+   "prs": 8,
+   "reviews": 13
+  },
+  {
    "login": "Delete228",
    "avatarUrl": "https://avatars.githubusercontent.com/u/31237303?v=4",
+   "prs": 20,
+   "reviews": 0
+  },
+  {
+   "login": "DrDth",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/357993605?v=4",
    "prs": 20,
    "reviews": 0
   },
@@ -493,12 +505,6 @@
    "avatarUrl": "https://avatars.githubusercontent.com/u/179360031?v=4",
    "prs": 19,
    "reviews": 0
-  },
-  {
-   "login": "vinycalves",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/130791766?v=4",
-   "prs": 8,
-   "reviews": 11
   },
   {
    "login": "WooCaash",
@@ -513,12 +519,6 @@
    "reviews": 0
   },
   {
-   "login": "DrDth",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/357993605?v=4",
-   "prs": 18,
-   "reviews": 0
-  },
-  {
    "login": "mariuslozo-boop",
    "avatarUrl": "https://avatars.githubusercontent.com/u/254631011?v=4",
    "prs": 18,
@@ -527,6 +527,12 @@
   {
    "login": "Mik00000",
    "avatarUrl": "https://avatars.githubusercontent.com/u/98947543?v=4",
+   "prs": 18,
+   "reviews": 0
+  },
+  {
+   "login": "RLC248",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/259570844?v=4",
    "prs": 18,
    "reviews": 0
   },
@@ -581,12 +587,6 @@
   {
    "login": "oskal675-design",
    "avatarUrl": "https://avatars.githubusercontent.com/u/249809525?v=4",
-   "prs": 16,
-   "reviews": 0
-  },
-  {
-   "login": "RLC248",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/259570844?v=4",
    "prs": 16,
    "reviews": 0
   },
@@ -1257,6 +1257,12 @@
    "reviews": 0
   },
   {
+   "login": "ZiQu-dev",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/75249449?v=4",
+   "prs": 3,
+   "reviews": 0
+  },
+  {
    "login": "adiraj66132",
    "avatarUrl": "https://avatars.githubusercontent.com/u/198093090?v=4",
    "prs": 2,
@@ -1559,12 +1565,6 @@
   {
    "login": "zenith600",
    "avatarUrl": "https://avatars.githubusercontent.com/u/137978856?v=4",
-   "prs": 2,
-   "reviews": 0
-  },
-  {
-   "login": "ZiQu-dev",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/75249449?v=4",
    "prs": 2,
    "reviews": 0
   },
