@@ -1,0 +1,756 @@
+{
+  "languageName": "Türkçe",
+  "meta": {
+    "title": "Horizon: Minecraft Rust Edition, Java 26.3 Rust ile yeniden yazıldı",
+    "description": "Minecraft: Java Edition 26.3 Rust ile yeniden yazıldı. Ücretsiz, açık kaynaklı ve vanilla'ya karşı test edildi. Windows, macOS ve Linux için Horizon launcher'ı indir."
+  },
+  "common": {
+    "newTab": "(yeni sekmede açılır)"
+  },
+  "header": {
+    "nav": {
+      "about": "Hakkında",
+      "hub": "Hub",
+      "benchmarks": "Benchmark",
+      "mods": "Modlar",
+      "releases": "Sürümler",
+      "docs": "Belgeler",
+      "players": "Oyuncular",
+      "shop": "Mağaza"
+    },
+    "mainNav": "Ana menü",
+    "download": "İndir",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "unseen": ", {n} yeni",
+    "unseenMenu": "{n} yeni"
+  },
+  "footer": {
+    "disclaimer": "Resmi bir Minecraft ürünü değildir. Mojang veya Microsoft tarafından onaylanmamıştır ve onlarla ilişkili değildir.",
+    "whoTitle": "Kim yapıyor",
+    "who": "Horizon, Ludovic Marie tarafından geliştirilmektedir; kendisine <lu4ovic>lu4ovic.com</lu4ovic> üzerinden ulaşabilirsiniz. Bu site ise <dezerx>DezerX</dezerx> ekibinden Anthony S tarafından geliştirilmiş olup sorumluluğu kendisine aittir. Horizon hiçbir Minecraft kodu, varlığı veya verisi içermez ve bu site oyun dosyası sunmaz: Minecraft: Java Edition'ın yasal olarak edinilmiş kendi kopyanıza sahip olmanız gerekir. Minecraft, Mojang Synergies AB'nin ticari markasıdır. Horizon kozmetikleri, kayıtlı satıcı Paddle.com aracılığıyla Ludovic Marie tarafından satılmaktadır.",
+    "licencesTitle": "Lisanslar",
+    "licences": "Horizon'ın özgün çalışması <mit>MIT lisansı</mit> altındadır. Yazı tipleri Geist, Geist Mono ve Bricolage Grotesque olup <ofl>SIL Open Font License</ofl> kapsamındadır. Bu sitedeki her varlık LEGAL.md dosyasında listelenmiştir.",
+    "privacyTitle": "Gizlilik",
+    "privacy": "Bu site çerez bırakmaz, analitik veya izleyici barındırmaz ve GitHub dışında üçüncü taraflardan hiçbir şey yüklemez. Bir sürümü açtığınızda sunucu, her ziyaretçiyi yalnızca bir kez sayabilmek için IP adresinizin tek yönlü özetini (hash) tutar; adresin kendisi asla saklanmaz. Son sürümleri, yama notlarını, bağlantıları ve katkıda bulunanları göstermek için tarayıcınız bunları api.github.com ve raw.githubusercontent.com adreslerinden, katkıda bulunanların fotoğraflarını ise avatars.githubusercontent.com adresinden ister; bu istekler <github>GitHub'ın gizlilik beyanı</github> kapsamındadır. Launcher, siz izin vermedikçe hiçbir şey göndermez: <telemetry>neleri gönderebileceği ve nasıl silineceği</telemetry>.",
+    "legal": {
+      "privacy": "Gizlilik politikası",
+      "terms": "Satış koşulları",
+      "refunds": "İadeler",
+      "shop": "Mağaza"
+    },
+    "madeInRust": "Açık şekilde, Rust ile yapıldı."
+  },
+  "notFound": {
+    "title": "Bu adreste",
+    "titleAccent": "hiçbir şey yok.",
+    "body": "Sayfa taşınmış ya da hiç var olmamış olabilir. İnsanların en çok aradığı yerler şunlar.",
+    "home": "Ana sayfaya dön",
+    "docs": "Belgeler",
+    "mods": "Modlar"
+  },
+  "home": {
+    "hero": {
+      "writtenIn": "<rust>Rust</rust> ile yazıldı",
+      "title": "Bildiğin o oyun,",
+      "titleAccent": "Rust ile yeniden yapıldı.",
+      "lead": "Minecraft: Java Edition 26.3 istemcisi ve oyun mantığı Rust ile yeniden yazıldı ve fark test düzenekleriyle vanilla oyuna karşı doğrulandı.",
+      "download": "Launcher'ı indir",
+      "github": "GitHub'da görüntüle",
+      "launcher": "Launcher {version}",
+      "downloadsTitle": "GitHub üzerinden tüm sürümler ve güncellemeler dahil launcher indirmeleri",
+      "downloads": "<n>{n}</n> indirme"
+    },
+    "frameRate": {
+      "eyebrow": "Benchmark",
+      "title": "<accent>{ratio}×</accent> daha yüksek kare hızı.",
+      "lead": "Mod yüklü olmadan vanilla 26.3'te saniyedeki ortalama kare sayısı.",
+      "standard": "Standart launcher",
+      "sliderLabel": "Standart launcher kare hızı",
+      "hint": "Kendi kare hızını denemek için standart launcher çubuğunu sürükle. Sonuçlar donanıma göre değişir."
+    },
+    "about": {
+      "eyebrow": "Nedir",
+      "title": "Aynı girdiler, birebir aynı çıktılar.",
+      "lead": "Bazen Minecraft Rust Edition olarak da anılan Horizon, Minecraft: Java Edition 26.3'ü alt sistem alt sistem Rust ile yeniden inşa eder ve her parçayı çıktıları birebir aynı olana kadar vanilla oyunla aynı girdilere tabi tutar.",
+      "contributors": "Katkıda bulunanları gör",
+      "imageAlt": "Bir lavanta tarlasının üzerinde bir Minecraft yel değirmeni",
+      "points": {
+        "copy": {
+          "title": "Kendi kopyan",
+          "body": "Resmi launcher ile Java Edition'ı kur ve 26.3 sürümünü bir kez oynat. Horizon kendi kaynaklarını bilgisayarındaki bu dosyalardan oluşturur; asla oyun dosyası indirmez veya paylaşmaz."
+        },
+        "native": {
+          "title": "Üç platformda yerel çalışma",
+          "body": "Linux, Apple Silicon veya Intel üzerinde macOS ve x64 veya ARM üzerinde Windows. Dünyalar, vanilla oluşturucuların Rust uyarlamasından gelir ve vanilla'nın blok modelleri, aydınlatması, gökyüzü ve sisi ile çizilir."
+        },
+        "open": {
+          "title": "Açık kaynak",
+          "body": "Horizon'ın kodu MIT lisanslıdır. İçerisinde hiçbir Minecraft kodu, varlığı veya verisi bulunmaz; bunlar Minecraft EULA kapsamında Mojang ve Microsoft'a aittir."
+        }
+      }
+    },
+    "sponsor": {
+      "title": "Minecraft Sunucun,<br/><accent>7/24 Çevrimiçi.</accent>",
+      "lead": "Sunucunu şimdi ~60 saniyenin altında kur!",
+      "cta": "Sunucumu kur",
+      "copy": "{code} kodunu kopyala",
+      "copied": "Kupon panoya kopyalandı",
+      "selected": "Seçildi: kopyalamak için Ctrl+C'ye bas",
+      "hide": "Bu ortağı gizle"
+    },
+    "community": {
+      "eyebrow": "Topluluk",
+      "title": "Açık şekilde geliştiriliyor.",
+      "lead": "Her değişiklik herkese açık biçimde GitHub'a düşer. Gelip soru sorabilir, hata bildirebilir veya pull request gönderebilirsiniz.",
+      "links": {
+        "discord": {
+          "title": "Discord",
+          "body": "Sorular, hata bildirimleri ve ekran görüntüleri."
+        },
+        "sponsor": {
+          "title": "Sponsor ol",
+          "body": "GitHub sponsorları bir sonraki sürümü finanse eder."
+        },
+        "source": {
+          "title": "Kaynak kodu",
+          "body": "Issue ve pull request'lere her zaman açığız."
+        },
+        "build": {
+          "title": "Nasıl geliştiriliyor",
+          "body": "Kim yazıyor, değişiklikler nasıl kontrol ediliyor ve çalıştırmak neden güvenli."
+        }
+      },
+      "artists": "3D modeller yapıyor musun? <link>Horizon 3D sanatçılar arıyor</link>."
+    },
+    "gallery": {
+      "eyebrow": "Çizen",
+      "title": "Sevdiğin o oyun, <accent>6× daha hızlı.</accent>",
+      "lead": "Buradaki her kare, vanilla'nın blok modelleri, aydınlatması, gökyüzü ve sisi ile Horizon tarafından işlendi.",
+      "shots": {
+        "nether": "Nether'daki bir lav denizinin üzerindeki kızıl ormanda altın kılıç tutan bir piglin",
+        "village": "Mavi bir gökyüzü altında akasya ağaçları arasında saz çatılı evlerden oluşan bir savana köyü",
+        "night": "Kare bir ayın ve yıldızlı gece gökyüzünün altında meşalelerle aydınlatılmış bir köy",
+        "ocean": "Ilık bir okyanusta bir mercan resifinin üzerinde yüzen tropikal balıklar"
+      }
+    },
+    "contributors": {
+      "eyebrow": "Katkıda bulunanlar",
+      "title": "{n} kişi tarafından yapıldı.",
+      "claude": "…ve<claude/>Claude da",
+      "titleFallback": "Katkıda bulunanlar tarafından yapıldı.",
+      "lead": "{repo} deposunda commit'i bulunan herkes (en çok commit'i olanlar başta) ve bu sitenin arkasındaki isimler.",
+      "all": "GitHub'daki tüm katkıda bulunanlar",
+      "oneCommit": "1 commit",
+      "commits": "{n} commit",
+      "webDeveloper": "Web Geliştiricisi"
+    },
+    "parity": {
+      "harnesses": "başladığımızda kurduğumuz fark test düzenekleri: her biri aynı girdileri hem Horizon'dan hem de vanilla istemci ve sunucudan geçirip çıkan sonuçları karşılaştırır.",
+      "title": "Proje nerede başladı.",
+      "lead": "Aşağıda her alt sistemin ilk denetimi yer alıyor: o dönem test düzeneklerinin neleri karşılaştırdığı ve ne kadarını kapsadığı. Bu bir birebir uyumluluk iddiası değildir: oyuncular hâlâ farklar buluyor ve 26.3 üzerindeki uyumluluk çalışması başta redstone olmak üzere devam ediyor.",
+      "audited": "Denetim tarihi: <date/><dot/>oyuncular hâlâ farklar buluyor: <link>açık bildirimler</link>",
+      "passed": "Test düzeneklerini geçti",
+      "scored": "Puan {score}: {label}",
+      "scaleTitle": "Her alt sistemin puanı",
+      "scale": {
+        "0": "yok",
+        "0.25": "başlandı",
+        "0.5": "oynanabilir, büyük özellikler eksik",
+        "0.75": "büyük ölçüde tamamlandı",
+        "1": "test düzenekleri kapsıyor ve geçiyor"
+      },
+      "subsystems": {
+        "loop": {
+          "name": "Pencere, girdi ve oyun döngüsü",
+          "detail": "Oyun döngüsü, seçenekler, kamera, otomatik zıplama, tek tuşla koşma/eğilme, yerel girdi ve kare sınırlayıcı vanilla ile eşleşiyor."
+        },
+        "assets": {
+          "name": "Varlıklar ve kaynaklar",
+          "detail": "Eşya modelleri 196.290 yığın (stack) üzerinde vanilla ile eşleşiyor ve istemci her eşyayı bunlar üzerinden çiziyor; kaynak paketi ekranı 3.000 tıklama, kaydırma ve arama oturumunda (uyumsuzluk onayı dahil) vanilla'nın çizimiyle eşleşiyor."
+        },
+        "network": {
+          "name": "Ağ protokolü ve çok oyunculu",
+          "detail": "Vanilla sunuculara katılıyor; adanmış sunucu (--dedicated) vanilla'nın dosyaları, durum ping'i, giriş, yapılandırma, oynanış, chunk'lar, sohbet, tarifler, başarımlar ve komut ağacıyla eşleşiyor, vanilla'nın paket kodundan oluşturulan bir istemci buna katılabiliyor, Horizon vanilla bir sunucuya katılabiliyor ve LAN keşfi 462 durumda eşleşiyor (yalnızca çevrimdışı modda)."
+        },
+        "chunks": {
+          "name": "Chunk depolama ve paletler",
+          "detail": "İstemci ve kayıtlar paletli kapları paylaşıyor; 266 senaryoda vanilla ile birebir aynı."
+        },
+        "meshing": {
+          "name": "Bölüm ağ örme (meshing)",
+          "detail": "112 sahne ve bir milyondan fazla dörtgen (quad) vanilla ile birebir aynı."
+        },
+        "rendering": {
+          "name": "Görüntü işleme (Rendering)",
+          "detail": "Varlık modelleri, blok varlık işleyicileri (End geçitleri, kapıları ve dokuma tezgahı flama önizlemesi dahil 407 durum) ve animasyonları (End kapısı ışınları dahil 296 durum), HUD katmanları (2.200 durum), tarif kitabı (600 durum), oyuncu listesi, altyazılar ve dünya sınırı vanilla ile eşleşiyor."
+        },
+        "lighting": {
+          "name": "Aydınlatma",
+          "detail": "Kaydedilen ve yeniden hesaplanan ışık, basamaklar ve merdivenler dahil vanilla ile eşleşiyor."
+        },
+        "worldgen": {
+          "name": "Dünya oluşturma",
+          "detail": "Üç boyutun tamamında 225 yapı bölgesini kapsayan 2.352 tam chunk, vanilla ile birebir aynı."
+        },
+        "saves": {
+          "name": "Bölge dosyaları ve kayıtlar",
+          "detail": "Kayıtlar vanilla ile karşılıklı sorunsuz açılıp kaydedilebiliyor ve 1.8'den 26.2'ye kadar olan dünyalar (dümdüz dünyalar dahil) tıpkı vanilla'nın DataFixer'ları gibi yükseltiliyor; eski options.txt ve hotbar.nbt dosyaları da yükseltiliyor."
+        },
+        "entities": {
+          "name": "Varlıklar ve fizik",
+          "detail": "Nitelikler, boyutlar, ölüm ganimetleri, doğma kuralları, doğal doğma (15.500 durum), baskınlar ve devriyeler (1.900 durum), doğan mob'ların ekipmanları, büyüleri ve durumları (finalizeSpawn, 24.000 durum) ve mob yapay zekası (köylü üremesi ve dedikoduları, warden, ghastling'ler ve bakır golemler dahil 92 senaryo) vanilla ile eşleşiyor."
+        },
+        "inventory": {
+          "name": "Etkileşim ve envanter",
+          "detail": "Menü tıklamaları dokuma tezgahı ve crafter dahil 8.000'den fazla tıklama dizisinde eşleşiyor; tarif kitabı yerleştirme (6.000 durum), düğmeleri (1.200), kayıtlı kitap (1.500) ve dokuma tezgahı ile crafter ekranları (1.600) vanilla ile eşleşiyor."
+        },
+        "menus": {
+          "name": "Menüler, HUD ve sohbet",
+          "detail": "Tüm komutlar vanilla gibi çalışıyor (39.685 ayrıştırılmış girdi üzerinde 758 komut), skor tabloları ve takımlar eşleşiyor (81.000 işlem), oyuncu listesi oyuncuların skin'lerinden çizilen kafalarla (authlib dokuları, SkinManager araması, eski skin dönüştürme) 872.000'den fazla çizim çağrısında eşleşiyor ve sohbet odaklanma ile kaydırmada eşleşiyor; kaynak paketi ekranı (4.000'den fazla durumda seçim, 3.000 oturumda çizim ve uyumsuzluk onayı) ile komut önerileri, kullanım satırları, Tab tamamlama ve geçmişi içeren sohbet girdisi (vanilla istemci komut ağacı üzerinde 3.000 oturum) vanilla ile eşleşiyor."
+        },
+        "audio": {
+          "name": "Ses",
+          "detail": "Ses motoru, ses olayları, müzik, durumsal müzik, ortam sesleri ve altyazılar vanilla ile eşleşiyor."
+        },
+        "blocks": {
+          "name": "Blok davranışları ve tick işleyişi",
+          "detail": "Blok güncellemeleri, rastgele tick'ler, redstone, fırlatıcılar (6.000 durum), crafter'lar (4.000 üretim), blok varlığı kaldırma (kapların içeriğini dökmesi, 4.000 durum), bakır golem sandık sıralaması ve sculk ailesi (çığırtkan uyarıları ve warden çağırma dahil 435 senaryo) vanilla ile eşleşiyor."
+        }
+      }
+    }
+  },
+  "releases": {
+    "meta": {
+      "title": "Horizon launcher'ı indir: sürümler ve nightly'ler",
+      "description": "Windows, macOS ve Linux için Horizon launcher'ı indir. Her oyun, launcher ve nightly sürümü, notları ve indirmeleriyle doğrudan GitHub'dan."
+    },
+    "eyebrow": "Sürümler",
+    "title": "Her sürüm,",
+    "titleAccent": "çıktığı anda.",
+    "lead": "Horizon, launcher'ı ve nightly derlemeleri doğrudan GitHub'dan. Notlarını okumak için birini açın; daha önce açtıklarınız görüldü olarak işaretlenir.",
+    "browse": "Sürümlere göz at",
+    "allOnGitHub": "GitHub'daki tüm sürümler",
+    "changelog": "Değişiklik günlüğü",
+    "latest": "Son {n} sürüm.",
+    "latestFallback": "Sürümler GitHub'da yer alıyor.",
+    "unreachable": "Şu anda GitHub'a ulaşılamadı. Her sürüm <link>GitHub'daki sürümler sayfasında</link> listelenmektedir.",
+    "kinds": {
+      "horizon": "Horizon",
+      "launcher": "Launcher",
+      "nightly": "Nightly"
+    },
+    "noNotes": "Bu sürüm için not yok.",
+    "downloads": "İndirmeler",
+    "viewOnGitHub": "GitHub'da görüntüle",
+    "list": {
+      "tabs": {
+        "all": "Tümü",
+        "horizon": "Horizon",
+        "launcher": "Launcher",
+        "nightly": "Nightly"
+      },
+      "newCount": "{n} yeni",
+      "caughtUp": "Hepsi güncel",
+      "markAllSeen": "Tümünü görüldü işaretle",
+      "seen": "Görüldü",
+      "new": "Yeni",
+      "markUnseen": "Görülmedi olarak işaretle",
+      "oneView": "1 görüntülenme",
+      "views": "{n} görüntülenme"
+    }
+  },
+  "benchmarks": {
+    "meta": {
+      "title": "Horizon vs Minecraft Java benchmarkları: FPS, bellek, yükleme",
+      "description": "2016 ThinkPad, Mac mini ve oyuncu masaüstü bilgisayarında Horizon ile Minecraft: Java Edition 26.3 karşılaştırması: aynı şekilde ölçülen kare hızları, takılmalar, yükleme ve bellek."
+    },
+    "titleA": "Horizon,",
+    "titleB": "Java Edition'a karşı.",
+    "lead": "Aynı üç bilgisayar her iki oyunu da aynı dünyada, aynı uçuş rotasında ve aynı ayarlarla çalıştırdı. Java Edition'ın hâlâ önde olduğu yerler de dahil olmak üzere, fark edeceğiniz şeylerin sade özeti burada.",
+    "compare": "Bir bilgisayarı karşılaştır",
+    "estimate": "Kendininkini tahmin et",
+    "inShort": "Özetle",
+    "summary": {
+      "noHitches": "Horizon'da hiç takılma yok; Java Edition'da dakikada {java}.",
+      "fewer": "Yaklaşık %{pct} daha az takılma ve {v} değerine karşı ortalama {h} FPS.",
+      "smooth": "İkisinde de akıcı. {lead}{far}.",
+      "leadMore": "Horizon, görüş mesafesi 12'de ortalama %{pct} daha fazla FPS veriyor",
+      "leadSame": "İki oyun da görüş mesafesi 12'de ortalama neredeyse aynı performansı veriyor",
+      "javaFar": "; 32'de Java Edition daha hızlı"
+    },
+    "metrics": {
+      "avgFps": "Ortalama kare hızı",
+      "low1": "En kötü anlardaki kare hızı",
+      "hitches": "Dakikadaki takılma",
+      "world": "Başlatmadan dünyaya",
+      "terrain": "Yeni arazi yükleme",
+      "memory": "Kullanılan bellek"
+    },
+    "units": {
+      "fps": "{n} FPS",
+      "seconds": "{n} sn",
+      "gb": "{n} GB"
+    },
+    "losses": {
+      "title": "Java Edition'ın hâlâ daha hızlı olduğu yerler",
+      "intro": "Bu testlerde orijinal oyunun daha iyi performans gösterdiği her durum. Yüksek görüş mesafelerinde daha kararlı kareler <link>yol haritasında</link> şu an üzerinde çalışılan iş olarak yer alıyor.",
+      "where": "{machine}, görüş mesafesi {rd}",
+      "java": "Java Edition {value}",
+      "horizon": "Horizon {value}"
+    },
+    "yours": {
+      "title": "Peki ya senin bilgisayarın?",
+      "lead": "Ekran kartını ve işlemcini seç. Tahmin, seninkine en yakın ölçülen bilgisayardan yola çıkar ve çiplerin teknik özelliklerine göre ölçeklenir; yani bu bir garanti değil, bir aralıktır."
+    },
+    "method": {
+      "title": "Nasıl ölçüldü",
+      "p1": "Her oyun yeni bir dünyadan (tohum 1234, yaratıcı mod) başlar, başlangıç noktası etrafındaki tüm chunk'ların yüklenip çizilmesini bekler, ardından bir köy, bir orman, bir okyanus ve bir dağı ziyaret eder. Her birinde araziyi bekler, 2 saniye durur ve 12 saniyede 192 blokluk düz bir rotada uçarak her kareyi kaydeder.",
+      "p2": "VSync kapalı, kare sınırı yok, 1280x720 pencere, simülasyon mesafesi 12 ve geri kalan her şey vanilla varsayılanlarında. Java Edition 26.3, resmi launcher'ın Java seçenekleriyle oyunculara ulaştığı haliyle çalıştırılır. Her değer{measured} yapılan testlerin medyanıdır.",
+      "measuredOn": " ({day} tarihinde)",
+      "measuredBetween": " ({from} ile {to} arasında)",
+      "p3": "Tüm yöntem ve istisnalar <link>docs/benchmark.md</link> dosyasında (İngilizce) yer almaktadır."
+    },
+    "own": {
+      "title": "Kendi bilgisayarını ölç",
+      "lead": "Bunu bir terminalde çalıştır. Aynı rotayı uçar ve oyun klasöründeki benchmarks klasörüne bir rapor yazar. Discord'da paylaşırsan makinen bu verilerin daha da iyileşmesine yardımcı olur.",
+      "copyLabel": "Benchmark komutunu kopyala",
+      "copy": "Komutu kopyala",
+      "copied": "Kopyalandı",
+      "docs": "Belgelerde daha fazlası"
+    },
+    "explorer": {
+      "pickTitle": "Bir bilgisayar seç",
+      "pickLead": "2016 model bir dizüstünden oyuncu masaüstüne kadar projenin kendi üç makinesi.",
+      "renderDistance": "Görüş mesafesi",
+      "renderDistanceShort": "Görüş mesafesi",
+      "distances": {
+        "12": "(varsayılan)",
+        "32": "(uzak)"
+      },
+      "computer": "Bilgisayar",
+      "showing12": "{missing} Görüş mesafesi 12 gösteriliyor.",
+      "horizon": "Horizon",
+      "java": "Java Edition",
+      "java263": "Java Edition 26.3",
+      "classes": {
+        "smooth": "120 FPS üzeri",
+        "fine": "60 - 120 arası",
+        "slow": "30 - 60 arası",
+        "stutter": "30 altı"
+      },
+      "times": "{n} kez",
+      "percent": "%{n}",
+      "verdict": {
+        "never": "{machine} cihazında Horizon hiç 60 FPS altına düşmedi; Java Edition dakikada {java} kez düştü.",
+        "fewer": "{machine} cihazında Horizon dakikada {h} kez takılırken Java Edition {v} kez takıldı.",
+        "javaSmoother": "{machine} cihazında Java Edition burada daha akıcıydı: Horizon'daki {h} takılmaya karşılık dakikada {v} takılma.",
+        "same": "{machine} cihazında her iki oyun da neredeyse aynı akıcılıktaydı.",
+        "faster": "dünyaya {amount} daha hızlı girdi",
+        "half": "yarısı kadar bellek kullandı",
+        "less": "%{pct} daha az bellek kullandı",
+        "and": " ve ",
+        "it": "Horizon {rest}.",
+        "javaFaster": "Java Edition dünyaya daha hızlı girdi."
+      },
+      "hitches": {
+        "title": "Bir dakikalık oyundaki takılmalar",
+        "body": "Takılma, 60 Hz bir ekranın tek bir yenilemesinden daha yavaş olan karedir; yani aynı görüntüyü iki kez görürsünüz. Kırmızı işaretler 30 FPS altındaki uzun olanlardır ve bunları donma olarak hissedersiniz.",
+        "stutters": "Dakikadaki uzun donmalar: Horizon {h}, Java Edition {v}."
+      },
+      "fps": {
+        "title": "Saniyedeki kare sayısı",
+        "average": "Ortalama",
+        "worst": "En kötü anlarda",
+        "lows": "%1 en düşükler",
+        "capped": "Burada Horizon Mac'in ekranı tarafından {n} değerinde sınırlandırılıyor, bu yüzden ortalaması daha yukarı çıkamıyor. En kötü anlara bakın."
+      },
+      "waiting": {
+        "title": "Bekleme süreleri",
+        "again": "Tekrar oynat"
+      },
+      "memory": {
+        "title": "Oynarken bellek kullanımı",
+        "peak": "tepe değer {h} ve {v}",
+        "needs": "Java Edition {times} daha fazla bellek gerektirir; bu, 8 GB'lık bir bilgisayarda önem taşır.",
+        "same": "Yaklaşık aynı."
+      },
+      "frames": {
+        "title": "Her karenin dağılımı",
+        "share": "{label}: %{pct}"
+      },
+      "feel": {
+        "title": "Farkı hisset",
+        "lead": "Her iki görünüm de aynı hızda kayar ancak her biri yalnızca kendi oyunu bir kareyi bitirdiğinde ilerler; {machine} cihazında {rd} görüş mesafesinde ölçülen kare süreleri kullanılır. Gördüğünüz her donma ve sıçrama bir takılmadır.",
+        "speed": "Oynatma hızı",
+        "realTime": "Gerçek zamanlı",
+        "slower": "{n}x daha yavaş",
+        "play": "Oynat",
+        "pause": "Duraklat",
+        "soFar": "Şimdiye kadar {n} takılma",
+        "note": "Bu bir video kaydı değil, ölçülen kare süresi dağılımının canlandırmasıdır. Ekranınız en fazla kendi yenileme hızını gösterebilir, bu yüzden gerçek zamanlıda bundan hızlı olan her kare aynı görünür. {n}x daha yavaş seçeneği aynı kareleri çeyrek hızda oynatır, böylece her biri görülebilecek kadar ekranda kalır."
+      },
+      "chipPhotos": "Çip fotoğrafları:",
+      "aboutRuns": "Bu bilgisayarın testleri hakkında"
+    },
+    "estimator": {
+      "gpu": "Ekran kartı",
+      "cpu": "İşlemci",
+      "renderDistance": "Görüş mesafesi",
+      "gpuSelect": {
+        "choose": "Bir ekran kartı seç",
+        "search": "Ekran kartı ara",
+        "placeholder": "{n} ekran kartı içinde ara",
+        "none": "“{query}” ile eşleşen ekran kartı yok. Bulabildiğin en yakın olanı seç."
+      },
+      "cpuSelect": {
+        "choose": "Bir işlemci seç",
+        "search": "İşlemci ara",
+        "placeholder": "{n} işlemci içinde ara",
+        "none": "“{query}” ile eşleşen işlemci yok. Bulabildiğin en yakın olanı seç."
+      },
+      "tflops": "{n} TFLOPS",
+      "ghz": "{n} GHz",
+      "headlineExact": "Tam bu ikilide ölçüldü: en kötü anlarda Horizon'da {h} FPS, Java Edition'da {v}.",
+      "headline": "En kötü anlarda Horizon'da kabaca {h} FPS, Java Edition'da {v} FPS bekleyebilirsin.",
+      "atLeast": "en az {n}",
+      "range": "{low}–{high}",
+      "line": "Ortalama {range} FPS · {low}–{high} sn içinde dünyada",
+      "measured": "Bunlar {machine} üzerinde ölçülen değerlerdir.",
+      "scaled": "Seninkine en yakın ölçülen bilgisayar olan {machine} baz alınarak, iki çipin yayınlanan teknik özelliklerine göre ölçeklendi.",
+      "caveat": "Sürücüler, soğutma ve işletim sistemi de çip kadar etkili olabilir; bu yüzden bunu kaba bir fikir olarak gör ve gerçek değerin için aşağıdaki benchmark'ı çalıştır.",
+      "floor": " Orada Horizon'ın ortalaması ekran tarafından sınırlandırılmıştı, bu yüzden tahmin yalnızca bir alt sınır verir.",
+      "none": "Henüz bu görüş mesafesinde tahmin yapılacak ölçülmüş bir bilgisayar yok.",
+      "machines": {
+        "ThinkPad (i7-7500U, HD Graphics 620)": "ThinkPad dizüstü bilgisayar",
+        "Mac mini (M4 Pro)": "Mac mini",
+        "Desktop (RTX 4080, i7-13700KF)": "oyuncu masaüstü bilgisayarı"
+      }
+    },
+    "machines": {
+      "thinkpad": {
+        "name": "ThinkPad dizüstü",
+        "inSentence": "ThinkPad dizüstü bilgisayar",
+        "kind": "2016 model bir dizüstü",
+        "alt": "Ekranında Horizon tarafından çizilmiş bir köy görünen bir Lenovo ThinkPad T470 dizüstü bilgisayar",
+        "caption": "Görseldeki: aynı Core i7-7500U ile satılan bir ThinkPad T470. Ekranda Horizon görünüyor.",
+        "specs": [
+          {
+            "label": "İşlemci",
+            "value": "Intel Core i7-7500U, 2 çekirdek"
+          },
+          {
+            "label": "Grafik",
+            "value": "Intel HD Graphics 620, dahili"
+          },
+          {
+            "label": "Bellek",
+            "value": "32 GB"
+          },
+          {
+            "label": "Sistem",
+            "value": "Linux"
+          }
+        ],
+        "buy": [
+          "eBay'de ikinci el bul",
+          "Lenovo teknik özellik sayfası"
+        ],
+        "missing32": "32'de ölçülmedi: bu dizüstünde iki oyun da başlangıç noktasını 5 dakikada yükleyemedi, dolayısıyla ikisi aynı dünyayı çizmemiş olurdu."
+      },
+      "macmini": {
+        "name": "Mac mini",
+        "inSentence": "Mac mini",
+        "kind": "Apple'ın küçük masaüstü bilgisayarı",
+        "alt": "M4 Pro çipli bir Apple Mac mini'nin ön yüzü",
+        "caption": "",
+        "specs": [
+          {
+            "label": "Çip",
+            "value": "Apple M4 Pro, 14 çekirdek CPU, 20 çekirdek GPU"
+          },
+          {
+            "label": "Bellek",
+            "value": "64 GB"
+          },
+          {
+            "label": "Sistem",
+            "value": "macOS"
+          }
+        ],
+        "buy": [
+          "apple.com'da satın al",
+          "Mac mini modellerini karşılaştır"
+        ],
+        "missing32": ""
+      },
+      "desktop": {
+        "name": "Oyuncu masaüstü",
+        "inSentence": "oyuncu masaüstü bilgisayarı",
+        "kind": "Bir masaüstü PC",
+        "alt": "Bir NVIDIA GeForce RTX 4080 Founders Edition ekran kartı",
+        "caption": "Görseldeki: ekran kartı, GeForce RTX 4080 Founders Edition.",
+        "specs": [
+          {
+            "label": "Grafik",
+            "value": "NVIDIA GeForce RTX 4080, 16 GB"
+          },
+          {
+            "label": "İşlemci",
+            "value": "Intel Core i7-13700KF, 16 çekirdek"
+          },
+          {
+            "label": "Bellek",
+            "value": "32 GB"
+          },
+          {
+            "label": "Sistem",
+            "value": "Linux"
+          }
+        ],
+        "buy": [
+          "Best Buy'da RTX 4080",
+          "Amazon'da Core i7-13700KF"
+        ],
+        "missing32": ""
+      }
+    },
+    "credits": {
+      "kabyLake": "i7-7500U ile aynı yonga paketine sahip bir i5-7200U, Rjluna2 tarafından (CC BY-SA 4.0)",
+      "appleSilicon": "aynı aileden daha eski bir çip olan Apple M1, Henriok tarafından (CC0)",
+      "raptorLake": "grafikleri açık bırakılmış 13700KF olan bir i7-13700K, 4300streetcar tarafından (CC BY 4.0)"
+    }
+  },
+  "mods": {
+    "meta": {
+      "title": "Horizon modları, mod paketleri, kaynak, shader ve veri paketleri",
+      "description": "Horizon için yapılmış modlar, mod paketleri, kaynak paketleri, shader paketleri ve veri paketleri. Her biri listelenmeden önce incelendi ve launcher kurmadan önce her dosyayı kontrol eder."
+    },
+    "srTitle": "Horizon modları",
+    "unreachable": {
+      "title": "Kayıt dizini yanıt vermedi",
+      "body": "Mod listesi şu anda yüklenemedi. Bir dakika içinde yeniden denenecek veya resmi siteden göz atabilirsiniz.",
+      "link": "playhorizon.dev üzerinde modlar"
+    },
+    "list": {
+      "search": "{n} projede ara",
+      "searchLabel": "Modları ara",
+      "policy": "Mod kuralları",
+      "make": "Mod oluştur",
+      "mine": "Modların",
+      "submit": "Kendininkini gönder",
+      "kindGroup": "Tür",
+      "orderGroup": "Sıralama",
+      "all": "Tümü",
+      "kinds": {
+        "mod": "Modlar",
+        "native-mod": "Yerel modlar",
+        "modpack": "Mod paketleri",
+        "resourcepack": "Kaynak paketleri",
+        "shader": "Shader paketleri",
+        "shaderpack": "Shader paketleri (shaders/ klasörü)",
+        "datapack": "Veri paketleri"
+      },
+      "kindNames": {
+        "mod": "Mod",
+        "native-mod": "Yerel mod",
+        "modpack": "Mod paketi",
+        "resourcepack": "Kaynak paketi",
+        "shader": "Shader paketi",
+        "shaderpack": "Shader paketi (shaders/ klasörü)",
+        "datapack": "Veri paketi"
+      },
+      "sorts": {
+        "downloads": "En çok indirilen",
+        "rating": "En yüksek puanlı",
+        "name": "Ad"
+      },
+      "category": "Kategori",
+      "everyCategory": "Tüm kategoriler",
+      "categories": {
+        "adventure": "Macera",
+        "decoration": "Dekorasyon",
+        "economy": "Ekonomi",
+        "equipment": "Ekipman",
+        "food": "Yiyecek",
+        "game-mechanics": "Oyun mekanikleri",
+        "library": "Kütüphane",
+        "magic": "Büyü",
+        "management": "Yönetim",
+        "minigame": "Mini oyun",
+        "mobs": "Mob'lar",
+        "optimization": "Optimizasyon",
+        "social": "Sosyal",
+        "storage": "Depolama",
+        "technology": "Teknoloji",
+        "transportation": "Ulaşım",
+        "utility": "Araçlar",
+        "worldgen": "Dünya oluşturma",
+        "cartoon": "Çizgi film",
+        "fantasy": "Fantastik",
+        "realistic": "Gerçekçi",
+        "semi-realistic": "Yarı gerçekçi",
+        "vanilla-like": "Vanilla tarzı",
+        "atmosphere": "Atmosfer",
+        "bloom": "Bloom",
+        "colored-lighting": "Renkli aydınlatma",
+        "foliage": "Bitki örtüsü",
+        "path-tracing": "Path tracing",
+        "pbr": "PBR",
+        "reflections": "Yansımalar",
+        "shadows": "Gölgeler",
+        "potato": "Patates",
+        "low": "Düşük",
+        "medium": "Orta",
+        "high": "Yüksek",
+        "screenshot": "Ekran görüntüsü",
+        "challenging": "Zorlayıcı",
+        "combat": "Savaş",
+        "kitchen-sink": "Her şey dahil",
+        "lightweight": "Hafif",
+        "multiplayer": "Çok oyunculu",
+        "quests": "Görevler",
+        "8x": "8x",
+        "16x": "16x",
+        "32x": "32x",
+        "48x": "48x",
+        "64x": "64x",
+        "128x": "128x",
+        "256x": "256x",
+        "512x": "512x",
+        "audio": "Ses",
+        "blocks": "Bloklar",
+        "core-shaders": "Çekirdek shader'lar",
+        "entities": "Varlıklar",
+        "environment": "Çevre",
+        "fonts": "Yazı tipleri",
+        "gui": "Arayüz",
+        "items": "Eşyalar",
+        "locale": "Dil",
+        "models": "Modeller",
+        "simplistic": "Basit",
+        "themed": "Temalı",
+        "tweaks": "İnce ayarlar"
+      },
+      "count": "{n} proje",
+      "countOf": "{n} projeden {shown} tanesi",
+      "downloads": "{n} indirme",
+      "download": "{n} indirme",
+      "noMatch": "“{query}” aramasıyla eşleşen proje yok{inKind}{inCategory}.",
+      "inKind": " ({kind})",
+      "inCategory": " — {category}",
+      "noneInCategory": "{category} kategorisinde henüz hiç {kind} yok.",
+      "project": "proje",
+      "nothing": "Burada henüz hiçbir şey yok.",
+      "stars": {
+        "title": "{n} değerlendirmeden 5 üzerinden {mean}",
+        "titleOne": "{n} değerlendirmeden 5 üzerinden {mean}",
+        "rated": "5 üzerinden {mean} puan aldı",
+        "github": "GitHub'da {n} yıldız",
+        "githubOne": "GitHub'da {n} yıldız"
+      }
+    }
+  },
+  "stats": {
+    "meta": {
+      "title": "Horizon oyuncu sayısı: şu anda kaç kişi oynuyor",
+      "description": "Çalışan her oyunun gönderdiği anonim ping üzerinden şu anda kaç kişinin Horizon oynadığı, rekorları ve geçmişi."
+    },
+    "kicker": "Oyuncular",
+    "kickerLive": "Canlı, her dakika",
+    "titleA": "Şu anda kimler",
+    "titleB": "Horizon oynuyor.",
+    "lead": "Çalışan her oyun dakikada bir anonim bir “oynuyorum” ping'i gönderir: hesap yok, adres yok, oyunda ne yaptığınız yok (<link>neler içerdiği</link>, İngilizce). Aşağıdaki sayı kesindir ve geçmiş yalnızca toplamları saklar.",
+    "live": {
+      "ranges": {
+        "24h": "24 saat",
+        "7d": "7 gün",
+        "30d": "30 gün",
+        "all": "Tümü"
+      },
+      "spans": {
+        "24h": "son 24 saat",
+        "7d": "son 7 gün",
+        "30d": "son 30 gün",
+        "all": "sayım başladığından beri"
+      },
+      "platforms": {
+        "linux": "Linux",
+        "macos": "macOS",
+        "windows": "Windows",
+        "other": "Diğer"
+      },
+      "label": "{title} ({span})",
+      "noSamples": "Bu aralıkta henüz örnek yok: geçmiş 31 Ekim 2026'da başladı.",
+      "highest": "En yüksek",
+      "average": "Ortalama",
+      "peak": "{when} tarihinde {n} ile zirve",
+      "chartLabel": "{title}: her nokta için en yüksek sayı ve ortalama. Aşağıdaki tablo her noktayı listeler.",
+      "tooltip": "En yüksek {max} · Ortalama {avg}",
+      "table": "Tablo",
+      "when": "Ne zaman",
+      "showThe": "Göster:",
+      "down": "Sunucu şu anda yanıt vermiyor.",
+      "loading": "Yükleniyor…",
+      "nowTitle": "Şu an ve zirveler",
+      "playingNow": "şu an oynuyor",
+      "updated": "{time} itibarıyla güncellendi, her dakika yenilenir",
+      "asking": "Sunucuya soruluyor…",
+      "peakToday": "bugünkü zirve",
+      "at": "saat {time}",
+      "noSampleToday": "Bugün henüz örnek yok",
+      "allTime": "tüm zamanların zirvesi",
+      "on": "{when}",
+      "lan": "LAN veya arkadaşlara açık",
+      "lanShare": "oynayanların %{pct}'i",
+      "system": "Hangi sistemde",
+      "nobody": "Şu anda kimse oynamıyor.",
+      "overTime": "Zaman içinde",
+      "historyNote": "Her nokta 5 dakikalık (24 saat), saatlik (7 gün), 3 saatlik (30 gün) veya günlük (tümü, UTC günleri) dilimdeki en yüksek ve ortalama sayıyı gösterir. Saatler kendi saat diliminize göredir.",
+      "officialTitle": "Official Horizon SMP",
+      "officialLead": "Oyunun sunucu listesinin en başında yer alan hayatta kalma sunucusu Official Horizon SMP. Telemetri sunucusu her dakika, oyununuzun Çok Oyunculu listesinin gönderdiği durum ping'inin aynısıyla orada kaç kişinin oynadığını sorar.",
+      "playingThere": "şu an orada oynuyor",
+      "atAgain": "Saat {time}, her dakika yenilenir",
+      "notAnswering": "{time} itibarıyla yanıt vermiyor",
+      "playersTitle": "Oyuncular",
+      "officialHistory": "Official Horizon SMP üzerinde"
+    }
+  },
+  "artists": {
+    "meta": {
+      "title": "3D sanatçılar · Horizon",
+      "description": "Horizon, oyuncuları için kozmetikler (şapkalar, sırt eşyaları, omuz evcil hayvanları, izler ve ifadeler) yapacak 3D sanatçılara kapılarını açıyor. Discord'da merhaba deyin."
+    },
+    "kicker": "3D sanatçılar",
+    "titleA": "3D sanatçılar",
+    "titleB": "arıyoruz.",
+    "lead": "Horizon, oyuncuları için kozmetikler tasarlayacak 3D sanatçıları memnuniyetle karşılar: oyuncuların taktığı veya taşıdığı ve diğer Horizon oyuncularının her dünyada, her sunucuda gördüğü şeyler. Küçük, bloklu modeller yapmayı seviyorsan senden haber almak isteriz.",
+    "make": {
+      "title": "Birlikte neler yaparız",
+      "items": [
+        "Şapkalar ve diğer başlık aksesuarları.",
+        "Sırt çantaları veya sert kanatlar gibi sırt eşyaları.",
+        "Oyuncunun omzunda duran küçük evcil hayvanlar veya yanında süzülen yoldaşlar.",
+        "Birkaç parçacıktan oluşan auralar ve izler.",
+        "İfadeler: oyuncunun kendi modeli için kısa animasyonlar."
+      ],
+      "note": "Kozmetikler yalnızca oyuncunun görünüşünü değiştirir, oyunun oynanışını asla etkilemez."
+    },
+    "fits": {
+      "title": "Neler uygun",
+      "items": [
+        "Birkaç düzine küpten oluşan ve küçük piksel dokulara (16 ila 64 piksel) sahip, Minecraft'ın bloklu tarzında low-poly modeller.",
+        "Kendi özgün tasarımların. Minecraft'ın mob ve eşyalarının ya da başkasının çalışmalarının kopyası olmamalı.",
+        "Her yaşa uygun, uzaktan bile ne olduğu anlaşılabilen çizimler.",
+        "Pelerinler ya da omuzlardan pelerin gibi sarkan herhangi bir şey yok.",
+        "Blockbench ile çalışılabilir. Animasyon artı puandır ama şart değildir."
+      ]
+    },
+    "contact": {
+      "title": "İletişime geç",
+      "body": "Horizon'ın Discord sunucusuna katıl ve 3D sanatçısı olduğunu belirterek yaptığın birkaç çalışmayı paylaş: bağlantılar veya görseller olabilir. Özel olarak yazmayı tercih edersen <link>lu4ovic.com</link> üzerinden ulaşabilirsin.",
+      "discord": "Discord'a katıl"
+    },
+    "newTab": " (yeni sekmede açılır)"
+  }
+}
