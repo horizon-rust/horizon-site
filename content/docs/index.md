@@ -19,7 +19,7 @@ Horizon is Minecraft: Java Edition 26.3 rewritten in Rust. You install it with a
 ## Supported systems
 
 - **Linux, x86-64.** A graphics card with Vulkan drivers. Builds are made on Ubuntu 22.04, so use a distribution at least that recent.
-- **macOS, Apple Silicon or Intel.** Any M1 or newer, or an Intel Mac, on macOS 12 or later.
+- **macOS, Apple Silicon or Intel.** Any M1 or newer, or an Intel Mac, on macOS 12 or later. Metal is Horizon's only graphics API on macOS.
 - **Windows, x64 or ARM64.** Vulkan or DirectX 12. Horizon picks DirectX 12 by itself when Vulkan does not work, and first on ARM64 PCs (Snapdragon).
 
 There is no build for 32-bit systems or ARM Linux. The server can be built from source on other systems.
