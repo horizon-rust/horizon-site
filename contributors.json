@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-20T20:20:43.501Z",
+ "generatedAt": "2026-11-21T07:08:44.235Z",
  "rule": "merged-prs-with-coauthors+reviews/3",
  "contributors": [
   {
@@ -17,8 +17,8 @@
   {
    "login": "rdbtCVS",
    "avatarUrl": "https://avatars.githubusercontent.com/u/87152661?v=4",
-   "prs": 520,
-   "reviews": 1153
+   "prs": 523,
+   "reviews": 1155
   },
   {
    "login": "levzzz5154",
@@ -41,8 +41,8 @@
   {
    "login": "NikitaMGrimm",
    "avatarUrl": "https://avatars.githubusercontent.com/u/65914808?v=4",
-   "prs": 433,
-   "reviews": 22
+   "prs": 458,
+   "reviews": 31
   },
   {
    "login": "Solenopsisbot",
@@ -119,13 +119,13 @@
   {
    "login": "angel2rider",
    "avatarUrl": "https://avatars.githubusercontent.com/u/159677645?v=4",
-   "prs": 117,
+   "prs": 120,
    "reviews": 16
   },
   {
    "login": "Detimes",
    "avatarUrl": "https://avatars.githubusercontent.com/u/165512828?v=4",
-   "prs": 130,
+   "prs": 132,
    "reviews": 0
   },
   {
@@ -149,7 +149,7 @@
   {
    "login": "Joansitoh",
    "avatarUrl": "https://avatars.githubusercontent.com/u/36512960?v=4",
-   "prs": 113,
+   "prs": 116,
    "reviews": 0
   },
   {
@@ -441,6 +441,12 @@
    "reviews": 0
   },
   {
+   "login": "oloion",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/199402172?v=4",
+   "prs": 24,
+   "reviews": 0
+  },
+  {
    "login": "DenisHumen",
    "avatarUrl": "https://avatars.githubusercontent.com/u/56129242?v=4",
    "prs": 23,
@@ -449,12 +455,6 @@
   {
    "login": "leifiyoo",
    "avatarUrl": "https://avatars.githubusercontent.com/u/250759920?v=4",
-   "prs": 23,
-   "reviews": 0
-  },
-  {
-   "login": "oloion",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/199402172?v=4",
    "prs": 23,
    "reviews": 0
   },
@@ -639,6 +639,12 @@
    "reviews": 0
   },
   {
+   "login": "xKumorio",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/78680226?v=4",
+   "prs": 14,
+   "reviews": 0
+  },
+  {
    "login": "abit-foggy",
    "avatarUrl": "https://avatars.githubusercontent.com/u/159262387?v=4",
    "prs": 13,
@@ -665,12 +671,6 @@
   {
    "login": "LookImEcho-Rick",
    "avatarUrl": "https://avatars.githubusercontent.com/u/62575172?v=4",
-   "prs": 13,
-   "reviews": 0
-  },
-  {
-   "login": "xKumorio",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/78680226?v=4",
    "prs": 13,
    "reviews": 0
   },
@@ -1161,6 +1161,12 @@
    "reviews": 0
   },
   {
+   "login": "Code-Jfk87",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/100723706?v=4",
+   "prs": 3,
+   "reviews": 0
+  },
+  {
    "login": "cristibctr",
    "avatarUrl": "https://avatars.githubusercontent.com/u/61913553?v=4",
    "prs": 3,
@@ -1197,6 +1203,12 @@
    "reviews": 0
   },
   {
+   "login": "FinleyLaempe",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/146988237?v=4",
+   "prs": 3,
+   "reviews": 0
+  },
+  {
    "login": "fluxxy33",
    "avatarUrl": "https://avatars.githubusercontent.com/u/217227875?v=4",
    "prs": 3,
@@ -1217,6 +1229,12 @@
   {
    "login": "kohad1ck",
    "avatarUrl": "https://avatars.githubusercontent.com/u/163426863?v=4",
+   "prs": 3,
+   "reviews": 0
+  },
+  {
+   "login": "liqttt",
+   "avatarUrl": "https://avatars.githubusercontent.com/u/170752801?v=4",
    "prs": 3,
    "reviews": 0
   },
@@ -1365,12 +1383,6 @@
    "reviews": 0
   },
   {
-   "login": "FinleyLaempe",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/146988237?v=4",
-   "prs": 2,
-   "reviews": 0
-  },
-  {
    "login": "fy2ne",
    "avatarUrl": "https://avatars.githubusercontent.com/u/207431051?v=4",
    "prs": 2,
@@ -1427,12 +1439,6 @@
   {
    "login": "kerimgrande",
    "avatarUrl": "https://avatars.githubusercontent.com/u/105588426?v=4",
-   "prs": 2,
-   "reviews": 0
-  },
-  {
-   "login": "liqttt",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/170752801?v=4",
    "prs": 2,
    "reviews": 0
   },
@@ -1697,12 +1703,6 @@
   {
    "login": "cemaliplt",
    "avatarUrl": "https://avatars.githubusercontent.com/u/123562519?v=4",
-   "prs": 1,
-   "reviews": 0
-  },
-  {
-   "login": "Code-Jfk87",
-   "avatarUrl": "https://avatars.githubusercontent.com/u/100723706?v=4",
    "prs": 1,
    "reviews": 0
   },
